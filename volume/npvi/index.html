@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>负成交量指数（NVI）&amp; 正成交量指数（PVI）指标深度解析：原理、计算与实战应用 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#nvi-pvi" class="nav-link">负成交量指数（NVI）&amp; 正成交量指数（PVI）指标深度解析：原理、计算与实战应用</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、核心理论基础：指标的底层逻辑假设</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_2" class="nav-link">二、指标定义、计算逻辑与核心特性</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#nvipvi_1" class="nav-link">三、实战应用：NVI与PVI的联动策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_3" class="nav-link">四、关键注意事项与常见误区</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="nvi-pvi">负成交量指数（NVI）&amp; 正成交量指数（PVI）指标深度解析：原理、计算与实战应用</h1>
+<p>负成交量指数（Negative Volume Index, NVI）与正成交量指数（Positive Volume Index, PVI）是由技术分析师保罗·戴萨特（Paul Dysart）在20世纪30年代提出，后经诺曼·福斯贝克（Norman Fosback）在《Stock Market Logic》中系统推广的<strong>量价联动型指标</strong>。二者核心逻辑围绕“<strong>成交量变化与资金行为的关联</strong>”展开，通过区分“缩量行情”与“放量行情”下的价格波动，判断市场中“聪明钱”（机构资金）与“散户资金”的主导权，最终服务于趋势判断、资金流向验证与反转预警。</p>
+<h2 id="_1">一、核心理论基础：指标的底层逻辑假设</h2>
+<p>NVI与PVI的设计基于福斯贝克对“市场资金行为”的经典观察，这是理解两个指标的前提：
+1. <strong>缩量行情（NVI关注）</strong>：当成交量较前一日减少时，市场交易活跃度下降，此时价格波动更可能由“聪明钱”（机构、专业投资者）主导——因为机构资金布局通常低调，无需大量成交量推动价格，且倾向在散户交易清淡时入场/离场；
+2. <strong>放量行情（PVI关注）</strong>：当成交量较前一日增加时，市场交易活跃度上升，此时价格波动更可能由“散户资金”主导——因为散户交易往往伴随情绪驱动（如追涨杀跌），容易引发成交量骤增，而机构此时更可能“借散户情绪出货/吸筹”；
+3. <strong>趋势验证逻辑</strong>：长期趋势的形成需要“聪明钱”的持续推动，因此NVI的长期走势更能反映市场真实趋势；PVI则更多反映短期情绪波动，需结合NVI判断趋势的可持续性。</p>
+<h2 id="_2">二、指标定义、计算逻辑与核心特性</h2>
+<h3 id="nvi">（一）负成交量指数（NVI）：跟踪缩量行情的“聪明钱信号”</h3>
+<h4 id="1">1. 核心定义</h4>
+<p>NVI是<strong>仅在“当日成交量＜前一日成交量”时更新，在放量时保持不变</strong>的累计型指标。其核心功能是通过缩量行情中的价格变化，捕捉机构资金的潜在布局轨迹，判断市场真实趋势方向。</p>
+<h4 id="2">2. 完整计算逻辑（以日线周期为例）</h4>
+<p>NVI的计算以“前一期NVI值”为基础，仅在缩量时调整，步骤如下：
+- <strong>第一步：确定计算前提</strong><br />
+  对比当日成交量（Volₜ）与前一日成交量（Volₜ₋₁）：<br />
+  - 若 Volₜ ＜ Volₜ₋₁（缩量）：计算当日NVI；<br />
+  - 若 Volₜ ≥ Volₜ₋₁（放量/平量）：当日NVI = 前一日NVI（保持不变）。</p>
+<ul>
+<li><strong>第二步：缩量时的NVI计算公式</strong><br />
+  [
+  NVI_t = NVI_{t-1} + \left( \frac{C_t - C_{t-1}}{C_{t-1}} \right) \times NVI_{t-1}
+  ]<br />
+  其中：  </li>
+<li>(NVI_t) = 当日NVI值；  </li>
+<li>(NVI_{t-1}) = 前一日NVI值（初始值通常设为1000，便于观察相对变化）；  </li>
+<li>(C_t) = 当日收盘价；  </li>
+<li>
+<p>(C_{t-1}) = 前一日收盘价。</p>
+</li>
+<li>
+<p><strong>第三步：公式简化理解</strong><br />
+  缩量时的NVI变化本质是“前一日NVI值 × （1 + 当日价格涨跌幅）”，即通过价格涨跌幅对NVI进行累计调整，反映缩量行情中价格波动对“聪明钱趋势”的影响。</p>
+</li>
+</ul>
+<h4 id="3-nvi1000">3. 计算示例（初始NVI=1000）</h4>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>前一日NVI</th>
+<th>前一日收盘价（Cₜ₋₁）</th>
+<th>当日收盘价（Cₜ）</th>
+<th>前一日成交量（Volₜ₋₁）</th>
+<th>当日成交量（Volₜ）</th>
+<th>缩量/放量</th>
+<th>当日NVI计算</th>
+<th>当日NVI结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day1</td>
+<td>1000</td>
+<td>20元</td>
+<td>20.4元</td>
+<td>2000手</td>
+<td>1800手（＜2000）</td>
+<td>缩量</td>
+<td>1000 + (20.4-20)/20 ×1000</td>
+<td>1020</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>1020</td>
+<td>20.4元</td>
+<td>20.2元</td>
+<td>1800手</td>
+<td>1900手（＞1800）</td>
+<td>放量</td>
+<td>保持前一日NVI</td>
+<td>1020</td>
+</tr>
+<tr>
+<td>Day3</td>
+<td>1020</td>
+<td>20.2元</td>
+<td>20.6元</td>
+<td>1900手</td>
+<td>1700手（＜1900）</td>
+<td>缩量</td>
+<td>1020 + (20.6-20.2)/20.2 ×1020 ≈ 1020 + 20.2</td>
+<td>1040.2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4">4. 核心特性</h4>
+<ul>
+<li><strong>缩量更新，放量停滞</strong>：仅在散户交易清淡时反映资金动向，避免短期情绪干扰；  </li>
+<li><strong>长期趋势导向</strong>：累计计算方式使其更擅长反映1-3个月以上的中期趋势，短期波动较小；  </li>
+<li><strong>无固定取值范围</strong>：数值随趋势累计增长/下降（如牛市中NVI从1000升至2000，熊市中降至500），需通过“与历史高点/低点对比”或“移动平均线”判断位置。</li>
+</ul>
+<h3 id="pvi">（二）正成交量指数（PVI）：跟踪放量行情的“散户情绪信号”</h3>
+<h4 id="1_1">1. 核心定义</h4>
+<p>PVI是<strong>仅在“当日成交量＞前一日成交量”时更新，在缩量/平量时保持不变</strong>的累计型指标。其核心功能是通过放量行情中的价格变化，捕捉散户资金的情绪波动，辅助判断短期趋势的强弱与反转风险。</p>
+<h4 id="2_1">2. 完整计算逻辑（以日线周期为例）</h4>
+<p>PVI的计算逻辑与NVI对称，仅在放量时调整：
+- <strong>第一步：确定计算前提</strong><br />
+  对比当日成交量（Volₜ）与前一日成交量（Volₜ₋₁）：<br />
+  - 若 Volₜ ＞ Volₜ₋₁（放量）：计算当日PVI；<br />
+  - 若 Volₜ ≤ Volₜ₋₁（缩量/平量）：当日PVI = 前一日PVI（保持不变）。</p>
+<ul>
+<li><strong>第二步：放量时的PVI计算公式</strong><br />
+  [
+  PVI_t = PVI_{t-1} + \left( \frac{C_t - C_{t-1}}{C_{t-1}} \right) \times PVI_{t-1}
+  ]<br />
+  变量定义与NVI一致，初始值同样设为1000。</li>
+</ul>
+<h4 id="3-pvi1000">3. 计算示例（初始PVI=1000）</h4>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>前一日PVI</th>
+<th>前一日收盘价（Cₜ₋₁）</th>
+<th>当日收盘价（Cₜ）</th>
+<th>前一日成交量（Volₜ₋₁）</th>
+<th>当日成交量（Volₜ）</th>
+<th>放量/缩量</th>
+<th>当日PVI计算</th>
+<th>当日PVI结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Day1</td>
+<td>1000</td>
+<td>20元</td>
+<td>20.4元</td>
+<td>2000手</td>
+<td>2500手（＞2000）</td>
+<td>放量</td>
+<td>1000 + (20.4-20)/20 ×1000</td>
+<td>1020</td>
+</tr>
+<tr>
+<td>Day2</td>
+<td>1020</td>
+<td>20.4元</td>
+<td>20.2元</td>
+<td>2500手</td>
+<td>2300手（＜2500）</td>
+<td>缩量</td>
+<td>保持前一日PVI</td>
+<td>1020</td>
+</tr>
+<tr>
+<td>Day3</td>
+<td>1020</td>
+<td>20.2元</td>
+<td>20.6元</td>
+<td>2300手</td>
+<td>2800手（＞2300）</td>
+<td>放量</td>
+<td>1020 + (20.6-20.2)/20.2 ×1020 ≈ 1020 + 20.2</td>
+<td>1040.2</td>
+</tr>
+</tbody>
+</table>
+<h4 id="4_1">4. 核心特性</h4>
+<ul>
+<li><strong>放量更新，缩量停滞</strong>：仅在散户情绪活跃时反映价格波动，直接关联短期交易热度；  </li>
+<li><strong>短期情绪导向</strong>：对成交量变化敏感，擅长反映1-2周内的短期趋势，波动较NVI更频繁；  </li>
+<li><strong>无固定取值范围</strong>：需结合“移动平均线”或“与NVI的联动关系”判断信号，单独使用易受情绪误导。</li>
+</ul>
+<h3 id="nvipvi">（三）NVI与PVI的核心差异对比</h3>
+<table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>负成交量指数（NVI）</th>
+<th>正成交量指数（PVI）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>更新条件</strong></td>
+<td>当日成交量＜前一日成交量（缩量）</td>
+<td>当日成交量＞前一日成交量（放量）</td>
+</tr>
+<tr>
+<td><strong>主导资金</strong></td>
+<td>机构资金（聪明钱）</td>
+<td>散户资金（情绪资金）</td>
+</tr>
+<tr>
+<td><strong>趋势周期</strong></td>
+<td>中期趋势（1-3个月以上）</td>
+<td>短期趋势（1-2周内）</td>
+</tr>
+<tr>
+<td><strong>信号特点</strong></td>
+<td>稳定、滞后性弱（反映真实趋势）</td>
+<td>灵敏、波动性强（反映情绪波动）</td>
+</tr>
+<tr>
+<td><strong>核心功能</strong></td>
+<td>判断长期趋势方向、验证趋势可持续性</td>
+<td>捕捉短期情绪反转、预警趋势短期风险</td>
+</tr>
+</tbody>
+</table>
+<h2 id="nvipvi_1">三、实战应用：NVI与PVI的联动策略</h2>
+<p>NVI与PVI单独使用时信号价值有限（如NVI无法反映短期情绪，PVI易受散户噪音干扰），<strong>二者联动分析</strong>是实战核心，主要应用场景包括“趋势判断”“背离预警”“资金流向验证”三大类。</p>
+<h3 id="1_2">（一）场景1：趋势方向判断（结合移动平均线）</h3>
+<p>由于NVI和PVI均为累计型指标，需搭配“10日/20日移动平均线（MA）”过滤短期波动，明确趋势方向：</p>
+<h4 id="1_3">1. 多头趋势确认（适合建仓/持仓）</h4>
+<ul>
+<li><strong>核心条件</strong>（满足2项及以上）：  </li>
+<li>NVI ＞ NVI的20日MA（中期趋势由机构资金推动向上）；  </li>
+<li>PVI ＞ PVI的10日MA（短期散户情绪与机构趋势一致，无明显分歧）；  </li>
+<li>价格持续在20日MA上方运行（价格趋势与量能趋势同步）；  </li>
+<li><strong>逻辑</strong>：机构主导的长期趋势向上，且散户情绪配合（放量时价格上涨），趋势可持续性强，适合持仓或在缩量回调时加仓。</li>
+</ul>
+<h4 id="2_2">2. 空头趋势确认（适合空仓/减仓）</h4>
+<ul>
+<li><strong>核心条件</strong>（满足2项及以上）：  </li>
+<li>NVI ＜ NVI的20日MA（中期趋势由机构资金推动向下）；  </li>
+<li>PVI ＜ PVI的10日MA（短期散户情绪与机构趋势一致，恐慌抛售）；  </li>
+<li>价格持续在20日MA下方运行（价格趋势与量能趋势同步）；  </li>
+<li><strong>逻辑</strong>：机构主导的长期趋势向下，且散户情绪加剧下跌（放量时价格下跌），趋势风险高，适合空仓或在放量反弹时减仓。</li>
+</ul>
+<h4 id="3">3. 震荡趋势确认（适合观望/短线交易）</h4>
+<ul>
+<li><strong>核心条件</strong>：  </li>
+<li>NVI围绕其20日MA上下波动（机构资金无明确方向）；  </li>
+<li>PVI围绕其10日MA剧烈震荡（散户情绪反复）；  </li>
+<li><strong>逻辑</strong>：市场缺乏主导资金，趋势不明朗，需等待NVI突破MA后再入场，避免频繁交易。</li>
+</ul>
+<h3 id="2_3">（二）场景2：趋势反转预警（背离信号）</h3>
+<p>“价格与指标背离”是NVI/PVI最有效的反转信号，尤其当二者同时出现背离时，反转概率极高：</p>
+<h4 id="1_4">1. 顶部反转预警（适合止盈/做空）</h4>
+<ul>
+<li><strong>NVI顶背离</strong>（核心信号）：<br />
+  条件：①价格创近期新高；②NVI未创同期新高，且NVI跌破其20日MA；<br />
+  逻辑：机构资金已在缩量时悄悄离场，价格新高缺乏真实资金支撑，随时可能回调。  </li>
+<li><strong>PVI顶背离</strong>（辅助信号）：<br />
+  条件：①价格创近期新高；②PVI未创同期新高，且放量时价格涨幅收窄；<br />
+  逻辑：散户追涨情绪减弱，放量却无法推动价格创新高，短期顶部形成。  </li>
+<li><strong>实战操作</strong>：若NVI顶背离+PVI顶背离同时出现，立即减仓50%；若后续价格跌破20日MA，剩余仓位全部止盈。</li>
+</ul>
+<h4 id="2_4">2. 底部反转预警（适合建仓/做多）</h4>
+<ul>
+<li><strong>NVI底背离</strong>（核心信号）：<br />
+  条件：①价格创近期新低；②NVI未创同期新低，且NVI突破其20日MA；<br />
+  逻辑：机构资金已在缩量时悄悄入场，价格新低是“诱空”，真实需求开始显现。  </li>
+<li><strong>PVI底背离</strong>（辅助信号）：<br />
+  条件：①价格创近期新低；②PVI未创同期新低，且放量时价格跌幅收窄；<br />
+  逻辑：散户恐慌抛售情绪减弱，放量却无法推动价格创新低，短期底部形成。  </li>
+<li><strong>实战操作</strong>：若NVI底背离+PVI底背离同时出现，轻仓建仓（仓位20%）；若后续NVI持续在MA上方，且价格突破20日MA，加仓至50%。</li>
+</ul>
+<h3 id="3_1">（三）场景3：资金流向验证（判断趋势真实性）</h3>
+<p>当价格趋势与NVI/PVI出现“分歧”时，需通过指标验证趋势是否由“真实资金”推动，避免陷入“假趋势”陷阱：</p>
+<h4 id="1_5">1. 验证“价格上涨趋势”的真实性</h4>
+<ul>
+<li><strong>真实上涨（可持仓）</strong>：价格上涨 + NVI上涨 + PVI上涨；<br />
+  逻辑：机构（缩量时推涨）与散户（放量时追涨）方向一致，趋势有资金支撑。  </li>
+<li><strong>假上涨（需警惕）</strong>：价格上涨 + NVI下跌 + PVI上涨；<br />
+  逻辑：仅散户放量追涨，机构在缩量时悄悄出货，上涨是“情绪驱动”，随时可能回调（典型“量价背离”的延伸）。</li>
+</ul>
+<h4 id="2_5">2. 验证“价格下跌趋势”的真实性</h4>
+<ul>
+<li><strong>真实下跌（可空仓）</strong>：价格下跌 + NVI下跌 + PVI下跌；<br />
+  逻辑：机构（缩量时抛售）与散户（放量时恐慌）方向一致，趋势有资金支撑。  </li>
+<li><strong>假下跌（可观望）</strong>：价格下跌 + NVI上涨 + PVI下跌；<br />
+  逻辑：仅散户放量抛售，机构在缩量时悄悄吸筹，下跌是“情绪恐慌”，随时可能反弹（典型“黄金坑”前兆）。</li>
+</ul>
+<h2 id="_3">四、关键注意事项与常见误区</h2>
+<h3 id="1_6">1. 避免“单一指标依赖”</h3>
+<p>NVI/PVI的核心价值在于“联动分析”，单独使用易出错：<br />
+- 仅看NVI：无法捕捉短期情绪反转（如NVI长期上涨，但PVI突然顶背离，短期仍需减仓）；<br />
+- 仅看PVI：易被散户情绪误导（如PVI短期上涨，但NVI下跌，长期趋势仍向下）。</p>
+<h3 id="2_6">2. 适配“高流动性品种”</h3>
+<p>NVI/PVI依赖“成交量与价格的连续联动”，低流动性品种（如小盘股、冷门ETF）因“成交量骤增骤减”或“价格跳空”，易导致指标计算失真：<br />
+- 适配品种：大盘股（如沪深300成分股）、主力合约期货、宽基指数（如上证指数、标普500）；<br />
+- 规避品种：日成交量＜5000手的小盘股、单日涨跌幅＞10%且成交量异常的股票。</p>
+<h3 id="3_2">3. 周期选择需匹配交易目标</h3>
+<ul>
+<li>短线交易（1-3天）：用“日线PVI+10日MA”捕捉情绪反转，NVI仅作参考；  </li>
+<li>波段交易（3-30天）：用“日线NVI+20日MA + 日线PVI+10日MA”联动，兼顾趋势与情绪；  </li>
+<li>中长线交易（1-6个月）：用“周线NVI+20周MA”判断长期趋势，忽略日线PVI的短期波动。</li>
+</ul>
+<h3 id="4_2">4. 警惕“极端行情失效”</h3>
+<p>在“一字涨跌停”“停牌复牌”等极端行情中，成交量与价格的联动关系被破坏，指标信号无效：<br />
+- 一字涨停：成交量骤减（散户无法入场），NVI可能持续上涨，但价格已封死，无交易机会；<br />
+- 停牌复牌：复牌后成交量骤增（散户集中交易），PVI剧烈波动，但趋势缺乏连续性，需等待1-2个交易日再判断。</p>
+<h2 id="_4">五、总结</h2>
+<p>NVI与PVI是一对“互补性极强的量价指标”——NVI像“市场的冷静观察者”，通过缩量行情捕捉机构资金的真实意图，反映长期趋势；PVI像“市场的情绪探测器”，通过放量行情捕捉散户资金的情绪波动，预警短期风险。</p>
+<p>实战中，需牢记“<strong>NVI定方向，PVI看情绪，MA过滤噪音</strong>”的核心逻辑：用NVI判断长期趋势是否值得参与，用PVI寻找短期入场/离场时机，用移动平均线减少信号误判。最终，结合价格形态（如头肩顶、双底）与其他量能指标（如成交量均线），形成多维度验证，才能最大化NVI与PVI的实战价值，在趋势中把握机会，在反转前规避风险。</p>
+<p><a href="../">返回成交量型指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

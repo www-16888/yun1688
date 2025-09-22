@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>价格通道 (Price Channel) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#price-channel" class="nav-link">价格通道 (Price Channel) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="price-channel">价格通道 (Price Channel) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念：</h3>
+<p>价格通道（Price Channel）是一种基于价格实际波动轨迹构建的动态趋势跟踪工具，通过手动或软件自动连接某一周期内的“连续显著高点”与“连续显著低点”，形成两条平行（或近似平行）的趋势轨线，中间区域即为价格在趋势中的“正常运行区间”。它的核心价值是“可视化趋势边界”，无需复杂计算，直接通过轨线倾斜方向、价格与轨线的位置关系，判断趋势方向、支撑阻力与突破时机，属于滞后性低、实操性强的技术工具。</p>
+<p>需明确：价格通道是广义的趋势通道工具统称，其核心是“随价格波动动态调整的轨线对”；而唐奇安通道（Donchian Channel）是价格通道的“特定子类”——唐奇安通道严格以“N周期内的最高价/最低价”为固定轨线（如20周期内最高价为上轨、最低价为下轨），轨线随周期更新自动替换；而普通价格通道的轨线更灵活，可根据“趋势结构中的关键高低点”调整（如忽略孤立的极端波动点），二者是“包含与被包含”关系，而非等同。</p>
+<ul>
+<li>“动态轨线”：区别于静态水平支撑阻力（如固定的历史高点），价格通道的上轨（压力）与下轨（支撑）会随趋势方向同步移动——上涨时双轨向上，下跌时双轨向下，横盘时双轨水平；</li>
+<li>“趋势适配”：轨线的倾斜角度与趋势强度正相关——轨线越陡峭，趋势动能越强（如急涨行情的上轨陡峭）；轨线越平缓，趋势动能越弱（如慢涨行情的上轨平缓）；</li>
+<li>“灵活识别”：无需严格绑定固定周期，可根据“肉眼可见的趋势波段”绘制（如从一轮上涨的起点到当前，连接3个以上连续高点形成上轨），更贴合主观判断的趋势结构。</li>
+</ul>
+<h3 id="_3">组成结构与分类：</h3>
+<p>价格通道的核心是“双轨一线”（上轨、下轨、通道区间），根据趋势方向和绘制逻辑，可分为不同类型，适用场景差异显著。</p>
+<h4 id="1">1. 核心组件拆解</h4>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>英文表述</th>
+<th>构建逻辑</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>上轨（压力轨）</td>
+<td>Upper Channel Line</td>
+<td>连接某一趋势波段内的连续关键高点（需是趋势延续中的回调高点，而非孤立的单日极端高点），形成压力线</td>
+<td>界定价格上涨的“合理上限”——价格触及上轨，短期多空力量易反转，可能回调</td>
+</tr>
+<tr>
+<td>下轨（支撑轨）</td>
+<td>Lower Channel Line</td>
+<td>连接同一趋势波段内的连续关键低点（需是趋势延续中的反弹低点，而非孤立的单日极端低点），形成支撑线</td>
+<td>界定价格下跌的“合理下限”——价格触及下轨，短期多空力量易反转，可能反弹</td>
+</tr>
+<tr>
+<td>通道区间</td>
+<td>Channel Range</td>
+<td>上轨与下轨之间的区域，是价格在当前趋势下的“正常波动范围”</td>
+<td>判断趋势“健康度”——价格在区间内运行，趋势延续概率高；突破区间，趋势可能反转或加速</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 主要分类（按趋势方向与绘制逻辑）</h4>
+<p>不同类型的价格通道，信号逻辑与适用场景完全不同，需针对性使用：
+| 通道类型       | 形态特征                                                                 | 绘制逻辑                          | 适用场景                          |
+|----------------|--------------------------------------------------------------------------|-----------------------------------|-----------------------------------|
+| 上升通道       | 上轨与下轨均向上倾斜，且双轨保持平行（或近似平行）；价格低点逐步抬高、高点逐步抬高，多数时间在通道内运行 | 从上涨起点开始，连接2-3个连续回调低点形成下轨，再平行于下轨画出上轨（或连接连续上涨高点形成上轨） | 明确的多头趋势（如股票波段上涨、期货牛市） |
+| 下降通道       | 上轨与下轨均向下倾斜，且双轨保持平行；价格高点逐步降低、低点逐步降低，多数时间在通道内运行 | 从下跌起点开始，连接2-3个连续反弹高点形成上轨，再平行于上轨画出下轨（或连接连续下跌低点形成下轨） | 明确的空头趋势（如股票波段下跌、期货熊市） |
+| 水平通道（箱体） | 上轨与下轨均水平运行，无明显倾斜；价格在双轨之间来回震荡，高低点基本持平，带宽稳定 | 连接横盘期间的连续高点形成上轨，连接连续低点形成下轨，双轨保持水平 | 多空平衡的横盘震荡行情（如股票区间整理） |
+| 收敛通道（楔形） | 上轨与下轨向中间收敛（上轨向下、下轨向上），带宽逐步缩小；价格波动范围越来越窄 | 连接逐步降低的高点形成上轨，连接逐步抬高的低点形成下轨，双轨夹角逐步缩小 | 趋势即将突破的转折期（如上涨后的整理、下跌后的蓄势） |</p>
+<blockquote>
+<p>注意：绘制普通价格通道时，需满足“关键高低点数量≥2个”（如至少2个连续高点才能形成上轨），且轨线需“覆盖当前完整趋势波段”——例如，一轮从10元涨至20元的行情，需包含3个以上回调低点，才能确保下轨支撑有效，避免因高点/低点数量不足导致轨线失真。</p>
+</blockquote>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>价格通道的核心价值在于用“可视化的双轨”解决“趋势边界模糊”“支撑阻力动态变化”的痛点，相比MA、MACD等依赖数值计算的指标，它更贴近“价格本身的运行规律”，具体体现在三大不可替代的功能：</p>
+<h3 id="1-ma">1. 精准定义趋势（比MA更贴合趋势结构）</h3>
+<p>移动平均线仅通过“价格与均线的位置”判断趋势，而价格通道通过“轨线倾斜方向+高低点节奏”，能更精准地识别趋势强度与阶段：
+- 强上升趋势：上轨陡峭向上，下轨同步陡峭，价格回调幅度小（仅触及下轨附近即反弹），且每次上涨都突破前高——表明多头力量主导，趋势延续性强；
+- 弱上升趋势：上轨平缓向上，下轨倾斜角度小，价格回调幅度大（接近下轨），且上涨时偶尔不突破前高——表明多头动能不足，趋势易转为横盘；
+- 强下降趋势：下轨陡峭向下，上轨同步陡峭，价格反弹幅度小（仅触及上轨附近即回落），且每次下跌都跌破前低——表明空头力量主导，趋势延续性强；
+- 趋势转折预警：若轨线从陡峭转为平缓（如上升通道上轨角度变缓），或价格开始频繁触碰轨线（如上升通道连续2次触及下轨），表明趋势动能衰减，即将进入震荡或反转。</p>
+<h3 id="2_1">2. 动态锁定支撑阻力（比静态水平位更实用）</h3>
+<p>传统支撑阻力是“固定的历史高低点”，而价格通道的支撑阻力（下轨/上轨）会随趋势同步移动，更适配实时价格波动：
+- 上升通道中：下轨是“动态支撑”——价格回调至下轨时，反映“当前趋势下的合理买入成本”，多头会主动入场，支撑有效性随趋势延续而增强；
+- 下降通道中：上轨是“动态阻力”——价格反弹至上轨时，反映“当前趋势下的合理卖出成本”，空头会主动入场，阻力有效性随趋势延续而增强；
+- 水平通道中：上轨是“固定阻力”、下轨是“固定支撑”——价格在区间内波动时，触及轨线即反映“多空力量的平衡临界点”，反转概率高；
+- 收敛通道中：双轨收敛至顶点时，是“多空决战临界点”——价格突破任一轨线，都预示新趋势启动，支撑阻力会立即转化（如突破上轨后，原上轨变为支撑）。</p>
+<h3 id="3">3. 直观捕捉突破时机（比布林带更聚焦趋势）</h3>
+<p>布林带需通过“标准差与带宽”判断突破，而价格通道直接以“轨线突破”为信号，无需解读复杂参数，且突破信号与趋势结构强绑定：
+- 趋势加速突破：上升通道中价格突破上轨，且突破时伴随成交量放大（股票），表明多头动能增强，趋势从“慢涨”转为“快涨”；下降通道中价格跌破下轨，表明空头动能增强，趋势从“慢跌”转为“快跌”；
+- 趋势反转突破：水平通道中价格突破上轨，表明多空平衡被打破，新上升趋势启动；水平通道中价格跌破下轨，表明新下降趋势启动；收敛通道中价格突破上轨（或下轨），表明整理结束，趋势向突破方向延续；
+- 突破确认逻辑：突破后需满足“2个条件”才算有效——① 收盘价站稳轨线外侧（如突破上轨则收盘价在上轨上方）；② 突破后1-2根K线不回踩轨线内侧（如突破上轨后不跌破上轨），避免“假突破”误导。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>价格通道的用法核心是“先判趋势类型，再定交易逻辑”——上升通道、下降通道、水平通道的操作策略完全不同，需避免“不分趋势盲目交易”。以下是三类主流通道的实战用法：</p>
+<h3 id="_6">用法一：上升通道（顺多头，抓回调加仓）</h3>
+<p>核心逻辑是“依托下轨动态支撑，在趋势延续中做多”，适合明确的上涨行情（如股票日线级别波段、期货周线级别牛市）。
+- 步骤1：确认通道有效性——
+  1. 形态：上轨与下轨平行向上，至少包含3个连续回调低点（下轨支撑有效）和3个连续上涨高点（上轨压力有效）；
+  2. 价格节奏：价格回调不跌破下轨，上涨能突破前高，且多数时间在通道上半区运行（表明多头占优）；
+- 步骤2：找买入时机——
+  1. 首次入场：价格回调至下轨附近，且出现看涨K线形态（如锤子线、看涨吞没），同时成交量缩窄（回调时卖盘减少，支撑有效）；
+  2. 加仓时机：价格突破上轨后，回踩上轨（此时上轨转化为支撑）且不跌破，同时成交量再次放大（买盘重新入场）；
+- 步骤3：设止损止盈——
+  1. 止损：买入价下方的下轨位置（若价格跌破下轨且收盘价在下方，说明下轨支撑失效，趋势弱化，需止损）；
+  2. 止盈：两种方式——① 目标位设为上轨附近（触及上轨且出现看跌K线，如流星线，可部分止盈）；② 跟踪止损（价格上涨后，将止损上移至最新的下轨位置，保留趋势利润）；
+- 注意：上升通道中“不猜顶”——若价格突破上轨且轨线同步向上扩张（趋势加速），不要急于止盈，需等价格出现顶背离（如RSI不创新高）或跌破上轨后再减仓。</p>
+<h3 id="_7">用法二：下降通道（顺空头，抓反弹加仓）</h3>
+<p>核心逻辑是“依托上轨动态阻力，在趋势延续中做空”，适合明确的下跌行情（如股票日线级别波段下跌、期货周线级别熊市）。
+- 步骤1：确认通道有效性——
+  1. 形态：上轨与下轨平行向下，至少包含3个连续反弹高点（上轨阻力有效）和3个连续下跌低点（下轨支撑有效）；
+  2. 价格节奏：价格反弹不突破上轨，下跌能跌破前低，且多数时间在通道下半区运行（表明空头占优）；
+- 步骤2：找卖出时机——
+  1. 首次入场：价格反弹至上轨附近，且出现看跌K线形态（如流星线、看跌吞没），同时成交量缩窄（反弹时买盘减少，阻力有效）；
+  2. 加仓时机：价格跌破下轨后，反弹至下轨（此时下轨转化为阻力）且不突破，同时成交量再次放大（卖盘重新入场）；
+- 步骤3：设止损止盈——
+  1. 止损：卖出价上方的上轨位置（若价格突破上轨且收盘价在上方，说明上轨阻力失效，趋势弱化，需止损）；
+  2. 止盈：两种方式——① 目标位设为下轨附近（触及下轨且出现看涨K线，如锤子线，可部分止盈）；② 跟踪止损（价格下跌后，将止损下移至最新的上轨位置，扩大利润）；
+- 注意：下降通道中“不猜底”——若价格跌破下轨且轨线同步向下扩张（趋势加速），不要急于止盈，需等价格出现底背离（如RSI不创新低）或突破下轨后再减仓。</p>
+<h3 id="_8">用法三：水平通道（震荡市，抓区间反转）</h3>
+<p>核心逻辑是“以上下轨为区间边界，低买高卖”，适合多空平衡的横盘行情（如股票日线级别区间整理、期货日内震荡）。
+- 步骤1：确认通道有效性——
+  1. 形态：上轨与下轨水平平行，带宽（上轨-下轨）稳定（如近10个交易日带宽波动不超过5%）；
+  2. 价格节奏：价格至少5次触及上轨回调、5次触及下轨反弹，无明显突破迹象；
+- 步骤2：找交易时机——
+  1. 买入信号：价格触及下轨，且出现看涨K线形态（如锤子线、启明星），同时成交量放大（买盘入场，支撑有效）；
+  2. 卖出信号：价格触及上轨，且出现看跌K线形态（如流星线、黄昏星），同时成交量放大（卖盘入场，阻力有效）；
+- 步骤3：设止损止盈——
+  1. 止损：买入时止损设为下轨下方（跌破下轨，震荡失效）；卖出时止损设为上轨上方（突破上轨，震荡失效）；
+  2. 止盈：买入后止盈设为上轨下方（无需完全触及上轨，若中途出现动能减弱信号，如成交量缩窄，可提前止盈）；卖出后止盈设为下轨上方；
+- 注意：水平通道中“不追突破”——若价格突破轨线但成交量缩小（如股票突破上轨但缩量），大概率是“假突破”，需等待价格回踩轨线后再反向操作；若突破后成交量放大、通道带宽扩张，则是趋势启动信号，需切换至“趋势通道”用法。</p>
+<h2 id="_9">高级技巧与注意事项</h2>
+<h3 id="1_1">1. 绘制技巧：避免轨线失真</h3>
+<p>普通价格通道的核心是“精准绘制轨线”，错误的轨线会导致信号完全失效，需掌握3个绘制原则：
+- 原则1：优先选择“趋势延续中的关键高低点”——忽略孤立的极端点（如单日涨停后的高点、单日跌停后的低点），这类点不反映趋势常态；例如，上升通道的上轨应连接“回调后的上涨高点”，而非“跳空涨停的极端高点”；
+- 原则2：双轨需“平行或近似平行”——若连接高点形成的上轨与连接低点形成的下轨夹角过大（如超过30°），说明趋势不稳定，通道无效；需重新筛选高低点，确保双轨倾斜角度一致；
+- 原则3：随趋势更新轨线——当价格形成新的关键高低点（如上升通道出现新的回调低点），需及时调整下轨位置，确保轨线贴合最新趋势；避免“一次绘制长期不更新”，导致轨线滞后于价格。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“通道陷阱”</h3>
+<p>价格通道虽直观，但存在天生局限性，尤其在“趋势切换期”和“高波动品种”中易产生误导：
+- 趋势尾声假突破多：在趋势即将反转时（如上升通道转横盘），价格可能频繁突破轨线（如突破上轨后立即回落），此时突破信号均为“假突破”，需结合动量指标（如RSI、MACD）验证——若突破时RSI超买（&gt;70），则假突破概率高；
+- 高波动品种适配差：如加密货币、原油期货，价格易出现“跳空缺口”（开盘价直接突破轨线），导致轨线无法及时跟随，信号滞后；此类品种需缩短绘制周期（如用1小时线而非日线），提高轨线更新频率；
+- 窄幅震荡时无交易价值：若价格长期在极小区间波动（如股票单日涨跌不超过1%），通道带宽过窄，即使触及轨线，利润空间也不足以覆盖手续费和止损成本，需暂停交易；
+- 单一通道不可信：永远不要只看价格通道交易！必须结合其他工具过滤信号：
+  - 与成交量结合：突破轨线时成交量放大（股票）或持仓量增加（期货），突破有效性提升；缩量突破大概率是假突破；
+  - 与动量指标结合：上升通道中，价格触及下轨时RSI超卖（&lt;30），买入信号更可靠；下降通道中，价格触及上轨时RSI超买（&gt;70），卖出信号更可靠；
+  - 与趋势指标结合：价格通道与MA方向一致（如上升通道+5EMA&gt;20EMA），信号可靠性高；若方向矛盾（如上升通道+5EMA&lt;20EMA），需警惕趋势反转。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：混淆“价格通道”与“唐奇安通道”——将唐奇安通道的“固定周期轨线”等同于普通价格通道，忽略普通通道的“灵活调整性”；例如，用20周期唐奇安通道的上轨（固定20日最高价）作为普通价格通道的上轨，导致轨线包含孤立极端点，信号失真；</li>
+<li>误区2：突破后“立即入场”——不等待“收盘价确认”和“回踩验证”，突破轨线后直接入场，结果遭遇假突破；正确做法是：日线级别突破需等当日收盘价站稳轨线外侧，且次日不回踩，再入场；</li>
+<li>误区3：用小周期通道否定大周期趋势——如日线级别是上升通道（长期多头），但1小时级别是下降通道（短期空头），此时应优先遵循大周期趋势，在1小时下降通道结束后做多，而非跟随小周期做空；</li>
+<li>误区4：过度追求“精准轨线”——反复调整高低点位置，试图让轨线完美贴合每一根K线，导致通道失去“趋势边界”的核心意义；实际上，价格通道允许“部分K线小幅突破轨线”，只要整体趋势在区间内即可。</li>
+</ul>
+<h2 id="_10">总结：</h2>
+<p>价格通道是技术分析中的“趋势结构可视化工具”——它不依赖复杂公式，直接通过“双轨与价格的互动”，让交易者看清趋势方向、支撑阻力与突破时机，尤其适合建立“趋势交易思维”，也适合主观交易者结合K线形态、成交量灵活决策。</p>
+<p>但价格通道并非“万能画图工具”，假突破多、绘制依赖主观判断是其无法回避的缺点。掌握价格通道的核心，不在于“画多精准的轨线”，而在于“理解轨线背后的多空逻辑”——上升通道中，多头主导，依托下轨做多；下降通道中，空头主导，依托上轨做空；水平通道中，多空平衡，低买高卖。始终以“趋势为纲，信号为辅助”，并结合其他工具验证，才能让价格通道成为交易中的“直观导航”。</p>
+<p><a href="../">返回趋势指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

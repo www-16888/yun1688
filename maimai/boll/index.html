@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>BOLL（布林带）实战用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#boll" class="nav-link">BOLL（布林带）实战用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#boll_1" class="nav-link">一、BOLL 核心构成与原理（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll_2" class="nav-link">二、BOLL 核心买卖信号（四大经典场景）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll_3" class="nav-link">三、BOLL 进阶用法：轨道形态与趋势强度</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll_4" class="nav-link">四、BOLL 实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll_5" class="nav-link">五、BOLL 买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="boll">BOLL（布林带）实战用法全解析</h1>
+<p>BOLL（Bollinger Bands，布林带）是技术分析中经典的<strong>趋势与震荡结合指标</strong>，通过“中轨（移动平均线）、上轨（中轨+2倍标准差）、下轨（中轨-2倍标准差）”三条轨道，直观反映价格的“波动范围”与“趋势方向”。其核心逻辑是“价格围绕中轨波动，轨道宽窄随波动率变化”——波动率低时轨道收窄（酝酿行情），波动率高时轨道张开（行情爆发），进而指导买卖决策。以下是详细应用逻辑与实战技巧。</p>
+<h2 id="boll_1">一、BOLL 核心构成与原理（基础必知）</h2>
+<p>BOLL指标的核心是“中轨定趋势，上下轨定区间”，需先明确三条轨道的计算逻辑与功能定位：</p>
+<h3 id="1-20">1. 计算公式（默认参数：20日）</h3>
+<ul>
+<li><strong>中轨（MB）</strong>：通常为<strong>20日简单移动平均线（SMA）</strong>，是价格的“中枢”，直接反映中期趋势方向。  </li>
+<li><strong>上轨（UP）</strong>：中轨 + 2倍的20日价格标准差（衡量价格波动幅度），代表价格的“压力位”（正常波动下的高位）。  </li>
+<li><strong>下轨（DN）</strong>：中轨 - 2倍的20日价格标准差，代表价格的“支撑位”（正常波动下的低位）。  </li>
+</ul>
+<h3 id="2-68-95">2. 核心原理：“68-95法则”</h3>
+<p>根据统计学正态分布，价格在“中轨±1倍标准差”内波动的概率约68%，在“中轨±2倍标准差”（即上下轨之间）波动的概率约95%。这意味着：
+- 95%的时间里，价格会在上下轨之间运行，突破轨道大概率是“趋势加速”或“极端行情”。<br />
+- 轨道宽窄由“标准差”决定：波动率高（如涨停/跌停）时轨道张开，波动率低（如横盘）时轨道收窄。</p>
+<h2 id="boll_2">二、BOLL 核心买卖信号（四大经典场景）</h2>
+<p>BOLL的用法围绕“轨道位置、价格突破、轨道形态”展开，不同场景对应不同买卖逻辑，需结合趋势方向判断。</p>
+<h3 id="1-1">1. 买入信号1：价格回踩下轨+中轨向上（趋势市低吸）</h3>
+<h4 id="_1">适用场景：上升趋势（中轨向上，价格沿上轨/中轨运行）</h4>
+<h4 id="_2">信号逻辑：</h4>
+<p>上升趋势中，价格回调至下轨时，相当于“回到趋势支撑位”，且下轨本身是“中轨-2倍标准差”的低位，买入后价格大概率回归中轨甚至上轨，属于“顺势低吸”。</p>
+<h4 id="_3">信号确认条件：</h4>
+<ul>
+<li>中轨呈<strong>向上倾斜</strong>（确认上升趋势，避免在中轨向下时抄底）。  </li>
+<li>价格回调至下轨附近时，出现“止跌K线”（如锤子线、阳包阴，证明下跌动能减弱）。  </li>
+<li>成交量配合：回踩下轨时缩量（抛压小），反弹时放量（有资金承接）。</li>
+</ul>
+<h4 id="_4">实战案例：</h4>
+<p>某股票日线级别中，中轨（20日均线）持续向上，价格从15元（上轨附近）回调至12元（下轨附近），当日收出锤子线（下影线长于实体2倍），成交量比前一日减少40%（缩量），次日反弹时成交量增加50%（放量），此时可视为有效买入信号，目标看向中轨或上轨。</p>
+<h3 id="2-2">2. 买入信号2：轨道收窄后向下突破再回拉（震荡转趋势）</h3>
+<h4 id="_5">适用场景：震荡市（轨道收窄，价格在上下轨间横盘）</h4>
+<h4 id="_6">信号逻辑：</h4>
+<p>轨道收窄意味着“波动率极低，多空力量均衡”，是行情爆发的前兆。若价格先向下突破下轨（假突破，诱空），随后快速回拉至轨道内，且中轨开始向上拐头，说明空头衰竭、多头启动，属于“震荡转趋势的买点”。</p>
+<h4 id="_7">信号确认条件：</h4>
+<ul>
+<li>突破下轨时<strong>缩量</strong>（假突破特征，若放量突破则可能是真下跌）。  </li>
+<li>回拉时价格需重新站上中轨，且中轨从走平转为<strong>向上倾斜</strong>。  </li>
+<li>轨道从“收窄”开始转为“缓慢张开”（波动率提升，趋势启动）。</li>
+</ul>
+<h3 id="3-1">3. 卖出信号1：价格冲高上轨+中轨向下（趋势市高抛）</h3>
+<h4 id="_8">适用场景：下跌趋势（中轨向下，价格沿下轨/中轨运行）</h4>
+<h4 id="_9">信号逻辑：</h4>
+<p>下跌趋势中，价格反弹至下轨时，相当于“回到趋势压力位”，且上轨本身是“中轨+2倍标准差”的高位，卖出后价格大概率回归中轨甚至下轨，属于“顺势高抛”。</p>
+<h4 id="_10">信号确认条件：</h4>
+<ul>
+<li>中轨呈<strong>向下倾斜</strong>（确认下跌趋势，避免在中轨向上时盲目止盈）。  </li>
+<li>价格反弹至上轨附近时，出现“滞涨K线”（如流星线、阴包阳，证明上涨动能减弱）。  </li>
+<li>成交量配合：冲高上轨时放量（有资金出货），回落时缩量（承接弱）。</li>
+</ul>
+<h4 id="_11">实战案例：</h4>
+<p>某股票日线级别中，中轨（20日均线）持续向下，价格从8元（下轨附近）反弹至10元（上轨附近），当日收出流星线（上影线长于实体2倍），成交量比前一日增加60%（放量），次日回落时成交量减少30%（缩量），此时可视为有效卖出信号，目标看向中轨或下轨。</p>
+<h3 id="4-2">4. 卖出信号2：轨道收窄后向上突破再回落（震荡转趋势）</h3>
+<h4 id="_12">适用场景：震荡市（轨道收窄，价格在上下轨间横盘）</h4>
+<h4 id="_13">信号逻辑：</h4>
+<p>轨道收窄后，若价格先向上突破上轨（假突破，诱多），随后快速回落至轨道内，且中轨开始向下拐头，说明多头衰竭、空头启动，属于“震荡转趋势的卖点”。</p>
+<h4 id="_14">信号确认条件：</h4>
+<ul>
+<li>突破上轨时<strong>缩量</strong>（假突破特征，若放量突破则可能是真上涨）。  </li>
+<li>回落时价格需跌破中轨，且中轨从走平转为<strong>向下倾斜</strong>。  </li>
+<li>轨道从“收窄”开始转为“快速张开”（波动率提升，下跌趋势启动）。</li>
+</ul>
+<h2 id="boll_3">三、BOLL 进阶用法：轨道形态与趋势强度</h2>
+<p>除了基础买卖信号，BOLL的“轨道形态”还能判断趋势强度与行情延续性，进一步优化决策。</p>
+<h3 id="1">1. 轨道张开：趋势加速信号</h3>
+<p>当BOLL轨道从“收窄”状态快速“张开”（上轨向上、下轨向下，轨道宽度大幅增加），说明价格波动率骤升，趋势进入“加速阶段”：
+- <strong>上升趋势中轨道张开</strong>：价格沿上轨运行，且上轨斜率陡峭，证明多头力量极强，可持仓观望（勿过早止盈），直至上轨开始走平或价格跌破中轨。<br />
+- <strong>下跌趋势中轨道张开</strong>：价格沿下轨运行，且下轨斜率陡峭，证明空头力量极强，需空仓观望（勿抄底），直至下轨开始走平或价格站上中轨。</p>
+<h3 id="2">2. 轨道走平：震荡整理信号</h3>
+<p>当BOLL轨道“走平”（上轨、中轨、下轨几乎平行，斜率接近0），说明价格波动率极低，处于“震荡整理”状态：
+- 此时价格会在上下轨间反复波动，<strong>避免用趋势市逻辑交易</strong>（如回踩下轨买、冲高上轨卖），需等待轨道收窄后突破方向明确，再跟进信号。<br />
+- 震荡整理时间越长（轨道走平周期久），后续突破轨道的行情幅度越大（“横有多长，竖有多高”）。</p>
+<h3 id="3">3. 中轨穿越：趋势反转信号</h3>
+<p>中轨是BOLL的“趋势分水岭”，价格穿越中轨往往意味着趋势方向变化：
+- <strong>价格从下向上穿越中轨</strong>：若同时中轨向上拐头，且轨道开始张开，证明“下跌趋势转上升趋势”，可加仓买入。<br />
+- <strong>价格从上向下穿越中轨</strong>：若同时中轨向下拐头，且轨道开始张开，证明“上升趋势转下跌趋势”，需清仓卖出。</p>
+<h2 id="boll_4">四、BOLL 实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不机械依赖“突破轨道”</strong>：95%的价格在轨道内运行，但“突破轨道”并非全是趋势信号——震荡市中易出现“假突破”（缩量突破后快速回轨），需结合中轨方向与成交量判断（放量突破+中轨拐头=真突破）。  </li>
+<li><strong>区分“趋势市”与“震荡市”</strong>：</li>
+<li>趋势市（中轨有明确斜率，轨道张开）：用“回踩下轨买、冲高上轨卖”的顺势逻辑。  </li>
+<li>震荡市（中轨走平，轨道收窄）：用“突破轨道跟进”的反转逻辑，避免频繁交易。  </li>
+<li><strong>搭配其他指标验证</strong>：BOLL单独使用时，在极端行情（如连续涨停/跌停）中可能滞后，需搭配MACD（趋势）、成交量（资金）确认信号（如BOLL上轨卖出+MACD顶背离，信号更可靠）。  </li>
+<li><strong>调整参数适配标的</strong>：默认20日参数适合大多数标的，但短期波动大的标的（如创业板股、可转债）可将参数调小至10日（灵敏度提升），长期波动小的标的（如蓝筹股、指数）可将参数调大至30日（稳定性提升）。</li>
+</ol>
+<h2 id="boll_5">五、BOLL 买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>判趋势</strong>：看中轨方向→中轨向上（上升趋势）、中轨向下（下跌趋势）、中轨走平（震荡市）。  </li>
+<li><strong>看形态</strong>：轨道收窄（酝酿行情）、轨道张开（趋势加速）、轨道走平（震荡整理）。  </li>
+<li><strong>找信号</strong>：</li>
+<li>上升趋势：价格回踩下轨+止跌K线+缩量→买入；轨道张开+沿上轨运行→持仓。  </li>
+<li>下跌趋势：价格冲高上轨+滞涨K线+放量→卖出；轨道张开+沿下轨运行→空仓。  </li>
+<li>震荡市：轨道收窄后突破（放量+中轨拐头）→跟进突破方向。  </li>
+<li><strong>验信号</strong>：搭配MACD（趋势同步）、成交量（量价配合）确认，避免假突破。  </li>
+<li><strong>设风控</strong>：买入后以“跌破下轨或中轨”止损；卖出后以“突破上轨或中轨”放弃回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

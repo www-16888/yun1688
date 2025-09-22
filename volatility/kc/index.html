@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>肯特纳通道（Keltner Channel）深度解析：基于波动率的趋势追踪工具 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#keltner-channel" class="nav-link">肯特纳通道（Keltner Channel）深度解析：基于波动率的趋势追踪工具</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么是“趋势与波动的双管家”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战应用：三大核心交易策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="keltner-channel">肯特纳通道（Keltner Channel）深度解析：基于波动率的趋势追踪工具</h1>
+<p>肯特纳通道（Keltner Channel）由技术分析师切斯特·肯特纳（Chester Keltner）在1960年提出，后经琳达·拉什克（Linda Raschke）优化，成为<strong>结合“移动平均趋势”与“波动率边界”的趋势追踪指标</strong>。其核心逻辑是“<strong>以价格均线为中枢，用平均真实波幅（ATR）量化市场波动率，构建上下两条动态边界，通过价格与边界的互动，判断趋势方向、捕捉突破机会、识别超买超卖信号</strong>”——例如，多头趋势中价格沿上轨运行，空头趋势中价格沿下轨运行，震荡趋势中价格在通道内来回波动，是兼顾趋势跟踪与风险控制的经典工具。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>肯特纳通道本质是“<strong>动态波动区间指标</strong>”，由“中轨（趋势中枢）、上轨（阻力边界）、下轨（支撑边界）”三部分构成。与固定百分比区间（如布林带基于标准差）不同，它的边界宽度由<strong>ATR（平均真实波幅）</strong> 决定——波动率越高，通道越宽；波动率越低，通道越窄，能更精准贴合市场真实波动，避免“窄幅震荡时边界过宽”或“剧烈波动时边界过窄”的问题。</p>
+<p>其核心优势是“<strong>趋势与波动率双维度融合</strong>”：中轨反映价格核心趋势，上下轨反映波动率带来的合理波动范围，既解决了“单纯均线无法判断波动边界”的缺陷，又弥补了“单纯波动率指标缺乏趋势指向”的不足，尤其适合趋势行情中的波段交易与震荡行情中的高抛低吸。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>动态边界</strong>：上下轨宽度随ATR变化实时调整，波动率适配性强；</li>
+<li><strong>趋势锚定</strong>：中轨（通常为EMA均线）具有趋势跟随性，多头/空头趋势中通道会同步倾斜；</li>
+<li><strong>信号明确</strong>：价格突破上轨=趋势强化，跌破下轨=趋势弱化，回踩中轨=趋势验证，无需复杂解读；</li>
+<li>
+<p><strong>跨周期通用</strong>：日线周期适合波段交易，1小时周期适合短线交易，周线周期适合中长线趋势判断。</p>
+</li>
+<li>
+<p><strong>与布林带（Bollinger Bands）的核心区别</strong>：
+  | 指标类型       | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+  |----------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | 肯特纳通道（Keltner Channel） | 中轨=EMA均线，上轨=中轨+ATR×倍数，下轨=中轨-ATR×倍数<br>（依赖ATR波动率） | 边界更贴合“真实波动”，趋势跟踪性强，适合趋势行情中的突破交易 | 趋势延续性强的品种（如期货、大盘指数）、波段/中长线交易 |
+  | 布林带（Bollinger Bands） | 中轨=SMA均线，上轨=中轨+2×标准差，下轨=中轨-2×标准差<br>（依赖价格标准差） | 更灵敏反映“价格偏离度”，适合震荡行情中的超买超卖捕捉 | 波动率骤增骤减的品种（如小盘股、加密货币）、短线震荡交易 |</p>
+</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>肯特纳通道的计算围绕“中轨（均线）→ ATR（波动率）→ 上下轨（边界）”三步展开，核心是通过ATR将波动率转化为可量化的边界宽度，确保通道与市场风险匹配。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<p>肯特纳通道的计算需先确定中轨与ATR参数，再推导上下轨，步骤清晰可复现：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某股票数据：中轨=20日EMA=20元，20日ATR=1.5元，倍数=2）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算“中轨（趋势中枢）”</td>
+<td>传统肯特纳通道用<strong>10日SMA</strong>，优化版常用<strong>20日EMA</strong>（EMA对近期价格更敏感，趋势跟踪性更强）<br>中轨 = EMA(收盘价, N) 或 SMA(收盘价, N)</td>
+<td>中轨=EMA(收盘价,20)=20元（以20日EMA为例）</td>
+</tr>
+<tr>
+<td>2. 计算“ATR（波动率）”</td>
+<td>采用与中轨周期一致的ATR（如中轨20日，则用20日ATR），确保趋势与波动率周期匹配<br>ATR计算逻辑：先算真实波幅（TR），再算N日移动平均（见“ATR指标解析”）</td>
+<td>ATR(20)=1.5元（20日平均真实波幅）</td>
+</tr>
+<tr>
+<td>3. 计算“上下轨（边界）”</td>
+<td>上轨 = 中轨 + （ATR × 倍数）<br>下轨 = 中轨 - （ATR × 倍数）<br>（倍数默认2倍，平衡“覆盖正常波动”与“过滤噪音”）</td>
+<td>上轨=20 + 1.5×2=23元<br>下轨=20 - 1.5×2=17元</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数适配（周期、倍数与品种选择）</h4>
+<p>肯特纳通道的“周期、倍数”直接影响信号灵敏度与边界宽度，需结合交易目标与品种特性调整：
+- <strong>周期适配</strong>：
+  - 短线交易（1-3天，1小时/30分钟周期）：中轨=10日EMA，ATR=10周期 → 短周期对价格变化更敏感，适合捕捉日内突破；
+  - 波段交易（3-15天，日线周期）：中轨=20日EMA，ATR=20周期（默认参数） → 平衡趋势跟踪与波动覆盖，适合大多数品种；
+  - 中长线交易（1个月以上，周线周期）：中轨=50日EMA，ATR=50周期 → 长期周期过滤短期噪音，适合捕捉大级别趋势；
+- <strong>倍数适配</strong>：
+  - 高波动率品种（期货、加密货币）：倍数=2.5-3倍 → 避免正常波动突破边界导致误信号；
+  - 中波动率品种（大盘股、宽基ETF）：倍数=2倍（默认） → 覆盖80%以上正常波动；
+  - 低波动率品种（债券、蓝筹股）：倍数=1.5倍 → 避免边界过宽导致信号滞后；
+- <strong>品种适配</strong>：
+  - 适配品种：趋势延续性强的品种（如沪深300期货、原油期货、贵州茅台）→ 通道倾斜明显，突破信号有效；
+  - 规避品种：极端震荡品种（如小盘股、ST股）→ 价格频繁穿越边界，信号噪音多，需结合量能指标过滤。</p>
+<h2 id="_4">二、意义：它为什么是“趋势与波动的双管家”？</h2>
+<p>肯特纳通道的核心价值在于“<strong>将‘趋势方向’与‘波动边界’整合为单一可视化工具</strong>”——传统均线只能告诉你“价格在趋势中”，但无法判断“合理波动范围”；单纯ATR只能告诉你“波动率大小”，但无法定位“趋势中枢”。而肯特纳通道通过“中轨定趋势、上下轨定边界”，完美解决这两个问题，其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 精准定义“趋势强弱”：通道倾斜度+价格位置=趋势信号</h3>
+<ul>
+<li><strong>强多头趋势</strong>：中轨向上倾斜，价格持续在中轨上方运行，且多次触碰上轨（每次回踩中轨后再创新高）→ 说明多头力量主导，趋势延续性强；</li>
+<li><strong>强空头趋势</strong>：中轨向下倾斜，价格持续在中轨下方运行，且多次触碰下轨（每次反弹中轨后再创新低）→ 说明空头力量主导，趋势延续性强；</li>
+<li><strong>弱趋势/震荡</strong>：中轨走平，价格在上下轨之间来回穿越（既不持续站稳上轨，也不持续跌破下轨）→ 说明多空平衡，趋势不明朗，需观望。</li>
+</ul>
+<h3 id="2_1">2. 动态捕捉“突破机会”：波动率适配的边界突破更有效</h3>
+<p>传统“固定价位突破”（如突破前高10元）易受波动率影响（高波动时突破后易回调，低波动时突破后难延续），而肯特纳通道的“ATR边界突破”更贴合真实供需：
+- <strong>有效多头突破</strong>：价格突破上轨时，ATR同步上升（波动率扩大，突破有资金支撑），且中轨向上→ 突破后趋势延续概率高；
+- <strong>有效空头突破</strong>：价格跌破下轨时，ATR同步上升（波动率扩大，突破有抛压支撑），且中轨向下→ 突破后趋势延续概率高；
+- <strong>假突破过滤</strong>：价格突破上轨/下轨时，ATR无明显变化（波动率未扩大，突破由小单推动），或中轨走平→ 突破后易回调，需放弃入场。</p>
+<h3 id="3">3. 合理设置“止损止盈”：通道边界=天然风险控制线</h3>
+<p>肯特纳通道的上下轨与中轨可直接作为止损止盈参考，无需主观判断：
+- <strong>多头止损</strong>：买入后，止损价设为“下轨下方1-2个点”（若价格跌破下轨，说明趋势弱化），或“中轨下方”（保守策略，回踩中轨未站稳则离场）；
+- <strong>空头止损</strong>：卖出后，止损价设为“上轨上方1-2个点”（若价格突破上轨，说明趋势弱化），或“中轨上方”（保守策略，反弹中轨未站稳则离场）；
+- <strong>止盈参考</strong>：短线止盈看“对侧边界”（如多头从下轨买入，止盈看上轨），波段止盈看“趋势反转信号”（如多头趋势中价格跌破中轨）。</p>
+<h2 id="_5">三、实战应用：三大核心交易策略</h2>
+<p>肯特纳通道的实战价值需通过“趋势方向+价格与通道的互动”落地，核心策略包括“趋势跟踪策略”“突破交易策略”“震荡高抛低吸策略”，覆盖不同市场环境。</p>
+<h3 id="_6">用法一：趋势跟踪策略（适用于明确趋势行情）</h3>
+<p>核心是“<strong>跟随通道倾斜方向，在价格回踩中轨时入场，依托对侧边界止损</strong>”，适合趋势延续性强的品种（如期货、大盘指数）：
+1. <strong>多头趋势跟踪</strong>：
+   - 入场条件（满足3项）：① 中轨向上倾斜（EMA均线斜率为正）；② 价格回踩中轨后企稳（收盘价在中轨上方）；③ ATR未明显下降（波动率未收缩，趋势有支撑）；
+   - 入场时机：价格回踩中轨当日，或次日小幅高开时；
+   - 止损止盈：止损=下轨下方（如中轨20元，下轨17元，止损16.8元）；止盈=上轨（如23元），或价格跌破中轨时离场（波段策略）；
+2. <strong>空头趋势跟踪</strong>：
+   - 入场条件（满足3项）：① 中轨向下倾斜（EMA均线斜率为负）；② 价格反弹中轨后承压（收盘价在中轨下方）；③ ATR未明显下降（波动率未收缩，趋势有支撑）；
+   - 入场时机：价格反弹中轨当日，或次日小幅低开时；
+   - 止损止盈：止损=上轨上方（如中轨20元，上轨23元，止损23.2元）；止盈=下轨（如17元），或价格突破中轨时离场（波段策略）；
+- <strong>示例</strong>：沪深300期货日线周期，中轨（20日EMA）向上，价格回踩中轨至4000点企稳，ATR=80点，上轨=4160点，下轨=3840点→ 4000点买入，止损3830点，止盈4160点。</p>
+<h3 id="_7">用法二：突破交易策略（适用于趋势启动/加速行情）</h3>
+<p>核心是“<strong>捕捉价格突破通道边界的趋势加速信号，依托中轨止损</strong>”，适合波动率扩大的突破行情：
+1. <strong>多头突破入场</strong>：
+   - 入场条件（满足3项）：① 中轨走平或向上；② 价格放量突破上轨（成交量≥5日均量1.5倍）；③ 突破后1-2个交易日收盘价站稳上轨上方（确认有效突破）；
+   - 入场时机：突破后站稳上轨当日（避免追涨突破瞬间的毛刺）；
+   - 止损止盈：止损=中轨下方（如中轨20元，止损19.8元）；止盈=上轨+ATR（如23元+1.5元=24.5元），或价格回踩上轨未破时续持；
+2. <strong>空头突破入场</strong>：
+   - 入场条件（满足3项）：① 中轨走平或向下；② 价格放量跌破下轨（成交量≥5日均量1.5倍）；③ 突破后1-2个交易日收盘价站稳下轨下方（确认有效突破）；
+   - 入场时机：突破后站稳下轨当日；
+   - 止损止盈：止损=中轨上方（如中轨20元，止损20.2元）；止盈=下轨-ATR（如17元-1.5元=15.5元），或价格反弹下轨未破时续持；
+- <strong>关键</strong>：突破时必须“放量”，且ATR同步上升，避免“缩量假突破”（如无成交量支撑的上轨突破，后续易回调）。</p>
+<h3 id="_8">用法三：震荡高抛低吸策略（适用于无趋势行情）</h3>
+<p>核心是“<strong>当中轨走平时，在价格触及上轨时做空，触及下轨时做多，依托对侧边界止盈</strong>”，适合震荡整理阶段：
+1. <strong>震荡多头入场（下轨买）</strong>：
+   - 入场条件（满足2项）：① 中轨走平（EMA斜率接近0）；② 价格触及下轨后反弹（收盘价高于下轨）；③ ATR收缩（波动率下降，震荡范围收窄）；
+   - 入场时机：价格触及下轨当日；
+   - 止损止盈：止损=下轨下方（如17元，止损16.8元）；止盈=中轨或上轨（如20元或23元）；
+2. <strong>震荡空头入场（上轨卖）</strong>：
+   - 入场条件（满足2项）：① 中轨走平；② 价格触及上轨后承压（收盘价低于上轨）；③ ATR收缩；
+   - 入场时机：价格触及上轨当日；
+   - 止损止盈：止损=上轨上方（如23元，止损23.2元）；止盈=中轨或下轨（如20元或17元）；
+- <strong>风险提示</strong>：震荡策略需严格设置止损，若价格突破上轨/下轨且中轨开始倾斜，说明震荡结束、趋势启动，需立即平仓并切换为“趋势跟踪策略”。</p>
+<h2 id="_9">四、高级技巧与注意事项</h2>
+<h3 id="1-atr">1. 优化信号：结合“量能+ATR斜率”过滤假信号</h3>
+<p>单纯依赖肯特纳通道易在“缩量震荡”或“主力诱骗突破”中产生误信号，需叠加量能与ATR斜率验证：
+- <strong>量能验证</strong>：突破上轨/下轨时，成交量必须大于5日均量1.2倍（有效突破有资金支撑）；回踩中轨时，成交量需小于5日均量（回调无抛压，趋势有支撑）；
+- <strong>ATR斜率验证</strong>：突破时ATR斜率为正（波动率扩大，突破真实），回踩时ATR斜率为负（波动率收缩，回调正常）；若突破时ATR斜率为负（波动率未扩大），则为假突破；
+- <strong>示例</strong>：价格突破上轨，但成交量仅为5日均量0.8倍，ATR斜率为负→ 假突破，不入场。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“肯特纳通道陷阱”</h3>
+<p>肯特纳通道虽功能全面，但存在天生局限性，需重点规避：
+- <strong>极端行情（黑天鹅）边界失效</strong>：
+  - 如突发利空导致价格“一字跌停”，直接跌破下轨且无法平仓，通道边界无法提供有效止损；
+  - 应对：极端行情前（如重要政策发布、财报披露），手动收紧止损（如从下轨止损改为中轨止损），或减少仓位；
+- <strong>窄幅震荡时信号频繁</strong>：
+  - 中轨走平时，价格频繁穿越中轨、触碰上下轨，导致“高抛低吸”变成“反复止损”；
+  - 应对：窄幅震荡时（通道宽度＜5%），暂停交易或提高ATR倍数（如从2倍改为2.5倍），减少信号频率；
+- <strong>滞后性（趋势反转时反应慢）</strong>：
+  - 中轨（EMA）具有滞后性，趋势反转初期（如多头转空头），价格已跌破下轨，但中轨仍向上，易导致止损延迟；
+  - 应对：中长线交易可搭配“MACD背离”信号，若价格跌破下轨且MACD出现顶背离，则确认趋势反转，立即离场。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：突破边界就入场，不确认有效性</strong>——价格瞬间刺穿上轨/下轨（毛刺）就入场，忽略“收盘价是否站稳”和“量能支撑”；正确做法是“等待突破后1-2个交易日收盘价确认，且量能达标再入场”；</li>
+<li><strong>误区2：所有品种都用默认参数</strong>——对加密货币（高波动）仍用2倍ATR，导致边界过窄、信号噪音多；正确做法是“按品种波动率调整ATR倍数，高波动→高倍数，低波动→低倍数”；</li>
+<li><strong>误区3：震荡策略与趋势策略混用</strong>——中轨向上时仍在中轨做空（震荡策略），忽略趋势方向；正确做法是“先看中轨斜率（定趋势），再选策略（趋势→跟踪，震荡→高抛低吸）”；</li>
+<li><strong>误区4：过度依赖通道，忽略其他指标</strong>——仅看通道突破就入场，忽略“大盘环境”（如大盘暴跌时，个股通道突破易失效）；正确做法是“通道信号+大盘趋势（如上证指数MA20）+量能”三者验证，再决策。</li>
+</ul>
+<h2 id="_10">五、总结</h2>
+<p>肯特纳通道是技术分析中“趋势与波动率的平衡大师”——它以EMA中轨锚定趋势，用ATR边界量化波动，既解决了单纯趋势指标“无边界参考”的问题，又弥补了单纯波动率指标“无趋势指向”的缺陷，适用于从短线到中长线的多场景交易。</p>
+<p>但它并非“万能工具”：极端行情中存在滞后性，窄幅震荡时信号噪音多，需结合量能、大盘环境等指标过滤。正确的用法是“将肯特纳通道作为‘核心框架’，搭配量能指标（如成交量均线）确认资金支撑，搭配方向指标（如MACD）验证趋势反转，形成‘趋势+波动+量能’的三维交易体系”，才能在控制风险的同时，精准捕捉趋势与突破机会。</p>
+<p><a href="../">返回波动率指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

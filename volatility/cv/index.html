@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>蔡金波动率指标（Chaikin's Volatility）深度解析：价格波动速率的“动态监测仪” - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#chaikins-volatility" class="nav-link">蔡金波动率指标（Chaikin's Volatility）深度解析：价格波动速率的“动态监测仪”</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么是“趋势启动的预警信号”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：三大核心交易策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="chaikins-volatility">蔡金波动率指标（Chaikin's Volatility）深度解析：价格波动速率的“动态监测仪”</h1>
+<p>蔡金波动率指标（Chaikin's Volatility）由技术分析师马克·蔡金（Marc Chaikin）提出，是<strong>基于价格区间（最高价-最低价）变化率，量化市场波动“速率”与“趋势”的波动率指标</strong>。其核心逻辑是“<strong>通过计算价格波动区间的扩张与收缩幅度，判断波动率是在增强还是减弱</strong>”——不单纯衡量波动大小，更聚焦“波动的变化趋势”，帮助交易者提前识别趋势转折（波动率扩张常伴随趋势启动，收缩常伴随趋势停滞）、筛选高波动交易机会、验证行情强度，是兼顾“波动幅度”与“波动趋势”的实用工具。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>蔡金波动率指标的本质是“<strong>价格波动区间（最高价-最低价）的变化率平滑值</strong>”。传统波动率指标（如ATR、标准差）侧重“某一周期内的平均波动幅度”，而蔡金波动率更关注“波动幅度本身的变化”——例如，若某股票每日波动区间从5元扩大至8元，说明波动率在“扩张”（指标上升）；若从8元收缩至3元，说明波动率在“收缩”（指标下降）。</p>
+<p>其核心优势是“<strong>提前捕捉波动率趋势变化</strong>”：当价格尚未大幅涨跌，但波动区间已开始扩张，往往预示趋势即将启动；当价格仍在震荡，但波动区间持续收缩，往往预示行情即将突破（“收敛三角形”等形态常伴随波动率收缩）。正因如此，蔡金波动率常被用于“趋势启动前的信号预警”，而非单纯的风险衡量。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>波动趋势导向</strong>：指标数值上升=波动率扩张（波动幅度变大），数值下降=波动率收缩（波动幅度变小），直接反映波动的变化方向；</li>
+<li><strong>双重平滑处理</strong>：先对“价格波动区间”做移动平均，再对“区间变化率”做平滑，减少短期噪音，突出波动趋势；</li>
+<li><strong>零轴参考性</strong>：指标以“零轴”为分界，突破零轴向上=波动率从收缩转为扩张，跌破零轴向下=波动率从扩张转为收缩，信号明确；</li>
+<li>
+<p><strong>跨周期适配</strong>：短线（1小时/30分钟）可捕捉日内波动变化，中长线（日线/周线）可跟踪趋势性波动率转折，适配不同交易风格。</p>
+</li>
+<li>
+<p><strong>与ATR（平均真实波幅）的核心区别</strong>：
+  | 指标类型               | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+  |------------------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | 蔡金波动率（Chaikin's Volatility） | 基于“价格波动区间（最高价-最低价）的变化率平滑值”，聚焦“波动的变化趋势” | 提前反映波动率扩张/收缩，适合趋势启动预警 | 识别趋势转折、捕捉突破行情、验证波动强度 |
+  | ATR（平均真实波幅）    | 基于“每日真实波幅的移动平均”，聚焦“波动的绝对幅度” | 直接量化波动大小，计算简单，适合风险控制 | 动态止损止盈、品种波动率筛选、短期风险衡量 |</p>
+</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>蔡金波动率的计算围绕“波动区间计算→区间变化率→双重平滑”三步展开，核心是通过“变化率”将“波动幅度”转化为“波动趋势信号”，确保指标能清晰反映波动率的增减。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<p>蔡金波动率的计算需先确定“波动区间周期”与“平滑周期”，步骤严谨且可复现：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某股票数据：周期N=10，平滑周期M=10；近10日波动区间均值=5元，前10日波动区间均值=3元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算“价格波动区间”</td>
+<td>每日波动区间=当日最高价 - 当日最低价<br>（仅关注当日价格的实际波动范围，不考虑跳空对前一日的影响）</td>
+<td>某日最高价=25元，最低价=20元→ 当日波动区间=5元</td>
+</tr>
+<tr>
+<td>2. 计算“N日波动区间均值”</td>
+<td>对每日波动区间做N日简单移动平均（SMA），平滑单日极端波动<br>均值ₜ = SMA(波动区间, N)</td>
+<td>N=10→ 第t日10日波动区间均值=5元；第t-10日10日波动区间均值=3元</td>
+</tr>
+<tr>
+<td>3. 计算“波动区间变化率”</td>
+<td>变化率=（当前N日均值 - 前期N日均值）÷ 前期N日均值<br>（反映当前波动幅度相对前期的变化比例，正数=扩张，负数=收缩）</td>
+<td>变化率=（5 - 3）÷ 3 ≈ 0.666（66.6%），说明波动区间扩张66.6%</td>
+</tr>
+<tr>
+<td>4. 计算“蔡金波动率（最终值）”</td>
+<td>对“波动区间变化率”做M日指数移动平均（EMA），进一步平滑短期波动，得到最终指标值<br>Chaikin Volatility = EMA(变化率, M)</td>
+<td>M=10→ 若变化率的10日EMA=0.5（50%），则蔡金波动率=50（通常×100便于显示）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数适配（周期与品种选择）</h4>
+<p>蔡金波动率的“N（波动区间周期）”和“M（平滑周期）”直接影响指标灵敏度，需结合交易目标调整，默认参数多为“N=10，M=10”，适配多数日线交易场景：
+- <strong>周期适配</strong>：
+  - 短线交易（1-3天，1小时/30分钟周期）：N=5，M=5 → 短周期对日内波动变化更敏感，适合捕捉日内突破前的波动率扩张；
+  - 波段交易（3-15天，日线周期）：N=10，M=10（默认参数） → 平衡灵敏度与稳定性，能清晰反映1-2周的波动率趋势；
+  - 中长线交易（1个月以上，周线周期）：N=20，M=20 → 长期周期过滤短期噪音，适合跟踪大级别趋势的波动率转折（如牛市启动前的波动率扩张）；
+- <strong>品种适配</strong>：
+  - 高波动率品种（期货、加密货币、小盘股）：参数可适当缩小（如N=8，M=8），避免指标滞后于快速变化的波动率；
+  - 低波动率品种（大盘股、债券、蓝筹ETF）：参数可适当扩大（如N=12，M=12），减少小波动导致的信号噪音；
+- <strong>指标显示</strong>：计算结果通常×100（如变化率0.05→指标值5），便于直观读取，零轴对应“波动率无变化”（变化率=0）。</p>
+<h2 id="_4">二、意义：它为什么是“趋势启动的预警信号”？</h2>
+<p>蔡金波动率的核心价值在于<strong>解决了“传统波动率指标仅反映波动大小，无法提前预警趋势”的缺陷</strong>——ATR能告诉你“当前波动大”，但无法告诉你“波动是在变大还是变小”；而蔡金波动率通过“扩张/收缩”信号，提前预示趋势的启动与停滞，其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 提前预警趋势启动：波动率扩张=趋势动能增强</h3>
+<p>趋势启动前，往往伴随“波动区间从收缩转为扩张”（多空分歧加大，资金开始入场推动价格），蔡金波动率通过“突破零轴向上”捕捉这一信号：
+- <strong>多头趋势启动</strong>：价格在低位震荡，蔡金波动率先于价格突破零轴向上（波动率扩张），随后价格突破震荡区间，多头趋势启动；
+  - 示例：股票在18-20元震荡10天，波动区间从3元收缩至1.5元（蔡金波动率低于零轴），随后波动区间扩大至4元（蔡金波动率突破零轴至5），价格突破20元，1个月内上涨至25元；
+- <strong>空头趋势启动</strong>：价格在高位震荡，蔡金波动率突破零轴向下（波动率扩张，且方向为负），随后价格跌破震荡区间，空头趋势启动；
+- <strong>核心逻辑</strong>：波动率扩张是“资金入场”的信号——多头资金入场会推动价格上涨且波动加大，空头资金入场会推动价格下跌且波动加大，两者均对应蔡金波动率的扩张。</p>
+<h3 id="2_1">2. 识别行情突破机会：波动率收缩至极致=突破临近</h3>
+<p>当市场进入“窄幅震荡”（如收敛三角形、矩形整理），波动区间会持续收缩，蔡金波动率同步下降至低位（接近零轴或负值区间），此时往往预示“多空平衡即将打破，突破行情临近”：
+- <strong>突破方向判断</strong>：若波动率收缩后，蔡金波动率向上突破零轴，且价格伴随放量突破震荡上沿→ 多头突破；若蔡金波动率向下突破零轴（负值扩大），且价格放量跌破震荡下沿→ 空头突破；
+- <strong>示例</strong>：股票在22-24元形成收敛三角形，波动区间从4元收缩至0.8元（蔡金波动率降至-3），随后成交量放大至5日均量1.8倍，蔡金波动率向上突破零轴至4，价格突破24元，3个交易日上涨至26元；</p>
+<h3 id="3">3. 验证趋势强度：波动率与价格同方向=趋势延续</h3>
+<p>趋势形成后，蔡金波动率的方向可验证趋势强度——若波动率与价格趋势同方向，说明趋势动能充足，大概率延续；若反向，则说明趋势动能不足，需警惕回调：
+- <strong>多头趋势验证</strong>：价格持续上涨，蔡金波动率维持在零轴上方（波动率扩张或稳定）→ 多头动能强，趋势延续；若价格上涨但蔡金波动率跌破零轴（波动率收缩）→ 多头动能弱，可能回调；
+- <strong>空头趋势验证</strong>：价格持续下跌，蔡金波动率维持在零轴下方（波动率扩张或稳定）→ 空头动能强，趋势延续；若价格下跌但蔡金波动率突破零轴（波动率收缩）→ 空头动能弱，可能反弹；</p>
+<h2 id="_5">三、实战用法：三大核心交易策略</h2>
+<p>蔡金波动率的实战价值集中在“趋势启动预警”“突破行情捕捉”“趋势强度验证”，需结合价格形态、成交量等指标使用，避免单一信号误导。</p>
+<h3 id="_6">用法一：波动率扩张+价格突破策略（适用于趋势启动行情）</h3>
+<p>核心是“<strong>蔡金波动率突破零轴（扩张信号）+ 价格突破震荡区间 + 放量</strong>”，捕捉趋势启动初期的机会，胜率较高：
+1. <strong>入场条件（满足3项）</strong>：
+   - 蔡金波动率突破零轴向上（多头）或向下（空头），且连续2个周期站稳突破位（确认扩张趋势）；
+   - 价格突破前期震荡区间上沿（多头）或下沿（空头），收盘价站稳突破位上方/下方；
+   - 成交量≥5日均量1.2倍（突破有资金支撑，排除假突破）；
+2. <strong>入场时机</strong>：价格突破当日或次日回踩突破位确认支撑/阻力时；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=震荡区间下沿下方；空头止损=震荡区间上沿上方；
+   - 止盈：按“突破幅度×2”（如突破区间幅度2元，止盈4元）或“蔡金波动率重回零轴”（波动率收缩，趋势减弱）设置；
+- <strong>示例</strong>：股票震荡区间19-21元（幅度2元），蔡金波动率突破零轴至3，价格突破21元，成交量1.5倍均量→ 21元买入，止损19元，止盈21+4=25元。</p>
+<h3 id="_7">用法二：波动率收缩+突破策略（适用于震荡突破行情）</h3>
+<p>核心是“<strong>蔡金波动率降至低位（收缩极致）+ 价格突破收敛形态 + 放量</strong>”，捕捉震荡后的大级别突破，适合收敛三角形、矩形等形态：
+1. <strong>入场条件（满足3项）</strong>：
+   - 蔡金波动率持续下降至-5以下（或历史20%分位以下），且维持3个周期以上（确认收缩极致）；
+   - 价格突破收敛形态的上轨（多头）或下轨（空头），突破幅度≥形态高度的1/2；
+   - 突破时成交量骤增（≥5日均量2倍），说明多空分歧打破，资金大规模入场；
+2. <strong>入场时机</strong>：突破当日（收敛形态突破后通常无回踩，需及时入场）；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=形态下轨下方；空头止损=形态上轨上方；
+   - 止盈：目标=形态高度（如收敛三角形高度3元，突破后目标3元），或“蔡金波动率升至历史80%分位”（波动率扩张至极致，趋势可能转折）；
+- <strong>关键</strong>：收缩极致的判断需结合历史数据（如该品种过去1年蔡金波动率低位多在-8以下，当前降至-9即视为收缩极致）。</p>
+<h3 id="_8">用法三：波动率与价格趋势验证策略（适用于趋势持仓管理）</h3>
+<p>核心是“<strong>通过蔡金波动率方向与价格趋势的一致性，判断是否继续持仓</strong>”，避免在趋势动能不足时过早离场或盲目加仓：
+1. <strong>持仓验证逻辑</strong>：
+   - 多头持仓：若价格上涨且蔡金波动率≥0（波动率扩张/稳定）→ 继续持仓；若价格上涨但蔡金波动率＜0（波动率收缩）→ 减仓1/2，若跌破5日均线则清仓；
+   - 空头持仓：若价格下跌且蔡金波动率≤0（波动率扩张/稳定）→ 继续持仓；若价格下跌但蔡金波动率＞0（波动率收缩）→ 减仓1/2，若突破5日均线则清仓；
+2. <strong>调整时机</strong>：每周或每月末复盘蔡金波动率与价格趋势的一致性，若连续2周不一致，则执行调整；
+- <strong>示例</strong>：持有股票从20元上涨至24元，蔡金波动率维持在2-4之间（≥0）→ 继续满仓；若价格上涨至25元，但蔡金波动率降至-1（＜0）→ 减仓至50%，若跌破23元（5日均线）则清仓。</p>
+<h2 id="_9">四、高级技巧与注意事项</h2>
+<h3 id="1_2">1. 优化信号：结合“成交量+价格形态”过滤假信号</h3>
+<p>单纯依赖蔡金波动率易在“无量波动”或“主力诱骗形态”中产生误信号，需叠加量能与形态验证：
+- <strong>成交量验证</strong>：波动率扩张/突破时，成交量必须放大（≥5日均量1.2倍），无量扩张多为“主力对倒制造的虚假波动”（如小盘股无资金支撑的波动率上升）；
+- <strong>形态验证</strong>：波动率信号需与经典价格形态匹配（如多头扩张信号对应“头肩底突破”，空头扩张信号对应“头肩顶突破”），避免孤立解读指标；
+- <strong>示例</strong>：蔡金波动率突破零轴向上，但价格未突破任何形态，成交量仅0.8倍均量→ 假信号，不入场。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“蔡金波动率陷阱”</h3>
+<p>蔡金波动率虽能提前预警趋势，但存在天生局限性，需重点规避：
+- <strong>极端行情（黑天鹅）信号滞后</strong>：
+  - 突发利空/利好导致价格“一字涨跌停”，波动区间骤增（如从2元扩大至10元），但蔡金波动率因“双重平滑”会滞后1-2个周期才反映，无法提前预判极端波动；
+  - 应对：极端行情前（如财报披露、政策发布），暂停依赖该指标，改用“固定止损”（如跌8%强制离场）；
+- <strong>窄幅震荡时信号频繁</strong>：
+  - 价格长期在小区间震荡（如1-2元内），波动区间小幅扩张/收缩会导致蔡金波动率频繁穿越零轴，产生“假突破”信号；
+  - 应对：窄幅震荡时（波动区间＜近期最高价的5%），提高入场门槛（如要求蔡金波动率突破零轴后涨幅≥3，且成交量≥2倍均量）；
+- <strong>与价格方向无直接关联</strong>：
+  - 蔡金波动率上升仅说明“波动扩张”，不代表“价格上涨”（可能是下跌波动扩张），需结合价格趋势（如均线方向）判断多空；
+  - 应对：波动率扩张信号必须与“均线趋势”一致（如EMA向上+波动率扩张=多头，EMA向下+波动率扩张=空头），否则不入场。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：单一依赖波动率扩张信号入场</strong>——认为“蔡金波动率突破零轴=必涨”，忽略价格方向与成交量；正确做法是“波动率信号+价格形态+成交量”三者验证；</li>
+<li><strong>误区2：忽视参数适配性</strong>——对所有品种都用默认参数（N=10，M=10），导致高波动品种信号滞后、低波动品种信号噪音多；正确做法是“按品种波动率调整参数，高波动→小参数，低波动→大参数”；</li>
+<li><strong>误区3：用短周期指标指导中长线交易</strong>——用1小时蔡金波动率判断日线趋势，忽略短期波动的随机性；正确做法是“交易周期与指标周期一致（中长线用日线指标，短线用1小时指标）”；</li>
+<li><strong>误区4：将指标值高低等同于风险大小</strong>——认为“蔡金波动率高=风险高”，忽略波动率高也可能是趋势启动信号；正确做法是“波动率高+趋势明确=机会，波动率高+趋势混乱=风险”。</li>
+</ul>
+<h2 id="_10">五、总结</h2>
+<p>蔡金波动率指标是技术分析中“趋势启动与波动趋势的核心监测工具”——它通过量化价格波动区间的扩张与收缩，提前预警趋势转折、捕捉突破机会、验证趋势强度，弥补了传统波动率指标“仅看幅度、不看趋势”的缺陷，尤其适合趋势交易者与突破交易者。</p>
+<p>但它并非“交易圣杯”：极端行情下存在滞后性，窄幅震荡时信号噪音多，且需结合价格形态、成交量等指标验证。正确的用法是“将蔡金波动率作为‘趋势预警锚’，搭配均线（定趋势方向）、成交量（定资金支撑）、价格形态（定突破结构），形成‘波动趋势+价格趋势+资金’的三维决策体系”，才能在波动扩张中把握趋势机会，在波动收缩中规避震荡风险，实现更精准的交易决策。</p>
+<p><a href="../">返回波动率指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

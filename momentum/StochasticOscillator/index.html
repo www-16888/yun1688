@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>随机振荡指标 (Stochastic Oscillator) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#stochastic-oscillator" class="nav-link">随机振荡指标 (Stochastic Oscillator) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_15" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_16" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="stochastic-oscillator">随机振荡指标 (Stochastic Oscillator) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>随机振荡指标（Stochastic Oscillator，简称“随机指标”或“KDJ指标的前身”）由美国分析师乔治·莱恩（George Lane）于20世纪50年代提出，是一种<strong>基于“价格在近期波动区间内的相对位置”判断多空动能的振荡指标</strong>。它通过计算“当前价格与近期高低点区间的比值”，输出K线（快速线）和D线（慢速线）两条曲线，映射到0-100区间内，核心逻辑是“价格上涨时倾向于靠近近期高点，下跌时倾向于靠近近期低点；当价格过度偏离该规律时，市场大概率回归”，帮助交易者识别超买超卖、捕捉趋势反转，属于中灵敏度、高实用性的技术工具。</p>
+<p>随机指标的核心价值在于<strong>“提前反映动能变化”</strong>——与RSI（基于涨跌幅度）不同，它聚焦“价格在区间内的位置”，能在价格未突破关键位时，通过“动能先于价格反转”发出信号。例如，价格仍在创新高，但随机指标已开始从超买区间回落，预示多头动能衰减，价格即将回调。</p>
+<ul>
+<li>“双线结构”：随机指标由%K（快速线）和%D（慢速线）组成——%K反应灵敏，直接计算当前价格的相对位置；%D是%K的移动平均，平滑短期噪音，信号更稳定；</li>
+<li>“区间定义”：0-100区间对应明确市场状态——20以下为<strong>超卖区间</strong>（价格接近近期低点，空头过度），80以上为<strong>超买区间</strong>（价格接近近期高点，多头过度），20-80为中性区间（多空平衡）；</li>
+<li>“周期逻辑”：默认参数为“14,3,3”（14期高低点区间、3期%K平滑、3期%D平滑），14期决定“近期区间”的时间范围，3期平滑决定信号灵敏度。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑</h3>
+<p>随机指标的计算围绕“近期高低点区间”和“价格相对位置”展开，核心参数为“区间周期（n）”“%K平滑周期（k）”“%D平滑周期（d）”，默认参数14,3,3，计算步骤分三步，逻辑清晰可复现。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（参数14,3,3，当日收盘价=105元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算%K（快速线）</td>
+<td>第一步：确定n期内高低点区间——<br>区间上限=过去n个交易日的最高价（Hn）<br>区间下限=过去n个交易日的最低价（Ln）<br>第二步：计算价格相对位置——<br>%K = [(当日收盘价 - Ln) / (Hn - Ln)] × 100<br>第三步：对%K进行k期平滑（默认3期SMA），得到最终%K</td>
+<td>假设过去14期Hn=110元，Ln=95元：<br>原始%K=[(105-95)/(110-95)]×100≈66.67<br>3期平滑后%K=（前两期%K+66.67）/3≈65</td>
+</tr>
+<tr>
+<td>2. 计算%D（慢速线）</td>
+<td>对平滑后的%K进行d期移动平均（默认3期SMA），得到%D——<br>%D = （过去d期%K的总和） / d</td>
+<td>若过去3期%K分别为60、62、65：<br>%D=(60+62+65)/3≈62.33</td>
+</tr>
+<tr>
+<td>3. 信号生成</td>
+<td>通过%K与%D的交叉、双线所处区间判断信号——<br>- 金叉：%K从下向上穿越%D（看涨信号）<br>- 死叉：%K从上向下穿越%D（看跌信号）<br>- 超买/超卖：双线进入80以上/20以下区间</td>
+<td>若%K=65、%D=62.33，%K上穿%D→金叉；若%K=85、%D=82→超买+死叉→看跌</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与周期适配</h4>
+<p>随机指标的参数需根据“交易周期”和“品种波动率”调整，核心是平衡“灵敏度”与“稳定性”，避免信号滞后或噪音过多：
+- 短线交易（15分钟/1小时，日内期货）：参数设为“9,3,3”——缩短区间周期（9期），%K更灵敏，能快速捕捉日内超买超卖机会（如1小时周期9期，适合日内T+0）；
+- 中短线交易（4小时/日线，股票波段）：参数设为“14,3,3”（默认）——14期区间覆盖2周左右行情，3期平滑过滤单日噪音，信号可靠性高；
+- 中长线交易（周线/月线，指数投资）：参数设为“21,5,5”——延长区间周期（21期）和平滑周期（5期），仅捕捉影响中长期趋势的动能变化，避免被短期波动误导；
+- 高波动品种（加密货币、原油）：参数设为“12,3,3”——稍短区间周期，适配价格快速变化；低波动品种（蓝筹股、国债）：参数设为“18,3,3”——稍长区间周期，减少假信号。</p>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>随机指标的核心价值在于<strong>用“价格相对位置”解决了“动能与价格不同步”的痛点</strong>。传统价格分析中，交易者常因“价格未破位但动能已反转”错过机会，而随机指标通过双线结构和区间定义，将“抽象的动能变化”转化为“直观的交叉信号”，具体体现在三大不可替代的功能：</p>
+<h3 id="1_1">1. 精准识别超买超卖（比价格形态更及时）</h3>
+<p>随机指标的20/80区间是“市场极端状态的精准标尺”，能提前1-2个周期标记“多头/空头过度”：
+- 超卖信号（双线≤20）：价格接近近期低点，空头力量释放充分，即使价格未出现明确反转形态（如双底），也大概率反弹——例如，股票连续下跌后，随机指标跌至15，即使股价仍创新低，也可能触发技术性反弹；
+- 超买信号（双线≥80）：价格接近近期高点，多头获利盘积累过多，即使价格仍创新高，也大概率回调——例如，期货连续上涨后，随机指标升至85，即使期货价再创新高，也可能因多头止盈导致回调；
+- 极端超买超卖（双线≥90或≤10）：属于“强趋势中的极端状态”，此时反转概率超80%（如双线跌至10且%K上穿%D，反弹概率极高）。</p>
+<h3 id="2-ma">2. 提前捕捉动能背离（比MA交叉更灵敏）</h3>
+<p>“背离”是随机指标最核心的功能，能在价格未突破趋势线时，通过“动能先于价格反转”预警趋势结束，分为“顶背离”和“底背离”：
+- 顶背离（看跌信号）：价格持续创新高，但随机指标（%K/%D）未同步创新高（如股价从10元涨至12元，%K从85跌至80）——表明“价涨动能不足”，多头无法推动价格进一步远离近期区间，上涨趋势即将结束；
+- 底背离（看涨信号）：价格持续创新低，但随机指标未同步创新低（如股价从10元跌至8元，%K从15升至20）——表明“价跌动能不足”，空头无法推动价格进一步靠近近期低点，下跌趋势即将结束；
+- 优势：相比MA交叉（需价格突破均线后确认反转），随机指标背离在价格仍沿趋势运行时就发出信号，能捕捉“反转的第一波机会”。</p>
+<h3 id="3">3. 辅助确认趋势强度（比单一价格更全面）</h3>
+<p>随机指标的双线波动与趋势强度直接相关，能帮助交易者判断“当前趋势是否健康”：
+- 多头趋势健康：价格在上升通道中，随机指标每次回调时%K/%D不跌破30（中性区间下沿），每次上涨时能升至70以上（中性区间上沿）——表明多头能持续推动价格靠近近期高点，趋势动能充足；
+- 空头趋势健康：价格在下降通道中，随机指标每次反弹时%K/%D不突破70（中性区间上沿），每次下跌时能跌至30以下（中性区间下沿）——表明空头能持续推动价格靠近近期低点，趋势动能充足；
+- 趋势衰竭预警：多头趋势中，随机指标每次上涨的高点逐步降低（如从80降至75再降至70），即使价格创新高，也表明趋势动能衰减；空头趋势同理，随机指标每次下跌的低点逐步升高，表明趋势即将反转。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>随机指标的用法核心是“区间信号+交叉信号+背离信号”三重验证，单一信号可靠性低，需结合价格形态、趋势方向综合判断。以下是三种经典实战用法，覆盖“震荡交易、趋势反转、趋势跟踪”三大场景：</p>
+<h3 id="_6">用法一：震荡市超买超卖交易（抓区间回归）</h3>
+<p>核心逻辑是“价格在区间内波动时，随机指标进入超买超卖区间=回归信号”，适合横盘行情（ADX&lt;20），赚取区间内的回调/反弹利润。</p>
+<h4 id="_7">多头入场（超卖反弹）</h4>
+<ul>
+<li>入场条件（需满足3个核心）：</li>
+<li>区间确认：价格在近期高低点之间横盘（如过去20日高低点波动幅度&lt;5%），无明确趋势；</li>
+<li>指标信号：随机指标%K/%D同步跌至20以下（超卖区间），且%K从下向上穿越%D（金叉）；</li>
+<li>价格辅助：价格回调至区间下沿（近期低点附近），出现看涨K线形态（如锤子线、启明星）；</li>
+<li>入场时机：金叉当日收盘前入场（避免盘中假金叉）；</li>
+<li>止损止盈：</li>
+<li>止损：设为区间下沿下方（如近期低点-1%），若价格跌破区间下沿，信号失效；</li>
+<li>止盈：设为区间上沿（近期高点附近），或随机指标升至70以上（中性区间上沿）时部分止盈。</li>
+</ul>
+<h4 id="_8">空头入场（超买回调）</h4>
+<ul>
+<li>入场条件（需满足3个核心）：</li>
+<li>区间确认：价格在近期高低点之间横盘，无明确趋势；</li>
+<li>指标信号：随机指标%K/%D同步升至80以上（超买区间），且%K从上向下穿越%D（死叉）；</li>
+<li>价格辅助：价格反弹至区间上沿（近期高点附近），出现看跌K线形态（如流星线、黄昏星）；</li>
+<li>入场时机：死叉当日收盘前入场；</li>
+<li>止损止盈：</li>
+<li>止损：设为区间上沿上方（如近期高点+1%），若价格突破区间上沿，信号失效；</li>
+<li>止盈：设为区间下沿（近期低点附近），或随机指标跌至30以下时部分止盈。</li>
+</ul>
+<h3 id="_9">用法二：趋势反转交易（抓背离信号）</h3>
+<p>核心逻辑是“价格沿趋势创新高/新低，但随机指标背离+交叉信号=趋势反转”，适合趋势末期（ADX开始下降），捕捉趋势转折的波段机会。</p>
+<h4 id="_10">多头反转（空头转多头，底背离）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新低（突破过去20日低点），且处于下降趋势中（MA5&lt;MA20）；</li>
+<li>指标背离：随机指标未同步创近期新低（如前低时%K=15，当前新低时%K=22），%D同理；</li>
+<li>交叉信号：背离后，%K从下向上穿越%D（金叉），且金叉发生在20-30区间（超卖区间边缘，动能开始回升）；</li>
+<li>价格形态：价格创新低时出现“底背离K线组合”（如双底、头肩底），或成交量放大（股票，恐慌盘释放）；</li>
+<li>入场时机：金叉后，价格突破“近期反弹高点”（如过去5日高点）时入场（确认反转有效）；</li>
+<li>止损止盈：</li>
+<li>止损：设为价格新低下方（如新低-2%），若价格重新跌破新低，背离失效；</li>
+<li>止盈：设为前一次下跌的起点（如过去30日高点），或随机指标升至80以上时部分止盈。</li>
+</ul>
+<h4 id="_11">空头反转（多头转空头，顶背离）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新高（突破过去20日高点），且处于上升趋势中（MA5&gt;MA20）；</li>
+<li>指标背离：随机指标未同步创近期新高（如前高时%K=85，当前新高时%K=78），%D同理；</li>
+<li>交叉信号：背离后，%K从上向下穿越%D（死叉），且死叉发生在70-80区间（超买区间边缘，动能开始衰减）；</li>
+<li>价格形态：价格创新高时出现“顶背离K线组合”（如双顶、头肩顶），或成交量萎缩（股票，买盘不足）；</li>
+<li>入场时机：死叉后，价格跌破“近期回调低点”（如过去5日低点）时入场；</li>
+<li>止损止盈：</li>
+<li>止损：设为价格新高上方（如新高+2%），若价格重新突破新高，背离失效；</li>
+<li>止盈：设为前一次上涨的起点（如过去30日低点），或随机指标跌至20以下时部分止盈。</li>
+</ul>
+<h3 id="_12">用法三：趋势跟踪交易（顺趋势加仓）</h3>
+<p>核心逻辑是“趋势未变时，随机指标回调至中性区间=加仓机会”，适合明确的单边趋势（ADX≥20），赚足趋势主浪利润。</p>
+<h4 id="_13">多头趋势跟踪（顺涨加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在上升通道中（低点上移、高点上移），且价格持续在MA20上方；</li>
+<li>随机指标每次上涨能升至70以上（表明多头动能充足），每次回调不跌破30（表明多头支撑强）；</li>
+<li>ADX≥20（确认有趋势，非震荡）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格回调至MA20附近，随机指标%K/%D跌至30-40区间（中性区间下沿），且%K上穿%D（金叉）；</li>
+<li>第二次加仓：价格突破前高，随机指标同步升至70以上（未超买），且ADX持续上升（趋势增强）；</li>
+<li>止损离场：</li>
+<li>止损：设为MA20下方（如MA20-1%），或随机指标跌破20且%K死叉%D（趋势可能反转）；</li>
+<li>离场信号：随机指标出现顶背离（价格新高、指标不新高），或ADX跌破20（趋势结束）。</li>
+</ul>
+<h4 id="_14">空头趋势跟踪（顺跌加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在下降通道中（高点下移、低点下移），且价格持续在MA20下方；</li>
+<li>随机指标每次下跌能跌至30以下（表明空头动能充足），每次反弹不突破70（表明空头阻力强）；</li>
+<li>ADX≥20（确认有趋势）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格反弹至MA20附近，随机指标%K/%D升至60-70区间（中性区间上沿），且%K死叉%D（死叉）；</li>
+<li>第二次加仓：价格跌破前低，随机指标同步跌至30以下（未超卖），且ADX持续上升；</li>
+<li>止损离场：</li>
+<li>止损：设为MA20上方（如MA20+1%），或随机指标突破80且%K金叉%D（趋势可能反转）；</li>
+<li>离场信号：随机指标出现底背离（价格新低、指标不新低），或ADX跌破20。</li>
+</ul>
+<h2 id="_15">高级技巧与注意事项</h2>
+<h3 id="1_2">1. 参数优化：适配不同品种与场景</h3>
+<p>随机指标的默认参数（14,3,3）需根据“品种波动率”和“交易目标”调整，确保信号与行情节奏匹配：
+- 按品种波动率调整：
+  - 高波动品种（加密货币、原油期货）：参数设为“12,3,3”——缩短区间周期（12期），%K更灵敏，适配价格快速变化，避免信号滞后；
+  - 中波动品种（股票、黄金）：参数设为“14,3,3”（默认）——平衡灵敏度与稳定性，适合多数波段；
+  - 低波动品种（蓝筹股、国债期货）：参数设为“18,3,3”——延长区间周期（18期），减少因小幅波动触发的假信号；
+- 按交易目标调整：
+  - 捕捉短期反转（如日线3-5天波段）：参数设为“9,3,3”——9期区间覆盖1.5周行情，信号更灵敏；
+  - 过滤假信号（如避免震荡市交易）：参数设为“14,5,5”——延长平滑周期（5期），%D更稳定，交叉信号更少。</p>
+<h3 id="2_1">2. 缺点与警示：避开这些“随机指标陷阱”</h3>
+<p>随机指标虽功能全面，但存在天生局限性，尤其在“强趋势”和“极端行情”中易产生误导：
+- 强趋势中超买超卖失效：在强劲单边趋势中（如股票连续涨停、期货单边上涨），随机指标可能长期处于超买区间（如≥80持续10个周期），此时“超买死叉”不是卖点，而是趋势强的表现——若按超买卖空，会持续亏损；
+- 极端行情后信号滞后：在“黑天鹅事件”（如突发利空导致股价暴跌）中，随机指标会快速跌至超卖区间（≤20），但价格可能因恐慌性抛售继续下跌（如超卖后再跌10%），此时入场“抄底”会被套在半山腰；
+- 小周期噪音多：5分钟以下超短周期中，随机指标会因价格小幅波动频繁交叉（金叉后立即死叉），产生大量假信号——此类场景不建议使用，或需结合“成交量放大”过滤；
+- 单一信号不可信：随机指标需与“价格形态+趋势指标”结合——例如，超卖金叉但价格跌破趋势线，可能是“假反弹”；顶背离但ADX仍≥30（趋势强），可能是“背离延续”（价格再创新高）。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：强趋势中按超买超卖交易——在ADX≥40的强趋势中，无视“趋势延续性”，仅看超买就卖、超卖就买，导致逆势操作；正确做法是“强趋势中用背离判断反转，不用超买超卖”；</li>
+<li>误区2：背离出现就立即入场——认为“只要背离就会反转”，忽略“背离可能持续多次”（如价格三次创新高，随机指标三次顶背离，第三次才反转）；需等待“背离+交叉信号+价格破位”三重确认；</li>
+<li>误区3：忽略%K与%D的优先级——%K灵敏但噪音多，%D稳定但滞后，单独看%K信号易被误导；正确做法是“以%D为核心，%K交叉%D为确认”（如%D在超卖区间，%K金叉%D，信号更可靠）；</li>
+<li>误区4：参数随意调整——频繁更换参数（如从14改为9再改为18），导致信号逻辑混乱，无法形成稳定交易体系；正确做法是“固定参数，通过其他指标（如成交量）过滤信号”。</li>
+</ul>
+<h2 id="_16">总结：</h2>
+<p>随机指标是技术分析中的“动能探测器”——它通过“价格相对位置”量化多空动能，用双线交叉和背离信号提前预警趋势变化，既能在震荡市中捕捉区间机会，也能在趋势市中辅助加仓，是兼顾灵活性与可靠性的经典指标。</p>
+<p>但随机指标并非“万能工具”，强趋势失效、极端行情滞后是其无法克服的局限。掌握它的核心，不在于“记住交叉规则”，而在于“理解动能与趋势的关系”——震荡市用超买超卖，趋势市用背离，始终结合价格形态、ADX等工具验证信号，才能充分发挥其优势，规避缺陷。</p>
+<p><a href="../">返回动量指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

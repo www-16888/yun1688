@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>资金流量指数 (MFI) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#mfi" class="nav-link">资金流量指数 (MFI) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_13" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_14" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="mfi">资金流量指数 (MFI) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>资金流量指数（Money Flow Index，简称MFI）由美国分析师Gene Quong和Avrum Soudack于1989年提出，是一种<strong>结合“价格涨跌”与“成交量”的动量振荡指标</strong>，被称为“成交量加权版的RSI”。它通过计算某一周期内“资金流入量”与“资金流出量”的比值，将结果映射到0-100区间内，核心逻辑是“价格上涨时成交量放大=资金主动流入，价格下跌时成交量放大=资金主动流出；当资金流入/流出过度时，市场大概率向相反方向回归”，帮助交易者识别“量价背离”、判断资金动能强弱，属于中灵敏度、量价结合的技术工具。</p>
+<p>MFI的核心优势在于<strong>“用成交量验证价格动能”</strong>——与仅关注价格的RSI不同，它通过“资金流量”量化市场参与者的“真实交易行为”：价格上涨但资金流入减少（MFI不同步上涨），表明涨势缺乏资金支撑；价格下跌但资金流出减少（MFI不同步下跌），表明跌势即将衰竭，尤其适合股票、加密货币等成交量数据有效的品种。</p>
+<ul>
+<li>“典型价格（TP）”：MFI的核心计算基础，与CCI一致，定义为（最高价+最低价+收盘价）÷3，用于衡量当日价格的“资金交易重心”；</li>
+<li>“资金流量（Money Flow）”：通过“典型价格涨跌”判断资金流向——当日TP＞前一日TP，为“正资金流量（资金流入）”；当日TP＜前一日TP，为“负资金流量（资金流出）”；TP相等时，资金流量为0；</li>
+<li>“区间定义”：0-100区间对应明确资金状态——80以上为<strong>超买区间</strong>（资金流入过度，多头动能耗尽），20以下为<strong>超卖区间</strong>（资金流出过度，空头动能衰减），20-80为中性区间（资金进出平衡）；</li>
+<li>“周期逻辑”：默认参数为14期（与RSI一致，便于对比），周期越短，指标对短期资金波动越灵敏（如6期MFI易快速进入超买超卖），周期越长，越能反映中长期资金趋势（如21期MFI信号更稳定）。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑</h3>
+<p>MFI的计算围绕“典型价格、资金流量、资金比率”展开，核心参数为“计算周期（n）”，默认14期，计算步骤分五步，需结合价格与成交量数据，逻辑严谨可复现。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（周期n=14，当日数据：最高价=110，最低价=100，收盘价=105，成交量=1000手；前一日TP=102）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算典型价格（TP）</td>
+<td>TP =（最高价 + 最低价 + 收盘价）÷ 3<br>——确定当日资金交易的“价格重心”</td>
+<td>TP=(110+100+105)÷3=105元</td>
+</tr>
+<tr>
+<td>2. 判断资金流向与计算资金流量</td>
+<td>- 若当日TP＞前一日TP：正资金流量=当日TP × 当日成交量（资金流入）<br>- 若当日TP＜前一日TP：负资金流量=当日TP × 当日成交量（资金流出）<br>- 若TP相等：资金流量=0</td>
+<td>当日TP=105＞前一日TP=102→正资金流量=105×1000=105,000（元·手）</td>
+</tr>
+<tr>
+<td>3. 计算n期正/负资金流量总和</td>
+<td>分别计算过去n期内“正资金流量的总和（Positive Money Flow, PMF）”与“负资金流量的总和（Negative Money Flow, NMF）”</td>
+<td>假设过去14期PMF=1,500,000，NMF=1,000,000</td>
+</tr>
+<tr>
+<td>4. 计算资金比率（Money Flow Ratio, MFR）</td>
+<td>MFR = PMF ÷ NMF<br>——若NMF=0，MFR=100（仅资金流入）；若PMF=0，MFR=0（仅资金流出）</td>
+<td>MFR=1,500,000 ÷ 1,000,000=1.5</td>
+</tr>
+<tr>
+<td>5. 计算MFI值</td>
+<td>MFI = 100 - (100 ÷ (1 + MFR))<br>——将资金比率映射到0-100区间</td>
+<td>MFI=100 - (100 ÷ (1+1.5))=100-40=60</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与周期适配</h4>
+<p>MFI的核心参数是“计算周期（n）”，不同周期对应不同的资金趋势级别，需根据“交易风格”和“品种流动性”调整：
+- 短线交易（15分钟/1小时，日内股票/加密货币）：周期设为6-9期——短期周期灵敏度高，能快速捕捉日内资金进出（如1小时6期MFI，适合日内T+0）；
+- 中短线交易（4小时/日线，股票波段）：周期设为14期（默认）——平衡资金灵敏度与稳定性，贴合1-2个月的中期资金趋势，信号可靠性高；
+- 中长线交易（周线/月线，指数投资）：周期设为21-28期——长期周期过滤短期资金噪音，反映6个月以上的主力资金动向；
+- 流动性适配：高流动性品种（大盘股、主流加密货币）可设短周期（6-14期），资金数据更具代表性；低流动性品种（小盘股、小众币）需设长周期（21-28期），避免单笔大额交易干扰指标。</p>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>MFI的核心价值在于<strong>用“资金流量”解决了“价格涨跌缺乏量能验证”的痛点</strong>。传统价格指标（如RSI）仅通过涨跌幅度判断动能，易被“无量上涨/下跌”误导；而MFI通过“量价结合”，量化资金的“真实动能”，具体体现在三大不可替代的功能：</p>
+<h3 id="1-rsi">1. 精准识别量价背离（比RSI更可靠）</h3>
+<p>“量价背离”是MFI最核心的功能，能提前1-3个周期预警“价格涨跌缺乏资金支撑”，比仅看价格的背离更具实战价值：
+- 顶背离（看跌信号）：价格持续创新高，但MFI未同步创新高（如股价从10元涨至12元，MFI从85跌至80），且伴随“价格新高时成交量萎缩”——表明“价涨量缩”，多头资金不再流入，上涨趋势即将结束；
+- 底背离（看涨信号）：价格持续创新低，但MFI未同步创新低（如股价从10元跌至8元，MFI从15升至20），且伴随“价格新低时成交量放大”——表明“价跌量增”，空头资金加速流出（恐慌盘释放），下跌趋势即将结束；
+- 优势：相比RSI背离（仅反映价格动能），MFI背离结合了成交量，能区分“真背离”（资金同步变化）与“假背离”（仅价格波动），反转准确率提升30%以上。</p>
+<h3 id="2_1">2. 验证超买超卖的有效性（比单一价格更精准）</h3>
+<p>MFI的超买超卖区间需“资金流量同步验证”，避免被“无量超买/超卖”误导：
+- 有效超买（MFI≥80）：需满足“价格上涨时正资金流量持续放大”，且MFI升至80以上后开始回落——表明资金流入过度，多头获利盘集中，回调概率高；
+- 无效超买（MFI≥80）：若MFI升至80以上，但正资金流量逐步减少（价格上涨依赖少量资金推动），则为“假超买”，价格可能继续上涨（如主力控盘的无量涨停）；
+- 有效超卖（MFI≤20）：需满足“价格下跌时负资金流量持续放大”，且MFI跌至20以下后开始回升——表明资金流出充分，空头止损盘集中，反弹概率高；
+- 无效超卖（MFI≤20）：若MFI跌至20以下，但负资金流量逐步减少（价格下跌缺乏抛压），则为“假超卖”，价格可能继续下跌（如无量跌停）。</p>
+<h3 id="3">3. 跟踪主力资金动向（比成交量更直观）</h3>
+<p>MFI能通过“资金流量的变化趋势”识别主力资金的“吸筹”与“出货”行为：
+- 主力吸筹（中长线看涨）：价格在低位横盘，MFI从20以下逐步回升至50以上，且每次回调时MFI不跌破30——表明低位资金持续流入，主力在逐步建仓；
+- 主力出货（中长线看跌）：价格在高位横盘，MFI从80以下逐步回落至50以下，且每次反弹时MFI不突破70——表明高位资金持续流出，主力在逐步减仓；
+- 优势：相比单纯看成交量（易被对倒交易误导），MFI通过“典型价格+成交量”过滤无效交易，更能反映主力的真实资金流向。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>MFI的用法核心是“依托量价背离判断反转，结合超买超卖捕捉机会”，以下是三种经典实战用法，覆盖“反转交易、震荡交易、趋势跟踪”三大场景：</p>
+<h3 id="_6">用法一：量价背离反转交易（抓顶底）</h3>
+<p>核心逻辑是“价格与MFI背离=资金动能与价格脱节，趋势即将反转”，适合捕捉趋势末期的顶底机会，是MFI最核心的用法。</p>
+<h4 id="_7">底背离交易（多头入场，抓底部）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新低（突破过去20日低点），且处于下跌趋势中（MA5＜MA20）；</li>
+<li>MFI层面：MFI未同步创近期新低（如前低时MFI=15，当前新低时MFI=22），形成“底背离”；</li>
+<li>资金验证：价格新低时，负资金流量逐步减少（抛压减弱），或出现“放量下跌后缩量”（恐慌盘释放完毕）；</li>
+<li>价格形态：价格新低时出现看涨K线形态（如双底、头肩底、锤子线）；</li>
+<li>入场时机：</li>
+<li>首次入场：MFI从20以下回升至30以上，且价格突破“近期回调高点”（如过去5日高点）；</li>
+<li>加仓时机：价格突破“下跌趋势线”，MFI同步升至50以上（资金流入确认）；</li>
+<li>止损止盈：</li>
+<li>止损：设为价格新低下方（如新低-2%），若价格重新跌破新低，背离失效；</li>
+<li>止盈：第一目标位=前一次下跌的起点（如过去30日高点），第二目标位=MFI升至80附近（超买区间）。</li>
+</ul>
+<h4 id="_8">顶背离交易（空头入场，抓顶部）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新高（突破过去20日高点），且处于上涨趋势中（MA5＞MA20）；</li>
+<li>MFI层面：MFI未同步创近期新高（如前高时MFI=85，当前新高时MFI=78），形成“顶背离”；</li>
+<li>资金验证：价格新高时，正资金流量逐步减少（买盘减弱），或出现“放量上涨后缩量”（获利盘开始离场）；</li>
+<li>价格形态：价格新高时出现看跌K线形态（如双顶、头肩顶、流星线）；</li>
+<li>入场时机：</li>
+<li>首次入场：MFI从80以上回落至70以下，且价格跌破“近期反弹低点”（如过去5日低点）；</li>
+<li>加仓时机：价格跌破“上涨趋势线”，MFI同步跌至50以下（资金流出确认）；</li>
+<li>止损止盈：</li>
+<li>止损：设为价格新高上方（如新高+2%），若价格重新突破新高，背离失效；</li>
+<li>止盈：第一目标位=前一次上涨的起点（如过去30日低点），第二目标位=MFI跌至20附近（超卖区间）。</li>
+</ul>
+<h3 id="_9">用法二：震荡市超买超卖交易（区间套利）</h3>
+<p>核心逻辑是“MFI进入超买超卖区间=资金流入/流出过度，价格大概率回归中性”，适合无明确趋势的震荡市（ADX＜20），赚取区间波动利润。</p>
+<ul>
+<li>震荡市确认：</li>
+<li>价格在固定区间内波动（高点、低点无明显上移/下移），且MA5与MA20反复交叉；</li>
+<li>ADX＜20（无趋势，多空平衡）；</li>
+<li>MFI在20-80区间内来回波动，无持续单边趋势；</li>
+</ul>
+<h4 id="mfi20">超卖买入（MFI≤20）</h4>
+<ul>
+<li>入场条件：</li>
+<li>MFI跌至20以下（超卖区间），且持续1-2个周期（确认超卖有效）；</li>
+<li>价格跌至震荡区间下沿（支撑位），且出现看涨K线（如锤子线、启明星）；</li>
+<li>资金验证：负资金流量降至近期低位（抛压枯竭），或成交量开始放大（资金抄底）；</li>
+<li>止损止盈：</li>
+<li>止损：区间下沿下方（如支撑位-1%），若价格跌破支撑位，区间失效；</li>
+<li>止盈：区间上沿（阻力位），或MFI回升至50-60区间（中性区间上沿）。</li>
+</ul>
+<h4 id="mfi80">超买卖出（MFI≥80）</h4>
+<ul>
+<li>入场条件：</li>
+<li>MFI升至80以上（超买区间），且持续1-2个周期（确认超买有效）；</li>
+<li>价格升至震荡区间上沿（阻力位），且出现看跌K线（如流星线、黄昏星）；</li>
+<li>资金验证：正资金流量降至近期低位（买盘枯竭），或成交量开始放大（资金出货）；</li>
+<li>止损止盈：</li>
+<li>止损：区间上沿上方（如阻力位+1%），若价格突破阻力位，区间失效；</li>
+<li>止盈：区间下沿（支撑位），或MFI回落至40-50区间（中性区间下沿）。</li>
+</ul>
+<h3 id="_10">用法三：趋势跟踪资金确认（顺趋势加仓）</h3>
+<p>核心逻辑是“趋势未变+资金持续流入/流出=加仓机会”，适合明确的单边趋势（ADX≥20），赚足趋势主浪利润，避免“无量趋势”的假突破。</p>
+<h4 id="_11">多头趋势跟踪（顺涨加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在上升通道中（低点上移、高点上移），且持续在MA20上方；</li>
+<li>MFI每次上涨能升至60以上（资金流入充足），每次回调不跌破40（资金支撑强）；</li>
+<li>ADX≥20（趋势强度高，延续性强）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格回调至MA20附近，MFI从60回落至40-50区间（资金未大幅流出），且正资金流量重新放大；</li>
+<li>第二次加仓：价格突破前高，MFI同步升至70以上（资金流入加速），且成交量放大（确认趋势有效）；</li>
+<li>止损离场：</li>
+<li>止损：设为MA20下方（如MA20-1%），或MFI跌破30（资金支撑失效）；</li>
+<li>离场信号：MFI出现顶背离（价格新高、MFI不新高），或正资金流量持续减少（买盘不足）。</li>
+</ul>
+<h4 id="_12">空头趋势跟踪（顺跌加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在下降通道中（高点下移、低点下移），且持续在MA20下方；</li>
+<li>MFI每次下跌能降至40以下（资金流出充足），每次反弹不突破60（资金阻力强）；</li>
+<li>ADX≥20（趋势强度高，延续性强）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格反弹至MA20附近，MFI从40回升至50-60区间（资金未大幅流入），且负资金流量重新放大；</li>
+<li>第二次加仓：价格跌破前低，MFI同步降至30以下（资金流出加速），且成交量放大（确认趋势有效）；</li>
+<li>止损离场：</li>
+<li>止损：设为MA20上方（如MA20+1%），或MFI突破70（资金阻力失效）；</li>
+<li>离场信号：MFI出现底背离（价格新低、MFI不新低），或负资金流量持续减少（抛压不足）。</li>
+</ul>
+<h2 id="_13">高级技巧与注意事项</h2>
+<h3 id="1_1">1. 参数优化：适配不同品种与场景</h3>
+<p>MFI的默认周期（14期）需根据“品种流动性”和“交易目标”调整，确保资金信号与行情节奏匹配：
+- 按流动性调整：
+  - 高流动性品种（大盘股、比特币、原油）：周期设为6-14期——资金数据量大且连续，短周期能快速捕捉资金动向；
+  - 中流动性品种（中小盘股、主流山寨币）：周期设为14-21期（默认）——平衡灵敏度与稳定性，避免单笔大额交易干扰；
+  - 低流动性品种（小盘股、小众币）：周期设为21-28期——长周期过滤“无量波动”的噪音，资金信号更可靠；
+- 按交易目标调整：
+  - 日内短线（15分钟/1小时）：周期=6-9期，超买超卖区间可放宽至85/15（避免频繁触发信号）；
+  - 波段交易（日线）：周期=14期，标准20/80区间；
+  - 中长线（周线）：周期=21期，超买超卖区间可收紧至75/25（信号更谨慎）。</p>
+<h3 id="2-mfi">2. 缺点与警示：避开这些“MFI陷阱”</h3>
+<p>MFI虽量价结合优势明显，但存在天生局限性，尤其在“极端行情”和“流动性不足”时易产生误导：
+- 极端行情下信号滞后：在“无量涨跌停”（如股票一字涨停/跌停）中，成交量极低，正/负资金流量无法有效反映真实资金动向，MFI可能长期处于超买/超卖区间（如涨停时MFI=90持续10天），此时信号完全失效；
+- 低流动性品种失真：在成交量极低的品种（如小盘股、小众币）中，单笔大额交易可能导致MFI大幅波动（如一笔买单使MFI从50升至80），此类信号无实际交易价值；
+- 强趋势中超买超卖失效：在ADX≥40的强趋势中，MFI可能长期处于超买（多头趋势）或超卖（空头趋势）区间（如MFI=80持续5个周期），此时“超买不是卖点，超卖不是买点”，按超买超卖交易会持续亏损；
+- 单一MFI信号不可信：MFI需与“价格形态+趋势指标”结合——例如，MFI底背离但价格未突破趋势线，可能是“背离延续”；MFI超买但ADX持续上升，可能是“趋势加速”。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：忽略流动性前提——在低流动性品种（如日成交量＜1000手的股票）中使用MFI，被虚假资金信号误导；正确做法是“仅在日成交量＞5000手的品种中使用MFI”；</li>
+<li>误区2：强趋势中按超买超卖交易——在强多头趋势中，MFI≥80就卖，忽略“资金持续流入”的趋势延续性；正确做法是“强趋势中用MFI背离判断反转，不用超买超卖”；</li>
+<li>误区3：背离出现就立即入场——认为“只要背离就会反转”，忽略“背离可能持续多次”（如价格三次创新高，MFI三次顶背离，第三次才反转）；需等待“背离+价格破位+资金验证”三重确认；</li>
+<li>误区4：混淆MFI与RSI——将MFI等同于“带成交量的RSI”，沿用RSI的交易规则（如MFI与RSI交叉），忽略MFI“资金流量”的核心逻辑，降低信号有效性。</li>
+</ul>
+<h2 id="_14">总结：</h2>
+<p>MFI是技术分析中的“资金动能标尺”——它通过“量价结合”量化资金的真实流向，用背离信号预警趋势反转，用超买超卖捕捉震荡机会，尤其适合重视资金面的交易者。</p>
+<p>但MFI并非“万能资金指标”，极端行情失效、流动性不足失真是其无法克服的局限。掌握MFI的核心，不在于“记住计算步骤”，而在于“理解资金与价格的同步性”——资金与价格同步上涨/下跌，趋势健康；资金与价格背离，趋势即将反转；始终结合流动性、趋势强度验证信号，才能充分发挥其“量价结合”的优势，规避缺陷。</p>
+<p><a href="../">返回动量指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

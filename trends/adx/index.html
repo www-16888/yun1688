@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>平均趋向指数 (ADX) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#adx" class="nav-link">平均趋向指数 (ADX) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_11" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="adx">平均趋向指数 (ADX) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念：</h3>
+<p>平均趋向指数（Average Directional Index，简称ADX）是由美国技术分析大师威尔斯·威尔德（Welles Wilder）于1978年在《技术交易系统的新概念》中提出的纯趋势强度衡量指标。它不判断趋势方向（多头/空头），仅通过计算价格波动的“趋向力度”，量化当前趋势的“强弱程度”，帮助交易者区分“有趋势行情”和“无趋势行情”，属于滞后性较低、客观性极强的技术工具。</p>
+<p>ADX并非单一指标，而是“趋向系统（DMI）”的核心组成部分——趋向系统包含+DI（正趋向指标，衡量多头力量）、-DI（负趋向指标，衡量空头力量）和ADX（平均趋向指数，衡量趋势强度）三个指标，三者需结合使用：+DI与-DI判断“趋势方向”，ADX判断“趋势强度”，缺一不可。</p>
+<ul>
+<li>“趋向力度”：核心逻辑是“价格沿趋势运行时，会形成持续的高低点突破”——上涨时高点、低点同步上移，+DI数值升高；下跌时高点、低点同步下移，-DI数值升高；ADX则通过平滑这些“趋向变化”，反映趋势的持续力度；</li>
+<li>“只测强度，不测方向”：ADX的数值（0-100）仅代表“趋势有多强”，不代表“趋势向上还是向下”——例如，ADX=60既可能对应强劲上涨，也可能对应强劲下跌，需结合+DI与-DI的位置关系判断方向；</li>
+<li>“平滑计算”：ADX通过“平均趋向指数”（对趋向指标的变化率进行平滑）消除短期波动干扰，确保趋势强度信号更稳定，避免因单日价格波动导致误判。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑：</h3>
+<p>ADX的核心是“三指标联动”，需先理解+DI、-DI的计算逻辑，才能掌握ADX的本质。三者均基于“真实波幅（TR）”和“趋向变动（DM）”两大基础数据。</p>
+<h4 id="1">1. 核心组件拆解（趋向系统三指标）</h4>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>英文缩写</th>
+<th>计算逻辑核心</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正趋向指标</td>
+<td>+DI</td>
+<td>衡量价格向上的趋向力度：若当日上涨幅度（今日最高价-昨日最高价）大于下跌幅度（昨日最低价-今日最低价），则记录为+DM，否则为0；+DI = (+DM / TR) × 100</td>
+<td>判断多头力量强弱——+DI数值越高，多头力量越强；+DI在-DI上方，代表当前趋势偏多</td>
+</tr>
+<tr>
+<td>负趋向指标</td>
+<td>-DI</td>
+<td>衡量价格向下的趋向力度：若当日下跌幅度大于上涨幅度，则记录为-DM，否则为0；-DI = (-DM / TR) × 100</td>
+<td>判断空头力量强弱——-DI数值越高，空头力量越强；-DI在+DI上方，代表当前趋势偏空</td>
+</tr>
+<tr>
+<td>平均趋向指数</td>
+<td>ADX</td>
+<td>先计算“趋向指数（DX）”=</td>
+<td>(+DI - -DI)/(+DI + -DI)</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与数值含义</h4>
+<p>ADX的默认参数为14期（威尔德原版设定），这是兼顾“灵敏度与稳定性”的通用选择，数值范围为0-100，不同区间对应不同趋势状态：
+- ADX &lt; 20：无趋势/弱趋势——市场处于横盘震荡，+DI与-DI频繁交叉，趋势方向不明确，此时不适合趋势交易；
+- 20 ≤ ADX &lt; 40：中等趋势——趋势开始形成（多头或空头），但强度一般，价格可能伴随回调，需结合+DI/-DI方向谨慎入场；
+- ADX ≥ 40：强趋势——趋势强度高，价格沿趋势方向运行的持续性强（上涨或下跌），是趋势交易的最佳时机；
+- ADX ≥ 60：极强趋势——趋势进入“加速期”，价格可能出现快速单边波动，但也预示趋势可能接近尾声，需警惕反转风险。</p>
+<blockquote>
+<p>注意：ADX的“14期”是指计算DX时的平滑周期，部分交易软件支持调整为10期（更灵敏）或20期（更稳定）——短线交易（如1小时周期）可缩短至10期，长线交易（如日线/周线）可延长至20期，避免参数与交易周期不匹配导致信号失真。</p>
+</blockquote>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>ADX的核心价值在于解决了“趋势交易的最大痛点——分不清‘有趋势’和‘无趋势’”。很多交易者在震荡市中用趋势指标（如MA、MACD）交易，导致频繁亏损；而ADX通过量化趋势强度，能提前筛选出“值得参与的趋势行情”，具体体现在三大不可替代的功能：</p>
+<h3 id="1_1">1. 精准筛选趋势行情（过滤震荡噪音）</h3>
+<p>这是ADX最核心的功能——它像“行情过滤器”，只保留有强度的趋势，排除无意义的震荡：
+- 震荡市识别：ADX持续低于20，+DI与-DI在低位反复交叉，此时无论MA、MACD发出何种“趋势信号”，均为噪音，需避免交易；
+- 趋势市识别：ADX从低于20升至20以上，且持续向上，同时+DI稳定在-DI上方（多头）或下方（空头），表明市场从震荡转为有趋势行情，可开始布局；
+- 趋势弱化预警：ADX从高于40开始回落，即使+DI与-DI仍有明确方向，也表明趋势强度减弱，需逐步减仓，避免趋势反转被套。</p>
+<h3 id="2_1">2. 量化趋势强度（判断交易性价比）</h3>
+<p>ADX的数值直接反映“趋势的可操作性”——趋势强度越高，交易的胜率和盈亏比越高，具体对应：
+- 低强度趋势（ADX 20-30）：趋势持续性弱，价格回调幅度大，交易需设窄止损，且仓位不宜过重（如1-2成仓）；
+- 中强度趋势（ADX 30-40）：趋势持续性中等，价格回调幅度可控，可正常仓位交易（如3-5成仓），止损设为趋势关键支撑/阻力（如MA20）；
+- 高强度趋势（ADX ≥40）：趋势持续性强，价格回调幅度小，可适当加仓（如5-7成仓），止损设为较宽的位置（如近期低点/高点），赚足趋势利润；
+- 极强趋势（ADX ≥60）：趋势进入加速期，利润空间大但风险也高，需用“跟踪止损”（如跌破近期低点5%止损），避免利润回吐。</p>
+<h3 id="3-di-di">3. 辅助确认趋势方向（与+DI/-DI联动）</h3>
+<p>ADX单独使用时无法判断趋势方向，但与+DI、-DI结合后，能形成“方向+强度”的完整趋势判断体系：
+- 多头趋势确认：+DI &gt; -DI（方向偏多），且ADX ≥20（有趋势），ADX持续向上（强度增强）——表明多头趋势健康，可做多；
+- 空头趋势确认：-DI &gt; +DI（方向偏空），且ADX ≥20（有趋势），ADX持续向上（强度增强）——表明空头趋势健康，可做空；
+- 趋势反转确认：+DI与-DI交叉（如+DI从上方下穿-DI），同时ADX从高位回落（如从50跌至40以下）——表明原趋势结束，新趋势启动，需反向交易。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>ADX的用法核心是“先看强度（ADX），再看方向（+DI/-DI）”，避免孤立使用单一指标。以下是三种经过实战验证的经典用法，覆盖“趋势筛选→入场→离场”全流程：</p>
+<h3 id="adx20">用法一：趋势筛选（只做ADX≥20的行情）</h3>
+<p>核心逻辑是“拒绝震荡，只参与有趋势的市场”，这是ADX最基础也最关键的用法，能直接过滤80%的假信号。
+- 步骤1：观察ADX数值——
+  1. 若ADX &lt; 20：无论+DI/-DI如何排列，均判定为“震荡市”，关闭趋势交易策略（如MA交叉、MACD金叉），仅考虑震荡策略（如水平通道低买高卖）；
+  2. 若ADX ≥20：判定为“趋势市”，进入下一步方向判断；
+- 步骤2：判断趋势方向——
+  1. 多头方向：+DI &gt; -DI，且+DI持续向上、-DI持续向下，表明多头力量主导；
+  2. 空头方向：-DI &gt; +DI，且-DI持续向上、+DI持续向下，表明空头力量主导；
+- 步骤3：制定交易策略——
+  1. 多头趋势：只做“回调买入”（如价格回踩MA20），不做空；
+  2. 空头趋势：只做“反弹卖出”（如价格反弹MA20），不做多；
+- 注意：ADX从20以下升至20以上时，需等待“连续2根K线确认”（如日线级别需2个交易日ADX≥20），避免因单日波动导致的“假趋势”判断。</p>
+<h3 id="adx_1">用法二：趋势入场（ADX突破+方向确认）</h3>
+<p>核心逻辑是“在趋势强度启动时入场”，捕捉趋势的“主升/主跌浪”，适合中短线趋势交易（如日线级别波段）。</p>
+<h4 id="_6">多头趋势入场</h4>
+<ul>
+<li>条件1：ADX突破20（从低于20升至20以上），且ADX曲线向上倾斜（强度增强）；</li>
+<li>条件2：+DI &gt; -DI，且+DI近期出现“金叉”（从下方上穿-DI）后持续向上；</li>
+<li>条件3：价格同步突破近期高点（如突破过去10个交易日高点），或回踩关键支撑（如MA20）后反弹；</li>
+<li>入场时机：满足以上3个条件后，当日收盘价确认时入场（如日线收盘前10分钟），避免盘中波动误判；</li>
+<li>止损设置：设为入场价下方的近期低点（或MA20下方），若ADX回落至20以下，无论止损是否触发，均需离场。</li>
+</ul>
+<h4 id="_7">空头趋势入场</h4>
+<ul>
+<li>条件1：ADX突破20，且ADX曲线向上倾斜；</li>
+<li>条件2：-DI &gt; +DI，且-DI近期出现“死叉”（从下方上穿+DI）后持续向上；</li>
+<li>条件3：价格同步跌破近期低点（如突破过去10个交易日低点），或反弹关键阻力（如MA20）后回落；</li>
+<li>入场时机：当日收盘价确认时入场；</li>
+<li>止损设置：设为入场价上方的近期高点（或MA20上方），ADX回落至20以下时离场。</li>
+</ul>
+<h3 id="adx_2">用法三：趋势离场（ADX回落+方向反转）</h3>
+<p>核心逻辑是“在趋势强度减弱或方向反转时离场”，避免利润回吐，适合趋势跟踪策略的“止盈止损”。</p>
+<h4 id="_8">盈利离场（趋势延续性减弱）</h4>
+<ul>
+<li>信号1：ADX从高位（如≥40）开始回落，且连续3根K线ADX数值下降（如从50跌至45再跌至42），表明趋势强度减弱；</li>
+<li>信号2：+DI（多头趋势中）开始走平或向下，或-DI（空头趋势中）开始走平或向下，表明主导趋势的力量衰减；</li>
+<li>操作：ADX回落至30以下时，减半仓；ADX回落至20以下时，清仓离场，锁定利润。</li>
+</ul>
+<h4 id="_9">止损离场（趋势反转）</h4>
+<ul>
+<li>信号1：+DI与-DI交叉（如多头趋势中+DI下穿-DI，空头趋势中-DI下穿+DI），且ADX同步回落；</li>
+<li>信号2：价格跌破趋势关键支撑（多头趋势中跌破MA20或近期低点），或突破关键阻力（空头趋势中突破MA20或近期高点）；</li>
+<li>操作：满足任一信号时，立即止损离场，避免趋势反转导致大幅亏损。</li>
+</ul>
+<h2 id="_10">高级技巧与注意事项</h2>
+<h3 id="1_2">1. 参数优化：适配不同交易周期与品种</h3>
+<p>ADX的默认14期参数并非“万能”，需根据交易周期和品种的波动率调整，确保信号与行情节奏匹配：
+- 短线交易（15分钟/1小时，如日内期货）：参数调整为10期——缩短周期让ADX更灵敏，快速捕捉短期趋势（如1小时级别的单边行情）；
+- 中长线交易（日线/周线，如股票波段）：参数调整为20期——延长周期过滤短期波动，避免被日线级别的小回调误导，更贴合中长期趋势；
+- 高波动品种（加密货币、原油期货）：参数调整为12-14期——高波动品种趋势强度变化快，12-14期既能保证灵敏度，又能避免频繁假信号；
+- 低波动品种（蓝筹股、国债期货）：参数调整为16-20期——低波动品种趋势强度上升慢，长周期能更准确识别趋势启动，避免过早入场。</p>
+<h3 id="2-adx">2. 缺点与警示：避开这些“ADX陷阱”</h3>
+<p>ADX虽为“趋势筛选利器”，但存在天生局限性，尤其在“趋势反转期”和“极端行情”中易产生误导，需警惕：
+- 趋势反转前ADX可能“假突破”：在趋势尾声（如上涨即将转下跌），ADX可能短暂突破高位（如从50升至55），看似趋势增强，实则是“最后一波加速”，随后快速回落；此时需结合价格形态（如顶背离、双顶）验证，避免追高/追空；
+- 窄幅震荡时ADX失效：若价格长期在极小区间波动（如股票单日涨跌&lt;1%），ADX会持续低于20，但+DI与-DI可能频繁交叉，此时即使ADX偶尔升至20以上，也并非有效趋势，需结合成交量（缩量震荡）判断，避免入场；
+- 单一ADX不可信：ADX必须与+DI、-DI结合使用，单独看ADX毫无意义——例如，ADX=50可能是强劲上涨，也可能是强劲下跌，若忽略+DI/-DI的位置，会完全误判趋势方向；
+- 不要用ADX判断“趋势反转时点”：ADX仅能判断“趋势强度是否减弱”，无法精准预测反转时点——例如，ADX从60回落至40，可能是趋势调整，也可能是反转，需结合价格行为（如K线形态、支撑阻力）确认。</p>
+<h3 id="3">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：ADX越高越好——认为ADX≥60是“最佳交易时机”，忽略其“趋势尾声预警”的含义；实际上，ADX≥60时，趋势已进入加速期，后续利润空间有限，且反转风险高，需逐步减仓，而非加仓；</li>
+<li>误区2：ADX&lt;20时强行做趋势交易——在震荡市中，因“想交易”而忽略ADX的筛选作用，强行用MA、MACD交易，导致被频繁交叉信号止损，持续亏损；</li>
+<li>误区3：忽略+DI/-DI的“金叉死叉有效性”——ADX&lt;20时，+DI与-DI的交叉均为“无效信号”，即使金叉/死叉形态完美，也不能作为入场依据；只有ADX≥20时，交叉信号才有效；</li>
+<li>误区4：用ADX判断短期波动——ADX反映的是“中期趋势强度”（如日线ADX反映1-2周的趋势），不适合判断单日或小时级别的短期波动；例如，日线ADX=30，不代表当日一定上涨，需结合短期周期（如1小时）的ADX辅助判断。</li>
+</ul>
+<h2 id="_11">总结：</h2>
+<p>ADX是技术分析中的“趋势强度裁判”——它不直接给出“买/卖信号”，但能通过量化趋势强度，帮交易者筛选出“值得参与的行情”，避免在震荡市中做无用功，也能通过强度变化提示“趋势是否值得继续持有”。</p>
+<p>但ADX并非“趋势预测工具”，它无法提前告知趋势何时启动、何时反转，需与+DI/-DI（判断方向）、价格形态（判断入场点）、成交量（验证有效性）结合使用。掌握ADX的核心，不在于“记住数值区间”，而在于“建立‘先看强度，再做交易’的思维”——当ADX告诉你“有趋势”时，再顺着+DI/-DI的方向入场；当ADX告诉你“无趋势”时，学会耐心等待，这才是ADX最核心的交易价值。</p>
+<p><a href="../">返回趋势指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>RSI（相对强弱指数）实战用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#rsi" class="nav-link">RSI（相对强弱指数）实战用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#rsi_1" class="nav-link">一、RSI 核心构成与计算（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#rsi_2" class="nav-link">二、RSI 核心买卖信号（三大经典场景）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#rsi_3" class="nav-link">三、RSI 进阶用法：背离信号（抓趋势拐点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#rsi_4" class="nav-link">四、RSI 实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#rsi_5" class="nav-link">五、RSI 买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="rsi">RSI（相对强弱指数）实战用法全解析</h1>
+<p>RSI（Relative Strength Index，相对强弱指数）是技术分析中核心的<strong>动量与超买超卖结合类指标</strong>，通过计算“近N日内股价上涨幅度与下跌幅度的比值”，量化市场多空力量的相对强弱，取值范围为0-100。其核心逻辑是“当多空力量失衡至极端状态（超买/超卖）时，价格大概率向均衡状态回归”，同时可通过趋势与背离信号捕捉趋势转折，以下是详细应用逻辑与实战技巧。</p>
+<h2 id="rsi_1">一、RSI 核心构成与计算（基础必知）</h2>
+<p>RSI的核心是“涨跌幅度的相对强度”，常用周期为6日（短期）、12日（中期）、24日（长期），通过多周期搭配可兼顾灵敏度与稳定性，需先明确计算逻辑与参数特点：</p>
+<h3 id="1-14">1. 计算公式（以14日为例，默认常用周期）</h3>
+<p>RSI计算分三步，核心是对比“平均上涨幅度”与“平均下跌幅度”：
+1. <strong>计算周期内涨跌幅度</strong><br />
+   每日上涨幅度=当日收盘价-前一日收盘价（若为负则记为0）；<br />
+   每日下跌幅度=前一日收盘价-当日收盘价（若为负则记为0）。
+2. <strong>计算平均涨跌幅度</strong><br />
+<strong>N日平均上涨幅度 = 近N日上涨幅度之和 ÷ N</strong><br />
+<strong>N日平均下跌幅度 = 近N日下跌幅度之和 ÷ N</strong><br />
+   （首次计算时，直接取N日内总和平均；后续计算采用“平滑平均”，即前一日平均×(N-1)/N + 当日幅度×1/N）。
+3. <strong>计算RSI值</strong><br />
+<strong>RSI（N日）= [平均上涨幅度 ÷（平均上涨幅度 + 平均下跌幅度）] × 100</strong><br />
+   - 若平均下跌幅度=0（全周期上涨），RSI=100；若平均上涨幅度=0（全周期下跌），RSI=0。</p>
+<h3 id="2">2. 常用周期与特点</h3>
+<p>不同周期的RSI反映的“多空博弈周期”不同，实战中通常同时查看短、中、长三个周期（如RSI6、RSI12、RSI24），通过周期共振提升信号可靠性：</p>
+<table>
+<thead>
+<tr>
+<th>周期类型</th>
+<th>常用参数（N日）</th>
+<th>灵敏度</th>
+<th>核心作用</th>
+<th>特点总结</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>短期RSI</td>
+<td>6、9</td>
+<td>高</td>
+<td>捕捉短期超买超卖（如1-3天反弹/回调）</td>
+<td>波动快，信号多但易受短期波动干扰</td>
+</tr>
+<tr>
+<td>中期RSI</td>
+<td>12、14</td>
+<td>中</td>
+<td>判断波段多空平衡（如1-4周趋势修正）</td>
+<td>波动适中，兼顾灵敏度与稳定性，最常用</td>
+</tr>
+<tr>
+<td>长期RSI</td>
+<td>24、30</td>
+<td>低</td>
+<td>识别长期趋势拐点（如牛熊转换初期）</td>
+<td>波动慢，信号滞后但稳定性极高</td>
+</tr>
+</tbody>
+</table>
+<h2 id="rsi_2">二、RSI 核心买卖信号（三大经典场景）</h2>
+<p>RSI的核心信号围绕“超买超卖阈值”“多周期交叉”展开，需结合“数值位置+趋势方向+成交量”过滤假信号，不同市场环境下的阈值需灵活调整，以下为通用参考标准：</p>
+<h3 id="1-1rsi3020">1. 买入信号1：超卖状态（RSI≤30，强超卖≤20）</h3>
+<h4 id="_1">信号逻辑：</h4>
+<p>当RSI数值跌至30以下（尤其是20以下的强超卖区间），说明短期内空头力量过度释放，市场情绪悲观，多空力量即将逆转，价格有反弹需求，是“低吸”的核心信号。</p>
+<h4 id="3">有效超卖买入的3个确认条件：</h4>
+<ul>
+<li>条件1：RSI在超卖区间（≤30）<strong>至少停留1-2个交易日</strong><br />
+  避免“一次性触碰超卖阈值后立即反弹”的假信号（如单日急跌导致RSI骤降，次日反弹后恢复，非真实超卖）。  </li>
+<li>条件2：多周期共振（如RSI6≤20的同时，RSI12≤30）<br />
+  短、中期RSI同步进入超卖区间，证明空头力量在不同周期均已衰竭，信号更可靠。  </li>
+<li>条件3：股价配合（出现止跌K线，如锤子线、阳包阴，且收盘价不创新低）<br />
+  价格与指标共振，避免“RSI超卖但股价持续破位”的无效信号（如极端熊市中的超卖后继续超卖）。</li>
+</ul>
+<h4 id="_2">实战案例：</h4>
+<p>某股票日线级别中，RSI6从35跌至18（强超卖），RSI12同步从40跌至28（超卖），且连续2日维持在该区间；期间股价收出锤子线（下影线长度是实体的2倍以上），第3日反弹时成交量比前一日增加35%，可视为有效超卖买入信号，短期反弹目标看向RSI回归50中性区间。</p>
+<h3 id="2-1rsi7080">2. 卖出信号1：超买状态（RSI≥70，强超买≥80）</h3>
+<h4 id="_3">信号逻辑：</h4>
+<p>当RSI数值升至70以上（尤其是80以上的强超买区间），说明短期内多头力量过度消耗，市场情绪乐观，多空力量即将逆转，价格有回调需求，是“高抛”的核心信号。</p>
+<h4 id="3_1">有效超买卖出的3个确认条件：</h4>
+<ul>
+<li>条件1：RSI在超买区间（≥70）<strong>至少停留1-2个交易日</strong><br />
+  避免“一次性冲高导致RSI骤升，次日回落恢复”的假信号（如单日涨停导致RSI飙升，次日开板后回落，非真实超买）。  </li>
+<li>条件2：多周期共振（如RSI6≥80的同时，RSI12≥70）<br />
+  短、中期RSI同步进入超买区间，证明多头力量在不同周期均已耗尽，信号更可靠。  </li>
+<li>条件3：股价配合（出现滞涨K线，如流星线、阴包阳，且收盘价不创新高）<br />
+  价格与指标共振，避免“RSI超买但股价持续创新高”的无效信号（如强牛市中的超买后继续超买）。</li>
+</ul>
+<h4 id="_4">实战案例：</h4>
+<p>某热门题材股日线级别中，RSI6从65升至82（强超买），RSI12同步从60升至72（超买），且连续2日维持在该区间；期间股价收出流星线（上影线长度是实体的2倍以上），第3日回落时成交量比前一日减少30%，可视为有效超买卖出信号，短期回调目标看向RSI回归50中性区间。</p>
+<h3 id="3-rsi">3. 趋势信号：RSI交叉与突破（确认趋势方向）</h3>
+<p>RSI交叉是“不同周期RSI线的位置变化”，反映多空力量在不同周期的传递，可用于确认趋势启动或反转，分为“金叉（低周期上穿高周期）”和“死叉（低周期下穿高周期）”：</p>
+<h4 id="1rsi">（1）买入信号：RSI金叉（低周期上穿高周期）</h4>
+<ul>
+<li><strong>定义</strong>：短期RSI（如RSI6）从下向上穿过中期RSI（如RSI12），且两者均在50以下（超卖区附近），说明短期多头力量向中期传递，趋势即将从下跌/震荡转为上涨。  </li>
+<li><strong>确认条件</strong>：金叉后RSI同步向上突破50（多空平衡线），且股价站上短期均线（如5日均线），证明多头已掌握主导权。</li>
+</ul>
+<h4 id="2rsi">（2）卖出信号：RSI死叉（低周期下穿高周期）</h4>
+<ul>
+<li><strong>定义</strong>：短期RSI（如RSI6）从上向下穿过中期RSI（如RSI12），且两者均在50以上（超买区附近），说明短期空头力量向中期传递，趋势即将从上涨/震荡转为下跌。  </li>
+<li><strong>确认条件</strong>：死叉后RSI同步向下跌破50（多空平衡线），且股价跌破短期均线（如5日均线），证明空头已掌握主导权。</li>
+</ul>
+<h2 id="rsi_3">三、RSI 进阶用法：背离信号（抓趋势拐点）</h2>
+<p>RSI背离是“股价走势与RSI走势相反”的现象，是趋势即将反转的强烈信号，比单纯超买超卖更提前，且可靠性更高，分为“底背离（买入拐点）”和“顶背离（卖出拐点）”：</p>
+<h3 id="1">1. 底背离（买入拐点）</h3>
+<ul>
+<li><strong>定义</strong>：股价创新低（如日线价格跌至10元，低于前低11元），但RSI未创新低（如RSI12前低20，本次最低25；RSI6前低15，本次最低20），说明“下跌动能减弱，多头暗中积蓄力量，反弹即将来临”。  </li>
+<li><strong>关键特征</strong>：通常先出现“短期RSI底背离”（RSI6不创新低），随后带动“中期RSI底背离”（RSI12不创新低），是趋势反转的递进信号。  </li>
+<li><strong>确认条件</strong>：底背离出现后，需等待RSI从超卖区间回升（如RSI12突破30），且股价收出止跌K线，避免“背离后继续背离”（如极端熊市中多次底背离，需以最后一次共振为准）。  </li>
+<li><strong>适用场景</strong>：熊市末期、下跌趋势尾声，捕捉波段底部（如个股连续回调后的反弹）。</li>
+</ul>
+<h3 id="2_1">2. 顶背离（卖出拐点）</h3>
+<ul>
+<li><strong>定义</strong>：股价创新高（如日线价格涨至20元，高于前高19元），但RSI未创新高（如RSI12前高80，本次最高75；RSI6前高85，本次最高80），说明“上涨动能减弱，空头暗中积蓄力量，回调即将来临”。  </li>
+<li><strong>关键特征</strong>：通常先出现“短期RSI顶背离”（RSI6不创新高），随后带动“中期RSI顶背离”（RSI12不创新高），是趋势反转的递进信号。  </li>
+<li><strong>确认条件</strong>：顶背离出现后，需等待RSI从超买区间回落（如RSI12跌破70），且股价收出滞涨K线，避免“背离后继续背离”（如强牛市中多次顶背离，需以最后一次共振为准）。  </li>
+<li><strong>适用场景</strong>：牛市末期、上涨趋势尾声，捕捉波段顶部（如个股连续冲高后的回调）。</li>
+</ul>
+<h2 id="rsi_4">四、RSI 实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不机械套用“30/70”超买超卖阈值</strong>：<br />
+   不同标的波动差异大——小盘股、题材股波动剧烈，超卖阈值可放宽至“RSI≤25”，超买阈值可收紧至“RSI≥75”；大盘股、蓝筹股波动平缓，超卖阈值可设为“RSI≤35”，超买阈值可设为“RSI≤65”，需回溯标的1-2年历史数据，找到“多次有效反弹/回调的阈值区间”（个性化阈值）。</li>
+<li><strong>避免在强趋势市中过度依赖RSI</strong>：<br />
+   牛市中易出现“超买后继续超买”（如RSI≥70后仍维持高位，甚至升至80以上），熊市中易出现“超卖后继续超卖”（如RSI≤30后仍维持低位，甚至跌至20以下），此时需结合MACD（趋势强度）、均线（支撑压力）判断，而非单纯等RSI回落/回升（如牛市中RSI超买但均线向上，可持仓观望，不急于卖出）。</li>
+<li><strong>区分“震荡市”与“趋势市”的信号优先级</strong>：  </li>
+<li>震荡市（股价在区间内波动，均线走平）：RSI的“超买超卖”信号优先级最高，可做区间高抛低吸（RSI超买卖、超卖买）。  </li>
+<li>趋势市（股价沿均线持续上涨/下跌）：RSI的“背离+交叉”信号优先级最高，超买超卖信号需谨慎（如上升趋势中，RSI超卖是买点，超买不是卖点）。</li>
+<li><strong>控制仓位与止损</strong>：<br />
+   超卖买入后，若股价继续下跌且RSI跌破个性化超卖阈值（如原阈值30，现跌至25），需立即止损（避免“抄底在半山腰”）；超买卖出后，若股价继续上涨且RSI突破个性化超买阈值（如原阈值70，现升至75），需放弃回补（避免“踏空趋势”）。</li>
+</ol>
+<h2 id="rsi_5">五、RSI 买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>定周期</strong>：同时查看短期（6/9日）、中期（12/14日）、长期（24/30日）RSI，确保多周期覆盖。  </li>
+<li><strong>判趋势</strong>：用20日均线判断方向→上升趋势（均线上）、下跌趋势（均线下）、震荡趋势（均线平）。  </li>
+<li><strong>找信号</strong>：</li>
+<li>上升趋势：RSI超卖（≤30）+ 底背离+RSI金叉→买入；RSI顶背离+RSI死叉→减仓（不清仓）。  </li>
+<li>下跌趋势：RSI超买（≥70）+ 顶背离+RSI死叉→卖出；RSI底背离+RSI金叉→轻仓试买（不重仓）。  </li>
+<li>震荡趋势：RSI超卖（≤30）→买入，RSI超买（≥70）→卖出，依托区间高低点操作。  </li>
+<li><strong>验信号</strong>：确认多周期共振（短、中期RSI同步信号）、价格配合（止跌/滞涨K线）、成交量配合（买时缩量反弹、卖时放量回落）。  </li>
+<li><strong>设风控</strong>：买入后以“股价破近期低点或RSI跌破个性化超卖阈值”止损；卖出后以“股价破近期高点或RSI突破个性化超买阈值”放弃回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

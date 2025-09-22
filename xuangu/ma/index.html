@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>MA（移动平均线）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ma" class="nav-link">MA（移动平均线）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#ma_1" class="nav-link">一、MA核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ma3" class="nav-link">二、MA选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#ma_2" class="nav-link">三、MA选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="ma">MA（移动平均线）选股方法与核心要点</h1>
+<p>MA（移动平均线）是炒股小白入门级的趋势类指标，核心价值在于平滑股价短期波动、明确趋势方向。以下从核心逻辑、具体选股方法及避坑注意事项三方面展开，聚焦实战可操作性。</p>
+<h2 id="ma_1">一、MA核心逻辑</h2>
+<p>MA的本质是通过计算特定周期内的股价平均值，过滤短期噪音，直观呈现股票的“趋势级别”与“方向”，核心围绕“周期”展开：
+- <strong>周期划分</strong>：短周期MA（MA5、MA10）反映短期趋势，中周期MA（MA20、MA60）反映中期趋势，长周期MA（MA120、MA250）反映长期趋势。
+- <strong>趋势判断</strong>：周期越长，MA信号越稳定（容错率越高）；周期越短，信号越灵敏（但波动风险更高）。小白优先选择中周期（MA20、MA60），平衡稳定性与时效性。
+- <strong>核心原则</strong>：MA向上=趋势向上（市场做多情绪占优）；MA向下=趋势向下（市场做空情绪占优）；股价在MA上方=当前价格高于近期平均成本，支撑较强。</p>
+<h2 id="ma3">二、MA选股的3种核心方法</h2>
+<h3 id="1-ma">1. 单条MA筛选（小白首选，最简单）</h3>
+<ul>
+<li><strong>逻辑</strong>：通过单条中周期MA，筛选“股价站在均线上+均线自身向上”的股票，确保中期趋势向好。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“技术指标选股-移动平均线（MA）”；</li>
+<li>选定目标周期（推荐MA20或MA60）；</li>
+<li>设置筛选条件：① 收盘价＞选定MA值；② 当前MA值＞5天前MA值（确认MA向上）；</li>
+<li>执行选股，得到中期趋势向上的标的。</li>
+</ul>
+<h3 id="2-ma">2. MA金叉选股（进阶，抓趋势启动点）</h3>
+<ul>
+<li><strong>逻辑</strong>：短周期MA从下往上穿过长周期MA（即“金叉”），代表短期趋势突破中期趋势，上升动能开始释放。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-MA金叉”；</li>
+<li>选择周期组合（推荐“MA10金叉MA60”，兼顾灵敏度与稳定性）；</li>
+<li>设置条件：① 当日短周期MA＞长周期MA；② 前1日短周期MA＜长周期MA（确认“上穿”动作）；③ 长周期MA（如MA60）当前值＞5天前值（确保长期趋势向上，避免无效金叉）；</li>
+<li>执行选股，筛选趋势启动阶段的标的。</li>
+</ul>
+<h3 id="3-ma">3. MA多头排列选股（高阶，抓持续上升趋势）</h3>
+<ul>
+<li><strong>逻辑</strong>：所有短周期MA均在长周期MA上方，且全部向上运行（如MA5＞MA10＞MA20＞MA60），代表短、中、长期资金同步做多，趋势稳定性最强。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-MA多头排列”；</li>
+<li>选定周期组合（推荐MA5、MA10、MA20、MA60）；</li>
+<li>设置条件：① MA5＞MA10＞MA20＞MA60；② 所有周期MA当前值均＞5天前值（确认整体向上）；</li>
+<li>执行选股，得到长期趋势向好的标的。</li>
+</ul>
+<h2 id="ma_2">三、MA选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>避开震荡市使用</strong>：股价在MA上下反复横跳时（如MA20附近频繁穿越），MA信号会频繁失效（金叉后快速死叉），易导致误操作，需等待趋势明确（股价站稳MA或跌破MA）后再介入。</li>
+<li><strong>优先选择“长周期MA向上”的标的</strong>：MA60是中长期趋势“生命线”，若MA60向下，即使短期出现金叉，也大概率是“反弹行情”（非趋势反转），风险极高，小白需坚决规避。</li>
+<li><strong>不单一依赖MA指标</strong>：MA仅为趋势筛选工具，需结合两方面补充判断：① 公司质地（避开ST股、连续亏损股，避免基本面暴雷）；② 成交量（信号出现时成交量放大，代表资金进场，信号更真实）。</li>
+<li><strong>警惕“高位MA背离”</strong>：股价创新高，但对应的长周期MA（如MA60）未同步创新高，说明趋势动能不足，可能出现反转，此时即使MA仍呈多头排列，也不宜买入。</li>
+<li><strong>严格设置止损线</strong>：MA选股需接受“趋势判断错误”的可能，必须提前设止损：① 若基于MA20选股，止损线为“跌破MA20且3天不收回”；② 若基于MA60选股，止损线为“直接跌破MA60”，避免亏损扩大。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>换手率（Turnover Rate）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#turnover-rate" class="nav-link">换手率（Turnover Rate）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、换手率核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#3" class="nav-link">二、换手率选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_2" class="nav-link">三、换手率选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="turnover-rate">换手率（Turnover Rate）选股方法与核心要点</h1>
+<p>换手率是反映股票交易活跃度的核心指标，通过计算“某段时间内成交量与流通股本的比值”，直观体现市场资金对个股的关注程度与筹码交换效率，既能辅助判断个股热度，也能识别资金进场/离场信号，是选股中不可或缺的“量能参考指标”。</p>
+<h2 id="_1">一、换手率核心逻辑</h2>
+<p>换手率的本质是“筹码交换频率”，核心通过数值大小划分交易活跃度，不同市场环境下的合理区间略有差异（以A股为例）：
+- <strong>低换手率（＜3%）</strong>：交易清淡，市场关注度低，多为震荡整理或冷门股，筹码稳定性强但动能不足；
+- <strong>中等换手率（3%-10%）</strong>：交易活跃，市场关注度适中，多为趋势明朗的个股，筹码交换均衡，趋势延续概率高；
+- <strong>高换手率（10%-20%）</strong>：交易极度活跃，市场关注度高，多为热门股、题材股或阶段性龙头，筹码交换频繁，短期波动大；
+- <strong>超高换手率（＞20%）</strong>：交易过热，可能伴随主力资金对倒、出货或换庄，风险与机会并存，小白需谨慎。</p>
+<p>核心原则：换手率突然放大（较5日均量翻倍），代表资金关注度骤升，可能触发趋势变化；换手率持续低迷，代表市场对个股缺乏信心，难有大行情。</p>
+<h2 id="3">二、换手率选股的3种核心方法</h2>
+<h3 id="1">1. 低换手启动选股（基础，抓趋势萌芽）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股长期处于低换手率（＜3%）震荡状态，筹码逐步集中，随后换手率突然放大至5%-8%（中等区间），且股价同步上涨，代表资金开始进场，趋势从“沉寂”转向“启动”。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“行情指标选股-换手率”；</li>
+<li>设置条件：① 近10日平均换手率＜3%（前期低换手）；② 当日换手率＞5%且＜8%（突然启动）；③ 当日收盘价＞前1日收盘价且收盘价＞20日均线（股价同步上涨，趋势支撑）；</li>
+<li>执行选股，筛选趋势萌芽阶段、资金初进场的标的。</li>
+</ul>
+<h3 id="2">2. 中等换手持续选股（进阶，抓趋势延续）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股在上升趋势中，换手率稳定维持在3%-10%（中等区间），且始终高于5日均换手率，代表筹码交换均衡（既有资金进场也有获利盘离场），多头动能持续，趋势具备延续性。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-行情指标选股-换手率”；</li>
+<li>设置条件：① 近5日平均换手率在3%-10%之间；② 每日换手率均＞5日均换手率（活跃度在线）；③ 20日均线向上且股价持续在均线上方（中期上升趋势）；</li>
+<li>执行选股，筛选趋势稳定、动能持续的标的。</li>
+</ul>
+<h3 id="3_1">3. 高换手突破选股（高阶，抓热门龙头）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股在关键阻力位（如前期高点、平台整理上沿）附近，换手率突然放大至10%-15%（高换手），且股价突破阻力位，代表资金集中进场突破，可能成为短期热门股或题材龙头。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-行情指标选股-换手率”；</li>
+<li>设置条件：① 当日换手率＞10%且＜15%（高换手但未过热）；② 当日股价突破近30日高点（关键阻力位突破）；③ 当日成交量＞5日均量2倍（资金进场验证）；</li>
+<li>执行选股，筛选短期爆发力强、可能成龙头的标的。</li>
+</ul>
+<h2 id="_2">三、换手率选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>结合流通盘大小判断</strong>：小盘股（流通盘＜5亿）正常换手率高于中大盘股，小盘股10%的换手率可能是“活跃”，大盘股10%的换手率可能是“异常过热”，需根据流通盘调整判断标准。</li>
+<li><strong>警惕高换手陷阱</strong>：股价高位时，若换手率突然飙升至20%以上且伴随股价滞涨（如收出长上影线、放量下跌），可能是主力资金出货，切勿追涨；低位高换手若缺乏趋势支撑（如20日均线向下），也可能是“假突破”。</li>
+<li><strong>不单一依赖换手率</strong>：需结合股价位置（低位/高位）、趋势方向（均线排列）、题材热度综合判断，例如低位+中等换手+均线向上，可靠性远高于高位+高换手+均线向下。</li>
+<li><strong>规避“僵尸股”与“过度炒作股”</strong>：长期换手率＜1%的“僵尸股”，缺乏资金关注，难有行情；短期换手率连续3日＞20%的“过度炒作股”，筹码混乱，回调风险极高，小白需远离。</li>
+<li><strong>设置动态止损</strong>：低换手启动股以“20日均线”为止损线；高换手突破股以“突破位（前期高点）”为止损线，若股价跌破且换手率骤降，说明资金离场，需及时止损。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

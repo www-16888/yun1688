@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>历史波动率（Historical Volatility）深度解析：市场过往波动的“量化档案” - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#historical-volatility" class="nav-link">历史波动率（Historical Volatility）深度解析：市场过往波动的“量化档案”</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么是“风险评估的基础工具”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：三大核心应用场景</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="historical-volatility">历史波动率（Historical Volatility）深度解析：市场过往波动的“量化档案”</h1>
+<p>历史波动率（Historical Volatility，简称HV）是<strong>基于特定周期内的历史价格数据，计算得出的市场过往波动幅度的量化指标</strong>。其核心逻辑是“<strong>通过回溯价格的实际波动轨迹，衡量资产在过去一段时间内的风险水平</strong>”——不预测未来波动，仅客观反映“已发生的波动事实”，帮助交易者评估资产的历史风险特征、对比不同品种的波动率差异、为衍生品定价（如期权）提供参考，是金融市场中最基础、最常用的波动率衡量工具之一。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>历史波动率的本质是“<strong>资产价格在过去N个周期内偏离均值的离散程度</strong>”，通常以“年化百分比”形式呈现（便于跨周期、跨品种对比）。例如，某股票30日历史波动率为20%，意味着该股票过去30天的价格波动，年化后对应的波动幅度约为20%；若历史波动率升至30%，则说明其过往波动明显加剧，风险水平上升。</p>
+<p>其核心优势是“<strong>数据客观、计算透明</strong>”：与反映“预期波动”的恐慌指数（VIX）不同，历史波动率完全基于已发生的价格数据（如收盘价、最高价-最低价），不存在主观情绪或预期偏差，能最直接地体现资产的历史风险特征。正因如此，它常被用作“风险基准”——例如，基金经理会用历史波动率衡量组合的过往风险，期权交易者会用历史波动率与隐含波动率对比，判断期权定价是否合理。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>回溯性</strong>：仅反映“过去N个周期”的波动，不具备前瞻性，无法预测未来波动；</li>
+<li><strong>周期依赖性</strong>：周期越短（如5日），波动率对短期价格波动越敏感；周期越长（如250日），波动率越平滑，反映长期波动趋势；</li>
+<li><strong>年化标准化</strong>：通过“年化处理”（如日度波动率×√252，周度波动率×√52），将不同周期的波动率统一为“年化百分比”，便于跨周期对比；</li>
+<li>
+<p><strong>价格数据选择性</strong>：可基于“收盘价”“最高价-最低价”“开盘价-收盘价”等不同价格序列计算，不同数据反映的波动维度不同（如最高价-最低价更贴近日内实际波动）。</p>
+</li>
+<li>
+<p><strong>与隐含波动率（如VIX）的核心区别</strong>：
+  | 指标类型               | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+  |------------------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | 历史波动率（Historical Volatility） | 基于“已发生的历史价格数据”，计算过往波动的离散程度 | 数据客观、透明，可直接衡量历史风险 | 评估资产历史风险、对比品种波动率、期权定价参考 |
+  | 隐含波动率（如VIX）    | 基于“期权价格”，推导市场对未来波动的预期 | 具备前瞻性，反映市场情绪与预期 | 判断市场情绪极值、对冲系统性风险、期权交易决策 |</p>
+</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>历史波动率的计算本质是“统计学中标准差的应用”——通过计算价格收益率的标准差，再进行年化处理，得到最终的波动率数值。核心是“用收益率替代价格本身”，避免价格绝对值差异导致的误判（如高价股与低价股的价格波动绝对值无直接可比性，收益率波动更具参考性）。</p>
+<h4 id="1-n">1. 核心计算步骤（以“日度收盘价”为例，计算N日历史波动率）</h4>
+<p>历史波动率的计算需经历“收益率计算→标准差计算→年化处理”三步，步骤严谨且可复现：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某股票5日收盘价：20元、21元、19.8元、20.5元、21.2元，N=5）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算“日度对数收益率”</td>
+<td>对数收益率=ln(当日收盘价 ÷ 前一日收盘价)<br>（选择对数收益率的原因：① 避免正负收益率抵消；② 符合金融资产价格的复利特性）</td>
+<td>第2日收益率=ln(21÷20)≈0.0488（4.88%）<br>第3日收益率=ln(19.8÷21)≈-0.0598（-5.98%）<br>第4日收益率=ln(20.5÷19.8)≈0.0349（3.49%）<br>第5日收益率=ln(21.2÷20.5)≈0.0337（3.37%）</td>
+</tr>
+<tr>
+<td>2. 计算“N日收益率标准差”</td>
+<td>标准差=√[Σ(收益率ᵢ - 收益率均值)² ÷ (N-1)]<br>（分母用N-1：样本标准差，更贴合“从部分数据推断整体”的场景）</td>
+<td>收益率均值≈(0.0488-0.0598+0.0349+0.0337)÷4≈0.0144<br>标准差≈√[(0.0488-0.0144)²+(-0.0598-0.0144)²+(0.0349-0.0144)²+(0.0337-0.0144)² ÷ 3]≈0.0492（4.92%）</td>
+</tr>
+<tr>
+<td>3. 年化处理（得到历史波动率）</td>
+<td>年化波动率=日度标准差 × √年化周期数<br>（常见年化周期：股票市场252日，期货市场240日，加密货币市场365日）</td>
+<td>按252日年化→ 历史波动率=0.0492 × √252≈0.0492×15.87≈0.781（78.1%）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数适配（周期、价格数据类型与品种选择）</h4>
+<p>历史波动率的“周期”“价格数据类型”直接影响指标的解读维度，需结合使用场景调整：
+- <strong>周期适配</strong>：
+  - 短期风险评估（1-2周）：5日/10日历史波动率 → 反映近期短期波动，适合日内交易、短线波段；
+  - 中期风险评估（1-3个月）：30日/60日历史波动率（最常用） → 平衡短期波动与长期趋势，适合波段交易、基金组合风险监控；
+  - 长期风险评估（1年以上）：120日/250日历史波动率 → 反映资产长期波动特征，适合长期投资、资产配置决策；
+- <strong>价格数据类型适配</strong>：
+  - 基于“收盘价”：计算简便，反映“隔夜波动”，适合股票等非24小时交易品种；
+  - 基于“最高价-最低价”（如Parkinson波动率）：更贴近“日内实际波动范围”，适合期货、加密货币等日内波动剧烈的品种；
+  - 基于“开盘价-收盘价”（如Garman-Klass波动率）：同时考虑日内波动与隔夜跳空，信息更全面，但计算稍复杂；
+- <strong>品种适配</strong>：
+  - 高波动率品种（期货、加密货币、小盘股）：适合用短周期（5-10日）+ 最高价-最低价数据，捕捉快速变化的波动；
+  - 低波动率品种（大盘股、债券、蓝筹ETF）：适合用长周期（30-60日）+ 收盘价数据，避免短期噪音干扰；</p>
+<h2 id="_4">二、意义：它为什么是“风险评估的基础工具”？</h2>
+<p>历史波动率的核心价值在于<strong>为“风险量化”提供客观基准</strong>——在没有历史波动率之前，投资者只能通过“主观感受”判断资产风险（如“这只股票波动大”），而历史波动率将“波动”转化为可计算、可对比的数字，其不可替代的功能体现在三点：</p>
+<h3 id="1">1. 客观衡量资产历史风险：避免“主观判断偏差”</h3>
+<p>不同投资者对“波动大”的定义不同（新手可能认为5%波动大，老手可能认为10%波动正常），历史波动率通过“年化百分比”统一风险衡量标准：
+- 例如，A股票30日历史波动率=15%，B股票30日历史波动率=30%→ 客观说明B股票过去30天的波动是A股票的2倍，风险更高；
+- 应用场景：基金投资者选择产品时，可对比不同基金的“历史波动率”（如股票型基金通常波动率20%-30%，债券型基金通常5%-10%），选择与自身风险承受能力匹配的产品。</p>
+<h3 id="2_1">2. 对比跨品种、跨周期波动率：发现“风险差异机会”</h3>
+<p>历史波动率的“年化标准化”特性，使其可跨品种、跨周期对比，帮助投资者发现被低估或高估的风险机会：
+- 跨品种对比：同为科技股，苹果（AAPL）30日历史波动率=18%，特斯拉（TSLA）30日历史波动率=45%→ 说明特斯拉的短期风险显著高于苹果，若两者隐含波动率相近，可选择“历史波动率低、隐含波动率高”的苹果期权（性价比更高）；
+- 跨周期对比：某股票30日历史波动率=25%，250日历史波动率=18%→ 说明该股票近期波动显著高于长期平均水平，需警惕短期风险；若30日波动率=12%，250日波动率=18%→ 说明近期波动低于长期平均，可能酝酿突破。</p>
+<h3 id="3">3. 为衍生品定价与交易提供参考：判断“期权性价比”</h3>
+<p>期权定价的核心变量之一是“波动率”（如布莱克-斯科尔斯模型），历史波动率常被用作“隐含波动率的对比基准”，判断期权是否被高估或低估：
+- 逻辑：若“隐含波动率＞历史波动率”→ 市场预期未来波动将高于过往，期权定价偏贵，适合“卖出期权”；若“隐含波动率＜历史波动率”→ 市场预期未来波动将低于过往，期权定价偏便宜，适合“买入期权”；
+- 示例：某股票30日历史波动率=20%，其平值看涨期权的隐含波动率=28%→ 隐含波动率高于历史波动率，期权偏贵，可考虑卖出该期权赚取权利金。</p>
+<h2 id="_5">三、实战用法：三大核心应用场景</h2>
+<p>历史波动率本身不直接产生“买卖信号”，但可作为“风险参考工具”，辅助交易决策、仓位管理与衍生品操作。</p>
+<h3 id="_6">用法一：基于历史波动率的仓位调整策略（适用于所有交易场景）</h3>
+<p>核心是“<strong>风险与仓位负相关</strong>”——历史波动率越高（风险越大），仓位越低；历史波动率越低（风险越小），仓位越高，避免高波动时重仓导致大幅亏损：
+1. 确定“基准仓位”与“基准波动率”：
+   - 例如，投资者风险承受能力对应的基准仓位=50%，基准波动率=20%（市场平均水平）；
+2. 计算“动态仓位”：
+   - 动态仓位=基准仓位 ×（基准波动率 ÷ 当前历史波动率）；
+   - 示例1：当前历史波动率=30%（高于基准）→ 动态仓位=50%×(20%÷30%)≈33%（降低仓位，控制风险）；
+   - 示例2：当前历史波动率=10%（低于基准）→ 动态仓位=50%×(20%÷10%)=100%（提高仓位，把握低风险机会）；
+3. 调整时机：
+   - 每周更新一次“当前历史波动率”（如30日波动率），若波动率变化超过20%（如从20%升至24%），则当日调整仓位；
+- <strong>优势</strong>：通过“波动率匹配仓位”，实现“高风险低仓、低风险高仓”，长期可降低最大回撤30%-50%。</p>
+<h3 id="_7">用法二：历史波动率与隐含波动率对比策略（适用于期权交易）</h3>
+<p>核心是“<strong>买低卖高</strong>”——当隐含波动率显著低于历史波动率时，买入期权（预期未来波动回归历史水平，期权价值上升）；当隐含波动率显著高于历史波动率时，卖出期权（预期未来波动回落，期权价值下降）：
+1. 确定“偏离阈值”：
+   - 通常以“隐含波动率-历史波动率”的差值或比值为阈值（如差值＞5个百分点，或比值＞1.2）；
+2. 入场条件：
+   - 买入期权：隐含波动率＜历史波动率-3个百分点，且历史波动率处于近1年50%分位以上（确保历史波动有代表性）；
+   - 卖出期权：隐含波动率＞历史波动率+3个百分点，且历史波动率处于近1年50%分位以下（确保未来波动可能回落）；
+3. 止损止盈：
+   - 止损：买入期权后，若隐含波动率进一步下跌2个百分点，或期权到期时间过半仍无波动；
+   - 止盈：买入期权后，隐含波动率回升至历史波动率附近，或期权盈利达权利金的50%；
+- <strong>示例</strong>：某股票30日历史波动率=22%，平值看涨期权隐含波动率=18%（差值-4个百分点）→ 买入该期权，止损隐含波动率=16%，止盈隐含波动率=22%。</p>
+<h3 id="_8">用法三：历史波动率突破策略（适用于趋势启动行情）</h3>
+<p>核心是“<strong>历史波动率突破长期均值，预示趋势可能强化</strong>”——当短期历史波动率（如10日）突破长期历史波动率（如60日），且伴随价格突破，视为趋势启动信号：
+1. 入场条件（满足3项）：
+   - 10日历史波动率突破60日历史波动率，且突破幅度≥20%（如60日波动率=20%，10日波动率升至24%）；
+   - 价格突破前期震荡区间（上沿=多头，下沿=空头），收盘价站稳突破位；
+   - 成交量≥5日均量1.2倍（突破有资金支撑）；
+2. 入场时机：
+   - 波动率突破与价格突破同步发生的当日；
+3. 止损止盈：
+   - 止损：多头止损=震荡区间下沿下方，空头止损=震荡区间上沿上方；
+   - 止盈：目标=突破幅度×2，或“10日波动率回落至60日波动率附近”（波动回归常态，趋势减弱）；
+- <strong>逻辑</strong>：短期波动率突破长期均值，说明市场波动从“常态”进入“强化态”，往往伴随趋势加速（如多头趋势中，波动扩张推动价格更快上涨）。</p>
+<h2 id="_9">四、高级技巧与注意事项</h2>
+<h3 id="1_1">1. 优化信号：结合“波动率趋势+价格趋势”过滤噪音</h3>
+<p>单纯依赖历史波动率数值易产生误判（如短期波动骤升可能是单一日异常，非趋势），需结合“波动率趋势”与“价格趋势”验证：
+- 波动率趋势验证：用“移动平均”平滑历史波动率（如5日EMA），若EMA向上（波动率趋势扩张），且突破长期均值，信号更可靠；
+- 价格趋势验证：波动率突破需与“均线趋势”一致（如10日波动率突破60日+20日EMA向上=多头，10日波动率突破60日+20日EMA向下=空头）；
+- 示例：10日波动率突破60日，但20日EMA向下，且波动率EMA走平→ 信号无效，不入场。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“历史波动率陷阱”</h3>
+<p>历史波动率虽客观，但存在“回溯性”“滞后性”等固有缺陷，需重点规避：
+- <strong>“历史不代表未来”：回溯性导致的预判偏差</strong>：
+  - 历史波动率仅反映过往波动，无法保证未来波动会重复（如某股票过去1年波动率=15%，但突发利空后波动率可能骤升至40%）；
+  - 应对：不单独用历史波动率预测未来，需结合基本面（如业绩、政策）、情绪面（如VIX）综合判断。</p>
+<ul>
+<li><strong>极端价格影响：异常值导致的波动率失真</strong>：</li>
+<li>单一日的极端价格（如涨停、跌停）会大幅拉高历史波动率，导致指标失真（如某股票平时波动率=20%，单日跌停后30日波动率升至35%，但实际波动未持续）；</li>
+<li>
+<p>应对：计算时可剔除“3倍标准差以上的极端收益率”，或用“加权移动平均”（近期数据权重低，降低极端值影响）。</p>
+</li>
+<li>
+<p><strong>周期选择偏差：短周期波动率的随机性</strong>：</p>
+</li>
+<li>短周期（如5日）历史波动率受随机波动影响大（如某股票连续2日涨3%，5日波动率骤升），信号噪音多；</li>
+<li>应对：短周期波动率需搭配“成交量”（如波动率上升时成交量放大，说明波动真实），或用“多周期共振”（如5日、10日波动率同时突破长期均值）。</li>
+</ul>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：认为“历史波动率低=风险低”</strong>：</li>
+<li>历史波动率低仅说明“过去波动小”，不代表“未来风险低”（如2007年美股历史波动率长期低于15%，但2008年金融危机后波动率骤升至80%）；</li>
+<li>
+<p>正确做法：历史波动率低时，需关注“隐含波动率是否上升”（提前预警风险），同时控制仓位。</p>
+</li>
+<li>
+<p><strong>误区2：跨品种对比时忽略“资产类型差异”</strong>：</p>
+</li>
+<li>直接对比“股票波动率”与“债券波动率”（如股票波动率20% vs 债券波动率5%），忽略两者资产属性不同（股票风险本就高于债券）；</li>
+<li>
+<p>正确做法：跨品种对比需在“同类资产”内进行（如同一行业的股票、同一期限的债券）。</p>
+</li>
+<li>
+<p><strong>误区3：过度依赖单一价格数据计算波动率</strong>：</p>
+</li>
+<li>仅用“收盘价”计算期货、加密货币的波动率，忽略其“24小时交易”的日内波动（如某加密货币收盘价无变化，但日内波动10%）；</li>
+<li>正确做法：24小时交易品种优先用“最高价-最低价”或“日内收益率”计算波动率，更贴近实际波动。</li>
+</ul>
+<h2 id="_10">五、总结</h2>
+<p>历史波动率是金融市场“风险量化的基石”——它将主观的“波动感受”转化为客观的“数字指标”，为风险评估、品种对比、衍生品定价提供了不可替代的参考。尽管它存在“历史不代表未来”的缺陷，但通过与基本面、情绪面、价格趋势的结合，仍能成为交易者控制风险、捕捉机会的重要工具。</p>
+<p>正确的用法是“将历史波动率作为‘风险基准’，而非‘预测工具’”——用它衡量资产的历史风险特征，对比不同品种的风险差异，辅助仓位调整与期权交易决策；同时警惕“过度依赖历史数据”的陷阱，始终结合多维度信息综合判断。只有这样，才能在“波动”中把握风险与收益的平衡。</p>
+<p><a href="../">返回波动率指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

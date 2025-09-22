@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>KDJ（随机指标）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#kdj" class="nav-link">KDJ（随机指标）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#kdj_1" class="nav-link">一、KDJ核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#kdj3" class="nav-link">二、KDJ选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#kdj_2" class="nav-link">三、KDJ选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="kdj">KDJ（随机指标）选股方法与核心要点</h1>
+<p>KDJ（随机指标）是一种兼具超买超卖判断与趋势跟踪功能的技术指标，通过计算股价在近期波动区间内的相对位置，反映市场多空力量的强弱变化，核心用于捕捉短期趋势反转和中期趋势延续信号，对震荡市和趋势市均有适配性，是炒股小白常用的短线选股工具。</p>
+<h2 id="kdj_1">一、KDJ核心逻辑</h2>
+<p>KDJ由K线、D线、J线三条曲线组成，核心基于“股价波动的随机性会向趋势性回归”的原理，通过数值区间划分市场状态：
+- <strong>数值范围</strong>：三条线均取值于0-100之间，其中J线灵敏度最高（反映短期波动），K线次之，D线最平滑（反映中期趋势）。
+- <strong>状态划分</strong>：
+  - <strong>超买区间</strong>：K、D值＞80（J值常超100），代表市场多头动能过度释放，短期可能回调；
+  - <strong>超卖区间</strong>：K、D值＜20（J值常低于0），代表市场空头动能过度宣泄，短期可能反弹；
+  - <strong>常态区间</strong>：20＜K、D值＜80，代表市场多空平衡，趋势方向不明确。
+- <strong>核心原则</strong>：K线从下往上穿过D线（金叉），代表短期动能转强；K线从上往下穿过D线（死叉），代表短期动能转弱；K、D线同步沿趋势方向运行，代表趋势延续性强。</p>
+<h2 id="kdj3">二、KDJ选股的3种核心方法</h2>
+<h3 id="1-kdj">1. KDJ超卖金叉选股（基础，抓短期反弹）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股持续下跌后，K、D值跌至20以下超卖区间，J值同步低于0，随后K线向上穿过D线形成金叉，且K、D值脱离超卖区间，代表空头动能耗尽，短期反弹信号明确，适合捕捉低位机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“技术指标选股-KDJ（随机指标）”；</li>
+<li>设置条件：① 近3日内至少1日K＜20且D＜20（确认进入超卖）；② 当日K＞D（形成金叉）；③ 当日K＞20且D＞20（脱离超卖区间）；</li>
+<li>执行选股，筛选短期超卖后有望反弹的标的。</li>
+</ul>
+<h3 id="2-kdj">2. KDJ低位金叉+均线支撑选股（进阶，抓趋势启动）</h3>
+<ul>
+<li><strong>逻辑</strong>：在中期上升趋势（20日均线向上）中，个股回调至20日均线附近时，KDJ在低位（20-50区间）形成金叉，代表回调到位，多头动能重启，既有均线支撑保障安全性，又有KDJ金叉提供启动信号，适合捕捉趋势延续的启动点。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-KDJ”；</li>
+<li>设置条件：① 当日K＞D（形成金叉）；② 金叉时K值在20-50之间（低位区间，非超卖，避免弱势反弹）；③ 当日收盘价＞20日均线且20日均线向上（中期趋势支撑）；</li>
+<li>执行选股，筛选回调结束、趋势有望延续的标的。</li>
+</ul>
+<h3 id="3-kdj">3. KDJ同步上行选股（高阶，抓强势延续）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股处于强势上升趋势中，KDJ三条线同步向上运行（K＞D＞J或K、D、J依次向上排列），且始终维持在50以上区间（未进入超买或轻度超买），代表多头动能持续，趋势稳定性强，适合捕捉“强者恒强”的机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-KDJ”；</li>
+<li>设置条件：① 连续3日K＞D＞J（或K、D、J同步上行）；② 连续3日K、D值在50-80之间（常态偏强区间，避免超买回调）；③ 同期股价沿5日均线向上运行（短期趋势同步）；</li>
+<li>执行选股，筛选强势趋势持续的标的。</li>
+</ul>
+<h2 id="kdj_2">三、KDJ选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>区分趋势环境</strong>：上升趋势中，KDJ金叉（尤其是低位金叉）成功率高，可作为买入信号；下跌趋势中，KDJ金叉多为“反弹信号”，持续时间短，不宜追涨，且需快进快出。</li>
+<li><strong>警惕超买超卖的“钝化”</strong>：强势上升趋势中，KDJ可能长期处于80以上超买区间（K、D值黏合向上），形成“超买钝化”，此时不宜因超买而卖出；弱势下跌趋势中，KDJ可能长期处于20以下超卖区间（“超卖钝化”），此时不宜因超卖而买入，需结合趋势是否反转判断。</li>
+<li><strong>避免单一依赖KDJ</strong>：KDJ灵敏度高但稳定性弱，需结合成交量（金叉时放量更可靠）、股价位置（低位金叉优于高位金叉）验证，例如高位超买+KDJ死叉+放量下跌，信号更明确。</li>
+<li><strong>适配周期选择</strong>：短线交易（1-3天）用日K线KDJ，灵敏性高；中期交易（1-2周）用周K线KDJ，稳定性强；避免用日K线KDJ判断长期趋势，防止被短期波动误导。</li>
+<li><strong>设置严格止损</strong>：超卖反弹选股以“近期低点”或“KDJ再次跌破20”为止损线；趋势启动选股以“20日均线”为止损线，若股价跌破且KDJ形成死叉，需果断止损，控制风险。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

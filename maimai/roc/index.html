@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>ROC（变动率指标）实战用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#roc" class="nav-link">ROC（变动率指标）实战用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#roc_1" class="nav-link">一、ROC 核心构成与计算（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#roc_2" class="nav-link">二、ROC 核心买卖信号（三大经典场景）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#roc_3" class="nav-link">三、ROC 进阶用法：背离信号（抓趋势拐点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#roc_4" class="nav-link">四、ROC 实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#roc_5" class="nav-link">五、ROC 买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="roc">ROC（变动率指标）实战用法全解析</h1>
+<p>ROC（Rate of Change，变动率指标）是技术分析中核心的<strong>动量类指标</strong>，通过计算“当前股价与N日前股价的相对变动百分比”，衡量价格变化的“速度与幅度”，进而判断市场是否处于“超买/超卖”状态，捕捉趋势加速或反转的信号。其核心逻辑是“价格变动速度会随趋势延续而变化，过快的涨跌终将回归常态”，以下是详细应用逻辑与实战技巧。</p>
+<h2 id="roc_1">一、ROC 核心构成与计算（基础必知）</h2>
+<p>ROC的核心是“价格的相对变动率”，通过单一数值直观反映价格动量，需先明确计算逻辑与常用参数：</p>
+<h3 id="1">1. 计算公式</h3>
+<p><strong>ROC（N日）= [（当日收盘价 - N日前收盘价）÷ N日前收盘价] × 100%</strong><br />
+- 若ROC为正值：当前价格高于N日前价格，说明价格呈上升动量，数值越大，上升速度越快。<br />
+- 若ROC为负值：当前价格低于N日前价格，说明价格呈下降动量，数值越小（绝对值越大），下降速度越快。<br />
+- 零轴：ROC数值为0时，代表当前价格与N日前价格持平，是多空力量的临时平衡点。</p>
+<h3 id="2">2. 常用周期与特点</h3>
+<p>不同周期的ROC反映的动量周期不同，实战中需根据交易目标选择，通常以“短周期+中周期”搭配使用，兼顾灵敏度与稳定性：</p>
+<table>
+<thead>
+<tr>
+<th>周期类型</th>
+<th>常用参数（N日）</th>
+<th>动量反映周期</th>
+<th>核心作用</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>短期ROC</td>
+<td>5、6</td>
+<td>1周内</td>
+<td>捕捉短期价格脉冲（如日内、隔日涨跌）</td>
+<td>短线交易（T+1、1-3天持仓）</td>
+</tr>
+<tr>
+<td>中期ROC</td>
+<td>10、12</td>
+<td>2-3周</td>
+<td>判断中期趋势动量（如波段涨跌速度）</td>
+<td>中线交易（1-4周持仓）</td>
+</tr>
+<tr>
+<td>长期ROC</td>
+<td>20、24</td>
+<td>1个月以上</td>
+<td>识别长期趋势拐点（如牛熊转换初期）</td>
+<td>长线投资（1-6个月持仓）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="roc_2">二、ROC 核心买卖信号（三大经典场景）</h2>
+<p>ROC的用法围绕“超买超卖、零轴穿越、背离”三大维度展开，不同信号对应不同的市场状态，需结合趋势方向进一步验证。</p>
+<h3 id="1-1roc">1. 买入信号1：超卖状态+ROC回升（低吸核心）</h3>
+<h4 id="_1">信号逻辑：</h4>
+<p>当ROC数值跌至“超卖阈值”以下，说明价格短期内下跌过快，市场情绪过度悲观，动量即将衰竭，价格有反弹需求；若ROC随后从超卖区间回升（如从-15%升至-8%），则确认买入信号。</p>
+<h4 id="_2">通用超卖阈值（需结合周期与标的调整）</h4>
+<ul>
+<li>短期ROC（5日）：≤ -10% ~ -15%（小盘股、题材股波动大，可放宽至-20%；大盘股、蓝筹股波动小，-10%即可预警）。  </li>
+<li>中期ROC（10日）：≤ -15% ~ -20%（指数类标的超卖阈值通常更保守，如-15%为强买入信号）。  </li>
+<li>长期ROC（20日）：≤ -20% ~ -25%（极端熊市中可能跌至-30%，但需结合基本面判断，避免“抄底过早”）。</li>
+</ul>
+<h4 id="_3">信号确认条件</h4>
+<ul>
+<li>条件1：ROC触及超卖阈值后，出现“止跌回升”（如连续2日ROC数值上升，且突破超卖区间）。  </li>
+<li>条件2：股价同步出现“企稳K线”（如十字星、锤子线，且收盘价不创新低）。  </li>
+<li>条件3：成交量配合（ROC回升时成交量温和放大，证明有资金承接）。</li>
+</ul>
+<h4 id="_4">实战案例</h4>
+<p>某小盘股日线级别中，5日ROC从-5%跌至-18%（超卖阈值），当日股价收出锤子线（下影线长于实体2倍），次日ROC回升至-10%，股价上涨3%，成交量比前一日增加40%，此时可视为有效超卖买入信号，短期反弹目标看向零轴附近。</p>
+<h3 id="2-1roc">2. 卖出信号1：超买状态+ROC回落（高抛核心）</h3>
+<h4 id="_5">信号逻辑：</h4>
+<p>当ROC数值升至“超买阈值”以上，说明价格短期内上涨过快，市场情绪过度乐观，动量即将衰减，价格有回调需求；若ROC随后从超买区间回落（如从15%跌至8%），则确认卖出信号。</p>
+<h4 id="_6">通用超买阈值（需结合周期与标的调整）</h4>
+<ul>
+<li>短期ROC（5日）：≥ 10% ~ 15%（小盘股、题材股可放宽至20%；大盘股、蓝筹股10%即可预警）。  </li>
+<li>中期ROC（10日）：≥ 15% ~ 20%（热门赛道股超买阈值可略高，如20%为强卖出信号）。  </li>
+<li>长期ROC（20日）：≥ 20% ~ 25%（牛市中可能升至30%，但需警惕“动量衰竭”，逐步减仓）。</li>
+</ul>
+<h4 id="_7">信号确认条件</h4>
+<ul>
+<li>条件1：ROC触及超买阈值后，出现“滞涨回落”（如连续2日ROC数值下降，且跌破超买区间）。  </li>
+<li>条件2：股价同步出现“滞涨K线”（如流星线、乌云盖顶，且收盘价不创新高）。  </li>
+<li>条件3：成交量配合（ROC回落时成交量异常放大，证明有资金高位出货）。</li>
+</ul>
+<h4 id="_8">实战案例</h4>
+<p>某热门赛道股日线级别中，10日ROC从10%升至22%（超买阈值），当日股价收出流星线（上影线长于实体2倍），次日ROC回落至15%，股价下跌4%，成交量创近期新高（天量），此时可视为有效超买卖出信号，短期回调目标看向零轴附近。</p>
+<h3 id="3">3. 趋势信号：零轴穿越（趋势确认）</h3>
+<p>零轴是ROC的“多空分水岭”，ROC穿越零轴往往意味着价格动量方向的转变，是趋势确认的关键信号：</p>
+<h4 id="_9">买入信号（零轴上穿）</h4>
+<ul>
+<li>定义：ROC从负值区间（零轴下方）向上穿越零轴，且后续持续在零轴上方运行。  </li>
+<li>逻辑：价格从“下跌动量”转为“上升动量”，中期趋势可能反转向上。  </li>
+<li>确认条件：上穿零轴时成交量放大，且股价同步站上短期均线（如5日均线），避免“假上穿”（穿轴后立即回落）。</li>
+</ul>
+<h4 id="_10">卖出信号（零轴下穿）</h4>
+<ul>
+<li>定义：ROC从正值区间（零轴上方）向下穿越零轴，且后续持续在零轴下方运行。  </li>
+<li>逻辑：价格从“上升动量”转为“下跌动量”，中期趋势可能反转向下。  </li>
+<li>确认条件：下穿零轴时成交量放大，且股价同步跌破短期均线（如5日均线），避免“假下穿”（穿轴后立即回升）。</li>
+</ul>
+<h2 id="roc_3">三、ROC 进阶用法：背离信号（抓趋势拐点）</h2>
+<p>ROC背离是“股价与ROC动量走势相反”的现象，是趋势即将反转的强烈信号，比单纯的超买/超卖更提前，适合捕捉波段顶部或底部。</p>
+<h3 id="1_1">1. 底背离（买入拐点）</h3>
+<ul>
+<li>定义：股价创新低（如日线价格跌至10元，低于前低11元），但ROC未创新低（如5日ROC前低-18%，本次最低-15%），说明“下跌动量减弱，多头即将反攻”。  </li>
+<li>确认条件：底背离出现后，需等待ROC“超卖回升”或“上穿零轴”，避免“背离后继续背离”（如股价再创新低，但ROC仍不创新低，需二次确认）。  </li>
+<li>实战场景：某股票周线级别中，价格从15元跌至12元（创新低），10日ROC从-20%跌至-18%（未创新低），形成底背离；随后日线ROC上穿零轴，可分批建仓。</li>
+</ul>
+<h3 id="2_1">2. 顶背离（卖出拐点）</h3>
+<ul>
+<li>定义：股价创新高（如日线价格涨至20元，高于前高19元），但ROC未创新高（如5日ROC前高18%，本次最高15%），说明“上升动量减弱，空头即将反攻”。  </li>
+<li>确认条件：顶背离出现后，需等待ROC“超买回落”或“下穿零轴”，避免“背离后继续背离”（如股价再创新高，但ROC仍不创新高，需二次确认）。  </li>
+<li>实战场景：某股票周线级别中，价格从18元涨至22元（创新高），10日ROC从20%涨至18%（未创新高），形成顶背离；随后日线ROC下穿零轴，需果断减仓。</li>
+</ul>
+<h2 id="roc_4">四、ROC 实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不机械套用超买超卖阈值</strong>：不同标的（如科技股vs公用事业股）、不同市场环境（牛市vs熊市）的动量特征差异大，需回溯标的近1-2年的ROC历史数据，确定“个性化阈值”（如某科技股历史上5日ROC跌至-18%必反弹，可将其设为超卖阈值）。  </li>
+<li><strong>避免单一依赖ROC</strong>：ROC是“动量指标”，在强趋势市中易出现“超买后继续超买”“超卖后继续超卖”（如牛市中ROC超买后仍随趋势上升），需搭配MACD（趋势方向）、均线（支撑压力）综合判断（如ROC超卖+MACD金叉，买入信号更可靠）。  </li>
+<li><strong>区分“趋势市”与“震荡市”</strong>：</li>
+<li>趋势市（股价沿均线持续上涨/下跌）：ROC的“零轴穿越”信号更有效，超买超卖信号需谨慎（避免逆势操作）。  </li>
+<li>震荡市（股价在区间内波动）：ROC的“超买超卖”信号更有效，可做区间高抛低吸，忽略零轴穿越的假信号。  </li>
+<li><strong>控制仓位与止损</strong>：超卖买入后，若股价继续下跌且ROC跌破个性化超卖阈值，需立即止损（避免“抄底在半山腰”）；超买卖出后，若股价继续上涨且ROC突破个性化超买阈值，需放弃回补（避免“踏空趋势”）。</li>
+</ol>
+<h2 id="roc_5">五、ROC 买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>定周期</strong>：短线选5/6日ROC，中线选10/12日ROC，长线选20/24日ROC，确保周期与持仓目标匹配。  </li>
+<li><strong>判趋势</strong>：用20日均线判断方向→均线向上（上升趋势）、均线向下（下跌趋势）、均线走平（震荡市）。  </li>
+<li><strong>找信号</strong>：</li>
+<li>上升趋势：ROC超卖回升（触及个性化超卖阈值后上升）→买入；ROC顶背离+下穿零轴→卖出。  </li>
+<li>下跌趋势：ROC超买回落（触及个性化超买阈值后下降）→卖出；ROC底背离+上穿零轴→轻仓试买。  </li>
+<li>震荡市：ROC超卖→买入，ROC超买→卖出，依托区间高低点操作。  </li>
+<li><strong>验信号</strong>：确认成交量配合（买时放量、卖时放量）、多周期共振（如5日+10日ROC同步超买/超卖）。  </li>
+<li><strong>设风控</strong>：买入后以“ROC跌破个性化超卖阈值或股价破近期低点”止损；卖出后以“ROC突破个性化超买阈值或股价破近期高点”放弃回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

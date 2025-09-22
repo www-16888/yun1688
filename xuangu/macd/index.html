@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>MACD（异同移动平均线）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#macd" class="nav-link">MACD（异同移动平均线）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#macd_1" class="nav-link">一、MACD核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#macd3" class="nav-link">二、MACD选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#macd_2" class="nav-link">三、MACD选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="macd">MACD（异同移动平均线）选股方法与核心要点</h1>
+<p>MACD（异同移动平均线）是基于MA（移动平均线）发展而来的技术指标，通过计算短期与长期均线的差值，反映股价趋势的动能与潜在反转信号，兼具趋势判断与动量分析功能，适合识别中期趋势变化。</p>
+<h2 id="macd_1">一、MACD核心逻辑</h2>
+<p>MACD由三条线和一个柱状体组成，核心构成包括：
+- <strong>DIFF（差离值）</strong>：短期EMA（指数移动平均线，通常为12日）与长期EMA（通常为26日）的差值，反映短期与长期趋势的偏离程度。
+- <strong>DEA（异同平均数）</strong>：DIFF的移动平均线（通常为9日），作为DIFF的平滑线，辅助判断趋势稳定性。
+- <strong>MACD柱状体</strong>：DIFF与DEA的差值，柱状体的长短代表多空动能的强弱（红柱为多头动能，绿柱为空头动能）。</p>
+<p>核心原则：DIFF与DEA在零轴上方=多头趋势（市场整体偏强）；在零轴下方=空头趋势（市场整体偏弱）；柱状体由短变长=动能增强；由长变短=动能减弱。</p>
+<h2 id="macd3">二、MACD选股的3种核心方法</h2>
+<h3 id="1-macd">1. MACD金叉选股（基础，抓趋势启动）</h3>
+<ul>
+<li><strong>逻辑</strong>：DIFF线从下往上穿过DEA线（即“金叉”），代表短期趋势动能超过长期趋势，多头力量开始占优，趋势可能由弱转强。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“技术指标选股-MACD金叉”；</li>
+<li>设置条件：① DIFF＞DEA（当日形成金叉）；② 前1日DIFF＜DEA（确认“上穿”动作）；③ 金叉发生在零轴附近或上方（零轴上方金叉更可靠，避免空头趋势中的弱势反弹）；</li>
+<li>执行选股，筛选趋势启动初期的标的。</li>
+</ul>
+<h3 id="2">2. 零轴上二次金叉选股（进阶，抓强势延续）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价上涨过程中，MACD在零轴上方首次金叉后短暂回调，随后再次形成金叉（二次金叉），代表多头动能未竭，趋势有望延续，属于“强势回调后的再启动”信号。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-MACD”；</li>
+<li>设置条件：① 当前形成金叉（DIFF上穿DEA）；② 前一次金叉发生在30个交易日内；③ 两次金叉均位于零轴上方；④ 回调过程中DIFF未跌破DEA太多（或绿柱较短），未出现明显空头动能释放；</li>
+<li>执行选股，筛选强势趋势中回调结束的标的。</li>
+</ul>
+<h3 id="3-macd">3. MACD底背离选股（高阶，抓趋势反转）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价创出新低，但MACD指标（DIFF或柱状体）未同步创出新低（甚至走高），形成“底背离”，代表空头动能衰竭，趋势可能由跌转升，属于潜在反转信号。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-MACD背离”；</li>
+<li>设置条件：① 股价收盘价创60日新低；② DIFF值未创60日新低（或柱状体绿柱缩短）；③ 背离后出现金叉（确认反转动能）；</li>
+<li>执行选股，筛选下跌趋势末端可能反转的标的。</li>
+</ul>
+<h2 id="macd_2">三、MACD选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>区分金叉有效性</strong>：零轴下方的金叉（空头趋势中的金叉）多为反弹信号，持续性差；零轴上方的金叉（多头趋势中的金叉）更可能是趋势延续，可靠性更高，小白应优先选择后者。</li>
+<li><strong>警惕高位顶背离</strong>：股价创新高但MACD未同步新高（顶背离），代表多头动能不足，可能出现趋势反转，此时即使有金叉也不宜追涨。</li>
+<li><strong>结合成交量判断</strong>：金叉或底背离出现时，若成交量同步放大，说明资金进场配合，信号更真实；若缩量，则可能是“假信号”，需谨慎。</li>
+<li><strong>避免单一依赖</strong>：MACD反映的是价格趋势，需结合基本面（如公司业绩、行业景气度）排除垃圾股，避免因指标信号买入存在退市风险的标的。</li>
+<li><strong>设置止损规则</strong>：以“金叉位置的最低价”或“近期支撑位”作为止损线，若股价跌破且MACD出现死叉（DIFF下穿DEA），应果断止损，控制风险。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

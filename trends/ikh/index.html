@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Ichimoku Kinko Hyo（IKH，一目均衡表）深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#ichimoku-kinko-hyoikh" class="nav-link">Ichimoku Kinko Hyo（IKH，一目均衡表）深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_13" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_14" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="ichimoku-kinko-hyoikh">Ichimoku Kinko Hyo（IKH，一目均衡表）深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念：</h3>
+<p>Ichimoku Kinko Hyo（简称IKH，中文译为“一目均衡表”）由日本分析师本间宗久（Munehisa Homma）在18世纪基于大米交易经验创立，是一种<strong>集趋势判断、支撑阻力识别、波动区间预测于一体的综合性技术指标</strong>。它并非单一曲线，而是通过“五组指标线+两个区间”构建的“行情全景图”，能同时反映“当前趋势方向、短期/中期支撑阻力、未来潜在波动范围”，属于滞后性低、信息密度极高的技术工具。</p>
+<p>IKH的核心逻辑是“价格沿趋势运行时，会受到过去、现在和未来的支撑阻力影响”——通过整合不同周期的价格数据，将“趋势、支撑、波动”三大维度信息直观呈现，帮助交易者快速判断“行情是否健康、入场点是否安全、趋势是否延续”，尤其适合捕捉趋势中的回调机会和震荡后的突破信号。</p>
+<ul>
+<li>“五组指标线”：构成IKH的核心骨架，分别对应不同周期的价格均值，覆盖短期、中期趋势；</li>
+<li>“两个区间”：通过指标线交叉形成的“云层”，既是支撑阻力区域，也是趋势强弱的“晴雨表”；</li>
+<li>“前瞻性”：区别于MA、MACD等仅反映历史数据的指标，IKH的“未来云层”（Senkou Span A/B）可预测未来26周期的潜在波动范围，为中长期交易提供方向参考。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑：</h3>
+<p>IKH的核心是“五線二雲”（五条线+两个云层），所有指标线均基于“收盘价”计算，默认参数为（9, 26, 52）——这是本间宗久结合大米交易周期总结的经典参数，分别对应短期（9周期）、中期（26周期）、长期（52周期）趋势。</p>
+<h4 id="1">1. 核心组件拆解（五線二雲）</h4>
+<table>
+<thead>
+<tr>
+<th>组件名称</th>
+<th>日文/英文表述</th>
+<th>计算逻辑（以日线周期为例）</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>转换线（短期趋势）</td>
+<td>Tenkan-sen (Conversion Line)</td>
+<td>（过去9个交易日的最高价 + 过去9个交易日的最低价）÷ 2</td>
+<td>反映短期趋势方向——向上=短期多头，向下=短期空头；与基准线交叉产生“短期信号”</td>
+</tr>
+<tr>
+<td>基准线（中期趋势）</td>
+<td>Kijun-sen (Base Line)</td>
+<td>（过去26个交易日的最高价 + 过去26个交易日的最低价）÷ 2</td>
+<td>反映中期趋势方向——向上=中期多头，向下=中期空头；是核心支撑/阻力位，比转换线更稳定</td>
+</tr>
+<tr>
+<td>先行跨度A（云层上沿）</td>
+<td>Senkou Span A (Leading Span A)</td>
+<td>（转换线 + 基准线）÷ 2，<strong>向右平移26个交易日</strong></td>
+<td>构成“未来云层”的上沿，是未来26周期的中期支撑位（多头趋势中）或阻力位（空头趋势中）</td>
+</tr>
+<tr>
+<td>先行跨度B（云层下沿）</td>
+<td>Senkou Span B (Leading Span B)</td>
+<td>（过去52个交易日的最高价 + 过去52个交易日的最低价）÷ 2，<strong>向右平移26个交易日</strong></td>
+<td>构成“未来云层”的下沿，是未来26周期的长期支撑位（多头趋势中）或阻力位（空头趋势中），强度比先行跨度A高</td>
+</tr>
+<tr>
+<td>延迟线（趋势验证）</td>
+<td>Chikou Span (Lagging Span)</td>
+<td>当日收盘价，<strong>向左平移26个交易日</strong>（即当前收盘价对应26个交易日之前的K线位置）</td>
+<td>验证趋势有效性——若延迟线在26日前的K线收盘价上方，说明当前多头趋势健康；反之则空头趋势健康</td>
+</tr>
+<tr>
+<td>云层（波动区间）</td>
+<td>Kumo (Cloud)</td>
+<td>先行跨度A与先行跨度B之间的区域——<br>- 若A在B上方，为“上升云层”（多头友好）；<br>- 若B在A上方，为“下降云层”（空头友好）</td>
+<td>核心支撑阻力区间——价格在云层上方=多头趋势，下方=空头趋势，穿越云层=趋势反转信号；云层厚度（A与B间距）越大，支撑/阻力越强</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与周期适配</h4>
+<p>IKH的默认参数（9,26,52）是通用选择，不同交易周期需调整参数以贴合行情节奏，避免信号滞后或失真：
+- 短线交易（15分钟/1小时，日内期货）：参数（5, 13, 26）——缩短周期让指标更灵敏，快速捕捉日内短期趋势；
+- 中短线交易（4小时/日线，股票波段）：参数（9, 26, 52）（默认）——平衡灵敏度与稳定性，覆盖1-2个月的中期趋势；
+- 中长线交易（周线/月线，指数投资）：参数（18, 52, 104）——延长周期过滤短期噪音，反映6个月以上的长期趋势；</p>
+<blockquote>
+<p>注意：IKH的“平移周期”与“基准线周期”一致（均为26周期），这是本间宗久的核心设计——通过将未来云层和延迟线平移26周期，实现“用过去数据验证现在、用现在数据预测未来”的逻辑闭环，调整参数时需保持“平移周期=基准线周期”（如参数13,26,52时，平移周期为26）。</p>
+</blockquote>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>IKH的核心价值在于<strong>用“一张图表整合所有趋势信息”，解决了“多指标叠加导致信号混乱”的痛点</strong>。传统技术分析需同时看MA、支撑阻力、趋势线等多个工具，而IKH通过“五線二雲”将“短期/中期趋势、支撑阻力、趋势验证、未来预测”融为一体，具体体现在三大不可替代的功能：</p>
+<h3 id="1-ma">1. 一站式趋势判断（比单一MA更全面）</h3>
+<p>IKH通过“多维度指标联动”，能精准识别趋势方向与强度，避免单一指标的片面性：
+- 多头趋势确认：价格在云层上方 + 转换线在基准线上方 + 延迟线在26日前K线上方 + 上升云层（A在B上）——四重信号验证，多头趋势健康；
+- 空头趋势确认：价格在云层下方 + 转换线在基准线下方 + 延迟线在26日前K线下方 + 下降云层（B在A上）——四重信号验证，空头趋势健康；
+- 趋势强度判断：云层厚度越大（A与B间距宽），趋势越强（支撑/阻力越稳固）；转换线与基准线间距越大，短期趋势动能越强；反之则趋势弱，易反转。</p>
+<h3 id="2_1">2. 动态支撑阻力（比静态水平位更精准）</h3>
+<p>IKH的“云层+转换线+基准线”构成“多层动态支撑阻力体系”，覆盖短期、中期、长期需求，适配不同行情：
+- 短期支撑/阻力：转换线——价格回调至转换线，若趋势健康（多头在云层上），则转换线为短期支撑，可加仓；
+- 中期支撑/阻力：基准线——价格回调至基准线，是中期趋势的核心支撑（多头）或阻力（空头），突破基准线预示短期趋势反转；
+- 长期支撑/阻力：云层——价格跌破/突破云层，是中长期趋势反转的信号；上升云层的B线（长期支撑）比A线（中期支撑）更强，跌破B线意味着长期多头趋势结束。</p>
+<h3 id="3">3. 前瞻性趋势预测（比布林带更具导向性）</h3>
+<p>IKH的“未来云层”是区别于其他指标的核心优势——通过提前26周期呈现潜在波动范围，为中长期交易提供明确方向：
+- 多头趋势中：未来云层（A在B上）是“上涨过程中的潜在支撑区间”，若价格回调至未来云层的A线或B线，可提前规划加仓点；
+- 空头趋势中：未来云层（B在A上）是“下跌过程中的潜在阻力区间”，若价格反弹至未来云层的A线或B线，可提前规划加仓点；
+- 突破预警：若未来云层从“上升”转为“下降”（A线下穿B线），预示中期趋势可能反转，需提前警惕，避免高位站岗。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>IKH的用法核心是“多信号联动验证”——单一指标线（如转换线交叉基准线）不足以构成交易信号，需结合“价格与云层的位置、延迟线状态、云层方向”综合判断。以下是三种经典实战用法，覆盖“趋势跟踪、趋势反转、震荡突破”三大场景：</p>
+<h3 id="_6">用法一：趋势跟踪（顺大势，抓回调加仓）</h3>
+<p>核心逻辑是“在健康趋势中，依托支撑位加仓”，适合明确的多头/空头趋势（价格在云层外，云层方向与趋势一致）。</p>
+<h4 id="_7">多头趋势跟踪（价格在上升云层上方）</h4>
+<ul>
+<li>步骤1：确认趋势健康——</li>
+<li>价格持续在上升云层（A在B上）上方运行；</li>
+<li>转换线在基准线上方，且两条线均向上倾斜；</li>
+<li>延迟线在26日前的K线收盘价上方（验证趋势有效）；</li>
+<li>步骤2：找加仓时机（回调支撑位）——</li>
+<li>一级支撑（短期）：价格回调至转换线附近，且不跌破转换线，同时出现看涨K线（如锤子线），适合轻仓加仓；</li>
+<li>二级支撑（中期）：价格回调至基准线附近，且不跌破基准线，适合重仓加仓（基准线支撑强度高于转换线）；</li>
+<li>三级支撑（长期）：价格回调至未来云层的A线附近，若云层厚度大，支撑更稳固，是趋势中的“黄金加仓点”；</li>
+<li>步骤3：止损止盈设置——</li>
+<li>止损：加仓价下方的最近支撑位（如一级支撑加仓，止损设为转换线下方；二级支撑加仓，止损设为基准线下方）；若跌破未来云层的B线，无论止损是否触发，均清仓（长期趋势反转）；</li>
+<li>止盈：参考未来云层的上沿（A线），或按ATR止盈（如3倍ATR），避免过早止盈；</li>
+</ul>
+<h4 id="_8">空头趋势跟踪（价格在下降云层下方）</h4>
+<ul>
+<li>步骤1：确认趋势健康——</li>
+<li>价格持续在下降云层（B在A上）下方运行；</li>
+<li>转换线在基准线下方，且两条线均向下倾斜；</li>
+<li>延迟线在26日前的K线收盘价下方；</li>
+<li>步骤2：找加仓时机（反弹阻力位）——</li>
+<li>一级阻力（短期）：价格反弹至转换线附近，且不突破转换线，出现看跌K线（如流星线），轻仓加仓；</li>
+<li>二级阻力（中期）：价格反弹至基准线附近，且不突破基准线，重仓加仓；</li>
+<li>三级阻力（长期）：价格反弹至未来云层的A线附近，云层厚度大则阻力强，是“黄金加仓点”；</li>
+<li>步骤3：止损止盈设置——</li>
+<li>止损：加仓价上方的最近阻力位；若突破未来云层的B线，清仓（长期趋势反转）；</li>
+<li>止盈：参考未来云层的下沿（B线），或3倍ATR止盈。</li>
+</ul>
+<h3 id="_9">用法二：趋势反转（抓云层穿越，做趋势切换）</h3>
+<p>核心逻辑是“价格穿越云层+多指标共振，确认趋势反转”，适合震荡后的趋势启动或原有趋势的结束，是IKH最经典的反转信号。</p>
+<h4 id="_10">多头反转（空头转多头）</h4>
+<ul>
+<li>反转信号确认（需满足3个条件）：</li>
+<li>价格从云层下方<strong>向上穿越云层</strong>（收盘价在云层上方），且穿越时伴随成交量放大（股票）或持仓量增加（期货）；</li>
+<li>转换线从下方<strong>上穿基准线</strong>（“金叉”），且两条线开始向上倾斜；</li>
+<li>延迟线从26日前K线下方<strong>上穿至上方</strong>（验证价格上涨有效，非假突破）；</li>
+<li>入场时机：</li>
+<li>首次入场：价格穿越云层后，回踩云层上沿（A线）且不跌破，此时是“反转后的确认买点”；</li>
+<li>加仓时机：转换线金叉基准线后，价格突破近期高点，同时未来云层从“下降”转为“上升”（A线上穿B线）；</li>
+<li>止损设置：入场价下方的云层下沿（B线），若价格重新跌破B线，反转失效，止损离场。</li>
+</ul>
+<h4 id="_11">空头反转（多头转空头）</h4>
+<ul>
+<li>反转信号确认（需满足3个条件）：</li>
+<li>价格从云层上方<strong>向下穿越云层</strong>（收盘价在云层下方），且穿越时伴随成交量放大；</li>
+<li>转换线从上方<strong>下穿基准线</strong>（“死叉”），且两条线开始向下倾斜；</li>
+<li>延迟线从26日前K线上方<strong>下穿至下方</strong>；</li>
+<li>入场时机：</li>
+<li>首次入场：价格穿越云层后，反弹至云层下沿（A线）且不突破，是“反转后的确认卖点”；</li>
+<li>加仓时机：转换线死叉基准线后，价格跌破近期低点，同时未来云层从“上升”转为“下降”（A线下穿B线）；</li>
+<li>止损设置：入场价上方的云层上沿（B线），若价格重新突破B线，反转失效，止损离场。</li>
+</ul>
+<h3 id="_12">用法三：震荡突破（抓云层内波动，做区间突破）</h3>
+<p>核心逻辑是“价格在云层内震荡时，以云层边界为突破信号”，适合横盘行情（价格在云层内来回波动，转换线与基准线频繁交叉）。</p>
+<ul>
+<li>步骤1：确认震荡状态——</li>
+<li>价格在云层内部运行（不突破A线和B线），云层厚度较薄（A与B间距窄，多空平衡）；</li>
+<li>转换线与基准线在低位反复交叉，无明确方向；</li>
+<li>延迟线在26日前K线附近波动（趋势无延续性）；</li>
+<li>步骤2：找突破时机——</li>
+<li>向上突破信号：价格突破云层上沿（A线），且收盘价在A线上方，同时转换线上穿基准线，成交量放大；</li>
+<li>向下突破信号：价格跌破云层下沿（B线），且收盘价在B线下方，同时转换线下穿基准线，成交量放大；</li>
+<li>步骤3：止损止盈设置——</li>
+<li>止损：向上突破止损设为B线下方；向下突破止损设为A线上方；</li>
+<li>止盈：突破后的目标位=云层厚度（A-B绝对值）×2 + 突破点（向上突破），或突破点 - 云层厚度×2（向下突破）；若突破后趋势加速，可结合ATR止盈（3倍ATR）。</li>
+</ul>
+<h2 id="_13">高级技巧与注意事项</h2>
+<h3 id="1_1">1. 指标联动：提升信号成功率</h3>
+<p>IKH的核心是“多信号共振”，单一信号可靠性低，需结合以下工具验证，提升交易胜率：
+- 与成交量结合：
+  - 价格穿越云层时，成交量放大（股票）或持仓量增加（期货），突破有效性提升30%以上；若缩量突破，大概率是假突破；
+  - 多头趋势中，价格回调至基准线时成交量缩窄（卖盘减少），加仓信号更可靠；
+- 与ADX结合：
+  - 趋势跟踪时，ADX≥20（有趋势），且ADX向上，说明趋势强度增强，加仓风险低；
+  - 震荡突破时，ADX&lt;20（无趋势），突破后ADX升至20以上，确认新趋势启动；
+- 与价格形态结合：
+  - 多头反转时，价格穿越云层后形成“头肩底”“双底”，反转概率更高；
+  - 空头反转时，价格穿越云层后形成“头肩顶”“双顶”，反转概率更高。</p>
+<h3 id="2-ikh">2. 缺点与警示：避开这些“IKH陷阱”</h3>
+<p>IKH虽信息全面，但存在天生局限性，尤其在“极端行情”和“高波动品种”中易产生误导：
+- 高波动品种信号滞后：如加密货币、原油期货，价格易出现“跳空穿越云层”（开盘价直接突破云层），导致IKH的“穿越信号”滞后，此时需结合短期周期（如1小时IKH）确认突破有效性；
+- 极端行情后云层失效：在“黑天鹅事件”（如单日涨停/跌停）后，价格可能远离云层，此时未来云层的支撑/阻力参考价值降低，需等待价格回调至云层附近再判断趋势；
+- 小周期IKH信号噪音多：15分钟以下的超短周期中，转换线与基准线频繁交叉，云层厚度薄，突破信号多为假突破，不建议使用；
+- 不要过度依赖未来云层：未来云层是“基于当前数据的预测”，若未来26周期内出现突发消息（如政策变化），预测会失效，需结合实时行情调整策略，避免“死守未来支撑/阻力”。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：只看转换线与基准线交叉——忽略“价格与云层的位置”，例如转换线金叉基准线，但价格仍在云层下方，此时金叉是“无效信号”，反而可能是反弹高点；</li>
+<li>误区2：忽略延迟线的验证作用——价格突破云层后，若延迟线未同步穿越26日前K线，说明突破是“假突破”（如价格上涨但延迟线仍在下方，可能是短期反弹）；</li>
+<li>误区3：云层厚度“越厚越好”——认为厚云层的支撑/阻力一定强，实则厚云层多出现于“趋势末期”（如多头趋势尾声，A与B间距扩大），此时突破云层的反转风险更高；</li>
+<li>误区4：所有周期信号权重一样——日线级别的IKH信号（中长期趋势）优先级高于1小时级别的IKH信号（短期趋势），若日线是多头趋势，即使1小时出现空头信号，也应优先做多，避免逆势交易。</li>
+</ul>
+<h2 id="_14">总结：</h2>
+<p>IKH是技术分析中的“行情全景图”——它用“五線二雲”将“短期/中期趋势、支撑阻力、趋势验证、未来预测”融为一体，既避免了多指标叠加的信号混乱，又解决了单一指标的片面性，尤其适合中长线趋势交易者和主观交易者。</p>
+<p>但IKH并非“完美信号机”，高波动品种适配差、小周期噪音多是其无法回避的缺点。掌握IKH的核心，不在于“记住所有组件”，而在于“理解多信号联动的逻辑”——价格在云层上+转换线在基准线上+延迟线在上方，才是健康多头；反之则是健康空头；穿越云层+多指标共振，才是有效反转。始终以“趋势为核心，信号为辅助”，并结合成交量、ADX验证，才能让IKH成为交易中的“精准导航仪”。</p>
+<p><a href="../">返回趋势指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

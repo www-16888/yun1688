@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>MTM（动量指标）实战用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#mtm" class="nav-link">MTM（动量指标）实战用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#mtm_1" class="nav-link">一、MTM 核心构成与计算（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mtm_2" class="nav-link">二、MTM 核心买卖信号（四大经典场景）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mtm_3" class="nav-link">三、MTM 进阶用法：背离信号（抓趋势拐点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mtm_4" class="nav-link">四、MTM 实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#mtm_5" class="nav-link">五、MTM 买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="mtm">MTM（动量指标）实战用法全解析</h1>
+<p>MTM（Momentum，动量指标）是技术分析中经典的<strong>价格动量追踪工具</strong>，通过计算“当前股价与N日前股价的绝对差值”，直观反映价格变化的“速度与方向”，核心逻辑是“价格的动量变化先于趋势变化”——当动量由强转弱或由弱转强时，往往是趋势反转或加速的信号，进而指导买卖决策。其应用需结合“动量方向、超买超卖、背离信号”三大维度，以下是详细操作逻辑与实战技巧。</p>
+<h2 id="mtm_1">一、MTM 核心构成与计算（基础必知）</h2>
+<p>MTM的核心是“价格差值”，通过单一数值或“MTM线+信号线”的组合，呈现价格动量状态，需先明确计算逻辑与参数设置：</p>
+<h3 id="1">1. 计算公式（核心两种形式）</h3>
+<p>MTM指标有“绝对动量”和“相对动量”两种常用计算方式，不同软件默认形式可能不同，需注意区分：
+- <strong>形式1：绝对动量（默认常用）</strong><br />
+<strong>MTM（N日）= 当日收盘价 - N日前收盘价</strong><br />
+  - 若MTM为正值：当前价格高于N日前价格，呈<strong>上升动量</strong>，数值越大，上升力度越强。<br />
+  - 若MTM为负值：当前价格低于N日前价格，呈<strong>下降动量</strong>，数值越小（绝对值越大），下降力度越强。<br />
+  - 零轴（MTM=0）：当前价格与N日前价格持平，是多空力量的临时平衡点。</p>
+<ul>
+<li><strong>形式2：相对动量（部分软件可选）</strong><br />
+<strong>MTM（N日）= [（当日收盘价 - N日前收盘价）÷ N日前收盘价] × 100%</strong><br />
+  （本质与ROC指标计算逻辑一致，通过百分比更直观反映动量幅度，应用逻辑可参考ROC）</li>
+</ul>
+<h3 id="2">2. 常用周期与指标组合</h3>
+<p>MTM实战中通常以“MTM线+信号线”的组合使用，通过两者交叉过滤杂波，常用参数如下：
+| 周期类型 | 核心参数（N日） | 信号线参数（M日） | 动量反映周期 | 适用场景                          |
+|----------|-----------------|-------------------|--------------|-----------------------------------|
+| 短期MTM | 5、6            | 2、3              | 1周内        | 短线交易（日内、隔日，捕捉短期脉冲） |
+| 中期MTM | 10、12          | 4、5              | 2-3周        | 中线交易（1-4周，判断波段动量）    |
+| 长期MTM | 20、24          | 8、10             | 1个月以上    | 长线投资（1-6个月，识别趋势拐点）  |
+- <strong>信号线</strong>：通常为MTM线的M日移动平均线（如10日MTM线搭配4日信号线），作用是平滑MTM线波动，减少假信号。</p>
+<h2 id="mtm_2">二、MTM 核心买卖信号（四大经典场景）</h2>
+<p>MTM的核心信号围绕“交叉信号、超买超卖、零轴穿越”展开，需结合趋势方向判断有效性，避免逆势操作。</p>
+<h3 id="1-1mtm">1. 买入信号1：MTM线金叉信号线（动量转强）</h3>
+<h4 id="_1">信号逻辑：</h4>
+<p>MTM线（快速动量线）从下向上穿过信号线（慢速动量线），说明短期价格动量由弱转强，若此时MTM整体处于低位或零轴附近，买入信号更可靠，属于“动量启动买点”。</p>
+<h4 id="3">有效金叉的3个条件：</h4>
+<ul>
+<li>条件1：金叉发生在<strong>MTM零轴下方或零轴附近</strong>（零轴下方金叉是“下降动量转上升动量”，反转意义更强；零轴上方金叉是“上升动量延续”，适合加仓）。  </li>
+<li>条件2：金叉时，MTM线需从“负值区间回升”或“低位横盘后突破”（避免在MTM高位反复金叉，可能是趋势尾声）。  </li>
+<li>条件3：股价同步配合（如金叉当日股价收阳，且收盘价高于前一日，证明价格与动量共振）。</li>
+</ul>
+<h4 id="_2">实战案例：</h4>
+<p>某股票日线级别中，10日MTM线（参数N=10）从-2元（负值区间）回升至-0.5元，向上穿过4日信号线（从-1.2元升至-0.8元），形成金叉；当日股价收阳，收盘价比前一日上涨2%，且MTM整体处于零轴附近，可视为有效买入信号，短期动量向上概率高。</p>
+<h3 id="2-1mtm">2. 卖出信号1：MTM线死叉信号线（动量转弱）</h3>
+<h4 id="_3">信号逻辑：</h4>
+<p>MTM线（快速动量线）从上向下穿过信号线（慢速动量线），说明短期价格动量由强转弱，若此时MTM整体处于高位或零轴附近，卖出信号更可靠，属于“动量衰减卖点”。</p>
+<h4 id="3_1">有效死叉的3个条件：</h4>
+<ul>
+<li>条件1：死叉发生在<strong>MTM零轴上方或零轴附近</strong>（零轴上方死叉是“上升动量转下降动量”，反转意义更强；零轴下方死叉是“下降动量延续”，适合止损）。  </li>
+<li>条件2：死叉时，MTM线需从“正值区间回落”或“高位横盘后跌破”（避免在MTM低位反复死叉，可能是趋势尾声）。  </li>
+<li>条件3：股价同步配合（如死叉当日股价收阴，且收盘价低于前一日，证明价格与动量共振）。</li>
+</ul>
+<h4 id="_4">实战案例：</h4>
+<p>某股票日线级别中，10日MTM线（参数N=10）从3元（正值区间）回落至1.2元，向下穿过4日信号线（从2.5元降至1.8元），形成死叉；当日股价收阴，收盘价比前一日下跌3%，且MTM整体处于零轴上方，可视为有效卖出信号，短期动量向下概率高。</p>
+<h3 id="3-2mtm">3. 买入信号2：超卖状态+MTM回升（低吸核心）</h3>
+<h4 id="_5">信号逻辑：</h4>
+<p>当MTM数值跌至“超卖阈值”以下，说明价格短期内下跌过快，动量过度衰竭，市场情绪悲观，价格有反弹需求；若MTM随后从超卖区间回升（如从-5元升至-2元），则确认超卖买入信号。</p>
+<h4 id="_6">通用超卖阈值（需结合周期与标的调整）：</h4>
+<ul>
+<li>短期MTM（5日）：≤ -（3%-5%对应的股价差值）（如股价10元，超卖阈值约-0.3元至-0.5元；小盘股波动大，可放宽至-0.8元）。  </li>
+<li>中期MTM（10日）：≤ -（5%-8%对应的股价差值）（如股价20元，超卖阈值约-1元至-1.6元；指数类标的更保守，-1元即可预警）。  </li>
+<li>长期MTM（20日）：≤ -（8%-12%对应的股价差值）（如股价30元，超卖阈值约-2.4元至-3.6元；极端熊市中可更低，但需结合基本面）。</li>
+</ul>
+<h4 id="_7">信号确认：</h4>
+<p>MTM触及超卖阈值后，需出现“连续2日回升”，且股价同步收出止跌K线（如锤子线、阳包阴），避免“一次性反弹后继续下跌”。</p>
+<h3 id="4-2mtm">4. 卖出信号2：超买状态+MTM回落（高抛核心）</h3>
+<h4 id="_8">信号逻辑：</h4>
+<p>当MTM数值升至“超买阈值”以上，说明价格短期内上涨过快，动量过度消耗，市场情绪乐观，价格有回调需求；若MTM随后从超买区间回落（如从5元降至2元），则确认超买卖出信号。</p>
+<h4 id="_9">通用超买阈值（需结合周期与标的调整）：</h4>
+<ul>
+<li>短期MTM（5日）：≥ 3%-5%对应的股价差值（如股价10元，超买阈值约0.3元至0.5元；小盘股可放宽至0.8元）。  </li>
+<li>中期MTM（10日）：≥ 5%-8%对应的股价差值（如股价20元，超买阈值约1元至1.6元；热门题材股可略高，1.6元为强信号）。  </li>
+<li>长期MTM（20日）：≥ 8%-12%对应的股价差值（如股价30元，超买阈值约2.4元至3.6元；牛市中可更高，但需警惕动量衰竭）。</li>
+</ul>
+<h4 id="_10">信号确认：</h4>
+<p>MTM触及超买阈值后，需出现“连续2日回落”，且股价同步收出滞涨K线（如流星线、阴包阳），避免“一次性回调后继续上涨”。</p>
+<h2 id="mtm_3">三、MTM 进阶用法：背离信号（抓趋势拐点）</h2>
+<p>MTM背离是“股价走势与MTM动量走势相反”的现象，是趋势即将反转的强烈信号，比交叉、超买超卖信号更提前，适合捕捉波段顶部或底部。</p>
+<h3 id="1_1">1. 底背离（买入拐点）</h3>
+<ul>
+<li><strong>定义</strong>：股价创新低（如日线价格跌至8元，低于前低9元），但MTM未创新低（如10日MTM前低-1.5元，本次最低-1.2元），说明“下跌动量减弱，多头即将反攻”。  </li>
+<li><strong>确认条件</strong>：底背离出现后，需等待MTM线“金叉信号线”或“突破零轴”，避免“背离后继续背离”（如股价再创新低，但MTM仍不创新低，需二次金叉确认）。  </li>
+<li><strong>实战场景</strong>：某股票周线级别中，价格从12元跌至10元（创新低），10日MTM从-2元跌至-1.8元（未创新低），形成底背离；随后日线MTM线金叉信号线，可分批建仓。</li>
+</ul>
+<h3 id="2_1">2. 顶背离（卖出拐点）</h3>
+<ul>
+<li><strong>定义</strong>：股价创新高（如日线价格涨至25元，高于前高23元），但MTM未创新高（如10日MTM前高2.5元，本次最高2.2元），说明“上升动量减弱，空头即将反攻”。  </li>
+<li><strong>确认条件</strong>：顶背离出现后，需等待MTM线“死叉信号线”或“跌破零轴”，避免“背离后继续背离”（如股价再创新高，但MTM仍不创新高，需二次死叉确认）。  </li>
+<li><strong>实战场景</strong>：某股票周线级别中，价格从20元涨至22元（创新高），10日MTM从2.3元涨至2.1元（未创新高），形成顶背离；随后日线MTM线死叉信号线，需果断减仓。</li>
+</ul>
+<h2 id="mtm_4">四、MTM 实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不机械依赖绝对阈值</strong>：MTM的超买超卖阈值是“相对值”（与股价挂钩），需根据标的历史波动调整——如股价5元的小盘股，MTM=±0.3元可能已超买超卖；股价100元的蓝筹股，MTM=±5元才达超买超卖，需回溯1-2年数据确定“个性化阈值”。  </li>
+<li><strong>避免单一使用MTM</strong>：MTM是“动量指标”，在强趋势市中易出现“超买后继续超买”“超卖后继续超卖”（如牛市中MTM超买仍随趋势上升），需搭配MACD（趋势方向）、均线（支撑压力）综合判断（如MTM超卖+MACD金叉，买入信号更可靠）。  </li>
+<li><strong>区分“趋势市”与“震荡市”</strong>：</li>
+<li>趋势市（股价沿均线持续上涨/下跌）：MTM的“零轴穿越”“金叉死叉”信号更有效，超买超卖信号需谨慎（避免逆势操作）。  </li>
+<li>震荡市（股价在区间内波动）：MTM的“超买超卖”信号更有效，可做区间高抛低吸，忽略频繁的金叉死叉假信号。  </li>
+<li><strong>参数适配交易周期</strong>：短线交易用5/6日MTM（搭配2/3日信号线），灵敏度高但杂波多；中线交易用10/12日MTM（搭配4/5日信号线），平衡灵敏度与稳定性；长线用20/24日MTM（搭配8/10日信号线），减少短期波动干扰。</li>
+</ol>
+<h2 id="mtm_5">五、MTM 买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>定参数</strong>：短线选5/6日MTM（信号线2/3日），中线选10/12日MTM（信号线4/5日），长线选20/24日MTM（信号线8/10日）。  </li>
+<li><strong>判趋势</strong>：用20日均线判断方向→均线向上（上升趋势）、均线向下（下跌趋势）、均线走平（震荡市）。  </li>
+<li><strong>找信号</strong>：</li>
+<li>上升趋势：MTM超卖回升+金叉信号线→买入；MTM顶背离+死叉信号线→卖出。  </li>
+<li>下跌趋势：MTM超买回落+死叉信号线→卖出；MTM底背离+金叉信号线→轻仓试买。  </li>
+<li>震荡市：MTM超卖→买入，MTM超买→卖出，依托区间高低点操作。  </li>
+<li><strong>验信号</strong>：确认股价与MTM共振（买时收阳、卖时收阴）、成交量配合（买时放量、卖时放量）。  </li>
+<li><strong>设风控</strong>：买入后以“MTM跌破超卖阈值或股价破近期低点”止损；卖出后以“MTM突破超买阈值或股价破近期高点”放弃回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

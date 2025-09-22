@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>威廉姆斯 %R (Williams %R) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#r-williams-r" class="nav-link">威廉姆斯 %R (Williams %R) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_13" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_14" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="r-williams-r">威廉姆斯 %R (Williams %R) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>威廉姆斯 %R（Williams %R，简称W%R）由美国著名交易员拉瑞·威廉姆斯（Larry Williams）于1973年提出，是一种<strong>基于“价格在近期波动区间内的相对位置”判断市场超买超卖状态的震荡指标</strong>。它通过计算“当前价格与近期周期内最高价的距离占区间总幅度的比例”，将结果映射到-100至0的区间内，核心逻辑是“价格下跌时倾向于靠近近期低点（W%R趋近-100），上涨时倾向于靠近近期高点（W%R趋近0）；当价格过度偏离该规律时，市场大概率向区间中部回归”，帮助交易者捕捉极端行情反转、确认趋势动能，属于高灵敏度、侧重“左侧交易”的技术工具。</p>
+<p>W%R的核心优势在于<strong>“提前捕捉价格回归信号”</strong>——与随机指标（Stochastic Oscillator，W%R的变形）相比，它计算逻辑更简洁，直接聚焦“价格与近期高点的距离”，对短期极端波动更敏感，尤其适合在震荡市中捕捉区间拐点，或在趋势市中预警趋势衰竭。</p>
+<ul>
+<li>“区间定义”：-100至0的固定区间对应明确市场状态——<strong>-80以下为超卖区间</strong>（价格接近近期低点，空头过度，大概率反弹），<strong>-20以上为超买区间</strong>（价格接近近期高点，多头过度，大概率回调），-80至-20为中性区间（多空平衡，价格沿趋势运行）；</li>
+<li>“周期逻辑”：默认参数为14期（拉瑞·威廉姆斯原版设定），周期越短，指标对短期波动越灵敏（如9期W%R易频繁进入超买超卖），周期越长，越能反映中长期趋势（如21期W%R信号更稳定）；</li>
+<li>“与随机指标的关联”：W%R与随机指标的%K线计算逻辑相反（W%R = 100 - %K），因此图形呈“镜像关系”——W%R的超卖对应随机指标的超卖，超买对应超买，但W%R更侧重“价格距离近期高点的弱势程度”，信号更偏向左侧。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑</h3>
+<p>W%R的计算围绕“近期高低点区间”和“价格相对位置”展开，核心参数为“计算周期（n）”，默认14期，计算步骤仅需两步，逻辑简洁且可复现。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（周期n=14，当日收盘价=102元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 确定n期高低点区间</td>
+<td>区间上限=过去n个交易日的最高价（Hn）<br>区间下限=过去n个交易日的最低价（Ln）<br>——定义“近期价格波动的范围”</td>
+<td>假设过去14期Hn=110元（区间上限），Ln=95元（区间下限）</td>
+</tr>
+<tr>
+<td>2. 计算W%R值</td>
+<td>W%R = [(Hn - 当日收盘价) / (Hn - Ln)] × (-100)<br>——分子反映“价格与近期高点的距离”，分母为区间总幅度，结果映射到-100至0</td>
+<td>W%R = [(110 - 102) / (110 - 95)] × (-100) = (8/15)×(-100)≈-53.33</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与周期适配</h4>
+<p>W%R的核心参数是“计算周期（n）”，不同周期对应不同的交易场景，需根据“交易风格”和“品种波动率”调整，避免信号滞后或噪音过多：
+- 短线交易（15分钟/1小时，日内期货/股票）：周期设为9-12期——短期周期灵敏度高，能快速捕捉日内极端波动（如1小时9期W%R，适合日内T+0抄底逃顶）；
+- 中短线交易（4小时/日线，股票波段）：周期设为14期（默认）——14期覆盖2周左右行情，平衡灵敏度与稳定性，信号可靠性高；
+- 中长线交易（周线/月线，指数/大宗商品）：周期设为21-28期——长期周期过滤短期噪音，仅捕捉影响中长期趋势的极端行情（如21期W%R跌至-80以下，可能是中期底部）；
+- 波动率适配：高波动品种（加密货币、原油期货）设短周期（9-14期），适配价格快速变化；低波动品种（蓝筹股、国债期货）设长周期（21-28期），减少假信号。</p>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>W%R的核心价值在于<strong>用“价格与近期高点的距离”解决了“左侧交易信号难捕捉”的痛点</strong>。传统指标（如MA、RSI）多为“右侧信号”（需价格突破后确认），而W%R通过-80/-20区间和背离，能在价格未突破关键位时预警极端状态，具体体现在三大不可替代的功能：</p>
+<h3 id="1_1">1. 精准捕捉左侧反转信号（比右侧指标更提前）</h3>
+<p>W%R的-80/-20区间是“左侧交易的精准标尺”，能在价格接近近期高低点时提前标记反转机会：
+- 超卖反转（W%R≤-80）：价格接近近期低点，空头力量释放充分，即使价格未出现明确反转形态（如双底），也大概率触发技术性反弹——例如，股票连续下跌后W%R跌至-85，此时入场属于“左侧抄底”，成本低于右侧突破信号；
+- 超买反转（W%R≥-20）：价格接近近期高点，多头获利盘积累过多，即使价格仍创新高，也大概率回调——例如，期货连续上涨后W%R升至-15，此时离场属于“左侧逃顶”，避免回调损失；
+- 优势：相比MA交叉（需价格突破均线后入场），W%R的左侧信号能提前1-3个周期入场，成本更低；相比随机指标，W%R计算更简洁，信号更直接。</p>
+<h3 id="2_1">2. 提前预警趋势背离（比价格形态更灵敏）</h3>
+<p>“背离”是W%R最核心的功能，能在价格沿趋势运行时，通过“指标与价格的不同步”预警动能衰减，分为“顶背离”和“底背离”：
+- 顶背离（看跌信号）：价格持续创新高，但W%R未同步创新高（即W%R的高点逐步升高，如从-15升至-25）——表明“价格新高但距离近期高点更远”，多头无法推动价格维持强势，上涨趋势即将结束；
+- 底背离（看涨信号）：价格持续创新低，但W%R未同步创新低（即W%R的低点逐步降低，如从-85跌至-75）——表明“价格新低但距离近期高点更近”，空头无法推动价格维持弱势，下跌趋势即将结束；
+- 关键差异：与RSI背离（基于涨跌幅度）不同，W%R背离基于“价格在区间内的位置”，更能反映“价格相对强弱的变化”，在震荡市中准确率更高。</p>
+<h3 id="3">3. 辅助确认区间震荡边界（比支撑阻力更量化）</h3>
+<p>W%R在震荡市中能精准标记“区间上下沿”，帮助交易者把握高抛低吸机会：
+- 震荡市确认：价格在固定区间内波动（高点、低点反复出现），W%R在-80至-20区间内来回穿越（超卖后回升，超买后回落），无持续单边趋势；
+- 区间下沿（买入点）：W%R跌至-80以下（超卖），对应价格触及区间下沿，此时买入风险低（止损仅需设为区间下沿下方）；
+- 区间上沿（卖出点）：W%R升至-20以上（超买），对应价格触及区间上沿，此时卖出收益确定性高（止盈设为区间下沿）；
+- 优势：相比主观判断支撑阻力位，W%R的-80/-20区间提供了量化标准，避免“抄底在半山腰”或“逃顶过早”。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>W%R的用法围绕“左侧反转”“背离预警”“区间震荡”三大场景展开，核心是“超买超卖区间入场，背离信号确认，趋势过滤假信号”。</p>
+<h3 id="_6">用法一：超买超卖左侧交易（震荡市高抛低吸）</h3>
+<p>适用于<strong>明确的区间震荡行情</strong>（价格高点、低点反复，ADX&lt;20），核心是“W%R进入超买/超卖区间时入场，回归中性区间时离场”。</p>
+<h4 id="wr-80">超卖买入（W%R≤-80）</h4>
+<ul>
+<li>入场条件（需满足3个条件）：</li>
+<li>W%R跌至-80以下（超卖区间），且持续1-2个周期（确认极端状态，避免假超卖）；</li>
+<li>价格触及震荡区间下沿（支撑位），且出现看涨K线形态（如锤子线、启明星），增强反转确定性；</li>
+<li>趋势过滤：ADX&lt;20（确认是震荡市，非趋势市超卖）；</li>
+<li>止损止盈：</li>
+<li>止损：区间下沿下方（如支撑位-1%），若价格跌破支撑位，区间失效；</li>
+<li>止盈：目标一为区间上沿（阻力位），目标二为W%R回归至-50（中性区间中部），可分仓止盈。</li>
+</ul>
+<h4 id="wr-20">超买卖出（W%R≥-20）</h4>
+<ul>
+<li>入场条件（需满足3个条件）：</li>
+<li>W%R升至-20以上（超买区间），且持续1-2个周期（确认极端状态）；</li>
+<li>价格触及震荡区间上沿（阻力位），且出现看跌K线形态（如流星线、黄昏星）；</li>
+<li>趋势过滤：ADX&lt;20（确认是震荡市，非趋势市超买）；</li>
+<li>止损止盈：</li>
+<li>止损：区间上沿上方（如阻力位+1%），若价格突破阻力位，区间失效；</li>
+<li>止盈：目标一为区间下沿（支撑位），目标二为W%R回归至-50（中性区间中部）。</li>
+</ul>
+<h3 id="_7">用法二：背离预警趋势反转（趋势市逃顶抄底）</h3>
+<p>适用于<strong>单边趋势行情</strong>（ADX≥20），核心是“价格创新高/新低时，W%R不同步创新高/新低，出现背离后入场”，避免趋势市中单纯按超买超卖交易的逆势亏损。</p>
+<h4 id="_8">底背离买入（下跌趋势反转）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新低（突破过去20日低点），且处于下跌趋势中（MA5&lt;MA20）；</li>
+<li>指标背离：W%R未同步创近期新低（如前低时W%R=-85，当前新低时W%R=-78），表明空头动能衰减；</li>
+<li>信号确认：背离后，W%R从-80以下回升至-70以上（脱离超卖区间），且价格出现看涨K线（如吞没形态）；</li>
+<li>趋势验证：ADX从高位回落（如从40降至30），表明下跌趋势强度减弱；</li>
+<li>入场时机：W%R回升至-50（中性区间）且价格突破前一次反弹高点时入场（右侧确认，降低左侧风险）；</li>
+<li>止损止盈：</li>
+<li>止损：价格新低下方（如新低-2%），若价格重新跌破新低，背离失效；</li>
+<li>止盈：前一次下跌的起点（如过去30日高点），或W%R升至-20以上（超买区间）时部分止盈。</li>
+</ul>
+<h4 id="_9">顶背离卖出（上涨趋势反转）</h4>
+<ul>
+<li>反转信号确认（需满足4个条件）：</li>
+<li>价格层面：价格创近期新高（突破过去20日高点），且处于上涨趋势中（MA5&gt;MA20）；</li>
+<li>指标背离：W%R未同步创近期新高（如前高时W%R=-15，当前新高时W%R=-25），表明多头动能衰减；</li>
+<li>信号确认：背离后，W%R从-20以上回落至-30以下（脱离超买区间），且价格出现看跌K线（如吞没形态）；</li>
+<li>趋势验证：ADX从高位回落（如从40降至30），表明上涨趋势强度减弱；</li>
+<li>入场时机：W%R回落至-50（中性区间）且价格跌破前一次回调低点时入场；</li>
+<li>止损止盈：</li>
+<li>止损：价格新高上方（如新高+2%），若价格重新突破新高，背离失效；</li>
+<li>止盈：前一次上涨的起点（如过去30日低点），或W%R跌至-80以下（超卖区间）时部分止盈。</li>
+</ul>
+<h3 id="_10">用法三：趋势跟踪辅助确认（顺趋势加仓）</h3>
+<p>适用于<strong>强劲单边趋势</strong>（ADX≥30），核心是“用W%R不进入超买/超卖区间确认趋势强度，回调至中性区间下沿/上沿时加仓”，避免逆势操作。</p>
+<h4 id="_11">多头趋势跟踪（顺涨加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在上升通道中（低点上移、高点上移），且持续在MA20上方；</li>
+<li>W%R每次回调不跌破-60（中性区间下沿），且每次上涨能升至-30以上（表明多头能维持价格强势）；</li>
+<li>ADX≥30（趋势强度高，延续性强）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格回调至MA20附近，W%R从-30回落至-60区间（未超卖），且出现看涨K线；</li>
+<li>第二次加仓：价格突破前高，W%R同步升至-20以上（超买区间），且ADX持续上升（趋势加速）；</li>
+<li>止损离场：</li>
+<li>止损：MA20下方（如MA20-1%），或W%R跌破-80（趋势反转信号）；</li>
+<li>离场信号：W%R出现顶背离，或ADX跌破20（趋势结束）。</li>
+</ul>
+<h4 id="_12">空头趋势跟踪（顺跌加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>价格在下降通道中（高点下移、低点下移），且持续在MA20下方；</li>
+<li>W%R每次反弹不突破-40（中性区间上沿），且每次下跌能跌至-70以下（表明空头能维持价格弱势）；</li>
+<li>ADX≥30（趋势强度高，延续性强）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：价格反弹至MA20附近，W%R从-70回升至-40区间（未超买），且出现看跌K线；</li>
+<li>第二次加仓：价格跌破前低，W%R同步跌至-80以下（超卖区间），且ADX持续上升（趋势加速）；</li>
+<li>止损离场：</li>
+<li>止损：MA20上方（如MA20+1%），或W%R突破-20（趋势反转信号）；</li>
+<li>离场信号：W%R出现底背离，或ADX跌破20（趋势结束）。</li>
+</ul>
+<h2 id="_13">高级技巧与注意事项</h2>
+<h3 id="1_2">1. 参数优化：适配不同品种与场景</h3>
+<p>W%R的默认周期（14期）需根据“品种波动率”和“交易目标”调整，确保信号与行情节奏匹配：
+- 高波动品种（加密货币、原油期货）：周期=9-14期——短周期能快速捕捉价格极端波动，避免信号滞后；
+- 中波动品种（股票、黄金）：周期=14期（默认）——平衡灵敏度与稳定性，适合多数波段交易；
+- 低波动品种（蓝筹股、国债期货）：周期=21-28期——长周期过滤小幅波动的噪音，减少假超买超卖；
+- 特殊场景：
+  - 捕捉短期极端行情（如日线3天反弹）：周期=9期，超买超卖区间放宽至-15/-85（避免频繁触发）；
+  - 过滤假信号（如震荡市频繁超买超卖）：周期=21期，超买超卖区间收紧至-25/-75（信号更谨慎）。</p>
+<h3 id="2-wr">2. 缺点与警示：避开这些“W%R陷阱”</h3>
+<p>W%R虽左侧信号优势明显，但存在天生局限性，尤其在“强趋势”和“极端行情”中易产生误导：
+- 强趋势中超买超卖失效：在ADX≥40的强趋势中，W%R可能长期处于超买（多头趋势）或超卖（空头趋势）区间（如多头趋势中W%R=-20持续10个周期），此时“超买不是卖点，超卖不是买点”——若按超买超卖交易，会逆势亏损；
+- 极端行情后信号滞后：在“黑天鹅事件”（如突发利空导致股价暴跌）中，W%R会快速跌至-80以下，但价格可能因恐慌性抛售继续下跌（如超卖后再跌10%），此时左侧入场会“抄底在半山腰”；
+- 小周期噪音多：5分钟以下超短周期中，W%R会因价格小幅波动频繁进入超买超卖（如5分钟W%R=-80后立即回升），信号可靠性低，不建议使用；
+- 单一信号不可信：W%R需与“价格形态+成交量”结合——例如，W%R超卖但价格跌破趋势线，可能是“假反弹”；W%R背离但成交量萎缩，可能是“背离延续”。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：强趋势中按超买超卖交易——在强多头趋势中，W%R≥-20就卖，忽略“趋势延续性”；正确做法是“强趋势中用W%R背离判断反转，不用超买超卖”；</li>
+<li>误区2：超买超卖出现就立即入场——认为“W%R≤-80=底部”，忽略“持续周期”原则，在W%R短暂跌至-80后立即入场，结果遭遇假超卖；需等待1-2个周期确认；</li>
+<li>误区3：混淆震荡市与趋势市信号——在ADX≥20的趋势市中，沿用震荡市“超买超卖高抛低吸”策略，导致逆势操作；正确做法是“用ADX过滤，震荡市用超买超卖，趋势市用背离”；</li>
+<li>误区4：忽略与随机指标的差异——将W%R等同于随机指标，沿用随机指标“金叉死叉”规则，忽略W%R“左侧信号”的核心逻辑，降低信号有效性。</li>
+</ul>
+<h2 id="_14">总结：</h2>
+<p>W%R是技术分析中的“左侧反转探测器”——它用简洁的计算逻辑量化价格与近期高点的距离，通过超买超卖区间捕捉左侧机会，用背离信号预警趋势反转，尤其适合震荡市高抛低吸和趋势市左侧逃顶抄底。</p>
+<p>但W%R并非“完美左侧工具”，强趋势失效、极端行情滞后是其无法克服的局限。掌握W%R的核心，不在于“记住区间数值”，而在于“区分震荡与趋势，用背离确认反转，用ADX过滤假信号”——始终结合价格形态、成交量验证，才能充分发挥其左侧优势，规避缺陷。</p>
+<p><a href="../">返回动量指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

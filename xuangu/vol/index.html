@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>VOL（成交量）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#vol" class="nav-link">VOL（成交量）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#vol_1" class="nav-link">一、VOL核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vol3" class="nav-link">二、VOL选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#vol_2" class="nav-link">三、VOL选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="vol">VOL（成交量）选股方法与核心要点</h1>
+<p>VOL（成交量）是反映市场交易活跃度的最基础指标，通过统计某段时间内（如1日、1周）股票的成交股数或成交金额，直观体现资金对个股的关注与参与程度。其核心逻辑是“量是价的先行指标”——资金的进出（成交量变化）往往先于股价涨跌，既能验证股价趋势的有效性，也能提前暴露资金潜伏或撤离的信号，是所有选股策略中不可或缺的“量能基础工具”。</p>
+<h2 id="vol_1">一、VOL核心逻辑</h2>
+<p>VOL的本质是“资金交易的痕迹”，核心通过“量能大小”“量价配合关系”“量能趋势变化”判断市场情绪与资金流向：
+- <strong>量能大小划分</strong>（以A股日线为例，需结合流通盘调整）：
+  - 低量：单日成交量＜5日均量的50%，代表交易清淡，资金关注度低；
+  - 均量：单日成交量在5日均量的80%-120%之间，代表交易平稳，多空平衡；
+  - 放量：单日成交量＞5日均量的150%，代表交易活跃，资金关注度骤升；
+  - 天量：单日成交量＞5日均量的300%，代表交易极度狂热，可能伴随资金对倒或极端情绪。
+- <strong>核心量价关系</strong>：
+  - 量价齐升：股价上涨+成交量放大，代表上涨有资金支撑，趋势健康；
+  - 量价齐跌：股价下跌+成交量放大，代表下跌有抛压支撑，趋势弱势；
+  - 缩量上涨：股价上涨+成交量缩小，代表上涨缺乏资金跟进，易回调；
+  - 缩量下跌：股价下跌+成交量缩小，代表抛压减弱，可能触底。
+- <strong>关键原则</strong>：成交量的“趋势性变化”（如从缩量到持续放量）比单日量能更重要，需结合5日、10日均量线判断量能趋势。</p>
+<h2 id="vol3">二、VOL选股的3种核心方法</h2>
+<h3 id="1">1. 缩量回调后放量上涨选股（基础，抓趋势回暖）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股在上升趋势中（20日均线向上）出现短期回调，回调期间成交量持续缩量（＜5日均量），代表抛压较轻；随后股价止跌回升，成交量同步放大至5日均量的150%以上，代表资金重新进场，回调结束，趋势回暖，适合捕捉低吸机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“行情指标选股-成交量（VOL）”；</li>
+<li>设置条件：① 近3日回调期间，每日成交量＜5日均量（缩量回调）；② 当日股价上涨（收盘价＞前1日收盘价）；③ 当日成交量＞5日均量×1.5（放量上涨）；④ 20日均线向上（中期趋势支撑）；</li>
+<li>执行选股，筛选回调结束、趋势回暖的标的。</li>
+</ul>
+<h3 id="2">2. 低位持续放量选股（进阶，抓资金潜伏）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股长期处于低位震荡（股价低于近60日均价），此前成交量持续低迷（＜5日均量）；随后连续3日成交量放大至5日均量的120%以上，且股价同步企稳（未大幅下跌），代表有资金在低位潜伏吸筹，可能是趋势反转的前兆，适合捕捉底部启动机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-行情指标选股-成交量（VOL）”；</li>
+<li>设置条件：① 近3日每日成交量＞5日均量×1.2（持续放量）；② 股价处于近60日低位（收盘价＜近60日均价）；③ 近3日股价波动幅度＜5%（低位企稳）；④ 5日均量线向上穿过10日均量线（量能趋势转强）；</li>
+<li>执行选股，筛选低位有资金潜伏的标的。</li>
+</ul>
+<h3 id="3">3. 突破关键位放量选股（高阶，抓趋势突破）</h3>
+<ul>
+<li><strong>逻辑</strong>：个股在关键阻力位（如近30日高点、前期平台上沿）附近震荡，此前成交量维持均量水平；当股价突破关键阻力位（收盘价＞近30日高点）时，成交量同步放大至5日均量的200%以上，代表资金集中进场突破阻力，趋势可能进入加速阶段，适合捕捉强势突破机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-行情指标选股-成交量（VOL）”；</li>
+<li>设置条件：① 当日收盘价＞近30日高点（突破关键位）；② 当日成交量＞5日均量×2（放量突破）；③ 突破前3日成交量围绕5日均量波动（蓄势充分）；④ 20日均线向上（中期趋势支撑突破）；</li>
+<li>执行选股，筛选关键位突破、趋势加速的标的。</li>
+</ul>
+<h2 id="vol_2">三、VOL选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>结合流通盘调整量能标准</strong>：小盘股（流通盘＜5亿）5日均量可能仅几万手，放量至10万手即算大幅放量；大盘股（流通盘＞100亿）5日均量可能达几十万手，需放量至100万手以上才算有效突破，避免因流通盘差异误判量能。</li>
+<li><strong>警惕高位放量陷阱</strong>：股价处于高位（高于近60日均价30%以上）时，若放量突破但股价滞涨（如收长上影线、当日冲高回落），可能是主力资金借突破出货，切勿追涨；高位放量下跌（成交量放大+股价大跌）更是明确的风险信号，需果断离场。</li>
+<li><strong>避免单一依赖成交量</strong>：成交量需与股价趋势（均线排列）、技术形态（如头肩底、双顶）配合，例如低位持续放量+MA20向上+头肩底形态，信号可靠性远高于单一放量；缩量上涨若缺乏均线支撑，也可能是“无量空涨”，风险极高。</li>
+<li><strong>区分“真放量”与“假放量”</strong>：真放量通常伴随股价趋势同步（如放量上涨、放量突破），且后续量能能维持；假放量多为单日突发放量（如利好消息刺激），次日量能骤缩，股价回落，需警惕短期消息面扰动带来的虚假信号。</li>
+<li><strong>设置动态止损</strong>：缩量回调选股以“20日均线”为止损线；突破选股以“关键突破位（近30日高点）”为止损线，若股价跌破且成交量骤缩，代表资金撤离，需及时止损控制风险。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

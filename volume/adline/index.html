@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>累计/分配线 (Accumulation/Distribution Line, A/D Line) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#accumulationdistribution-line-ad-line" class="nav-link">累计/分配线 (Accumulation/Distribution Line, A/D Line) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么能精准反映主力行为？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：从信号到交易决策</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_12" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_13" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="accumulationdistribution-line-ad-line">累计/分配线 (Accumulation/Distribution Line, A/D Line) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>累计/分配线（A/D Line）由著名技术分析师拉里·威廉姆斯（Larry Williams）提出，是一种<strong>基于“价格波动与成交量结合”的资金流向指标</strong>。其核心逻辑是“<strong>通过判断当期成交价格在‘当日价格区间’的位置，量化‘资金是主动流入（累计）还是主动流出（分配）’</strong>”——例如，某股票当日开盘后持续冲高，收盘价接近最高价，说明多头主动买入意愿强（累计），A/D Line向上；若当日开盘后持续下跌，收盘价接近最低价，说明空头主动卖出意愿强（分配），A/D Line向下。</p>
+<p>与OBV（能量潮）仅通过“收盘价涨跌”判断资金流向不同，A/D Line更精细：它结合“当日最高价、最低价、收盘价”的相对位置，进一步区分“涨跌过程中资金的主动程度”，核心是“<strong>收盘价越靠近最高价，多头主动性越强；越靠近最低价，空头主动性越强</strong>”，能更精准反映主力资金的“暗中布局”（如价格横盘但A/D Line上涨，说明主力在低位吸筹）。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>精细化资金判断</strong>：不依赖单一收盘价涨跌，而是通过“价格区间内的收盘位置”，区分“被动涨跌”与“主动涨跌”（如价格涨但收盘价靠近最低价，可能是多头乏力的主动回落）；</li>
+<li><strong>累计性</strong>：A/D Line是“累计指标”，每日数值基于前一日A/D Line叠加“当期资金流向值”，反映资金流向的长期趋势；</li>
+<li><strong>无固定取值范围</strong>：与OBV类似，A/D Line无“超买超卖”阈值，仅通过“曲线方向（上升/下降）”和“与价格的背离关系”传递信号；</li>
+<li><strong>与OBV的核心区别</strong>：
+  | 指标类型       | 资金流向判断依据                                                                 | 优势                          | 适用场景                          |
+  |----------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | OBV（能量潮）  | 仅根据“当期收盘价与前一期收盘价的涨跌”判断（涨则加成交量，跌则减成交量） | 计算简单，反映资金流向的整体趋势 | 快速判断量价同步/背离，适合短线交易 |
+  | A/D Line（累计/分配线） | 根据“当期收盘价在‘最高价-最低价’区间的位置”计算资金流向值，再结合成交量叠加 | 区分主动/被动涨跌，更精准反映主力行为 | 识别主力吸筹/出货，适合波段/中长线交易 |</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>A/D Line的计算围绕“价格区间位置（CLV）”与“成交量”的结合展开，核心是“先计算当期资金流向的‘强度值’（CLV），再叠加至历史累计值”，步骤清晰且可复现，无需复杂参数（仅需最高价、最低价、收盘价、成交量4个基础数据）。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<p>A/D Line的计算分为两步：先算“当期资金流向强度（CLV，Close Location Value）”，再算“当期A/D Line数值”，公式如下：<br />
+1. <strong>第一步：计算CLV（资金流向强度）</strong><br />
+   CLV = (收盘价 - 最低价) - (最高价 - 收盘价) / (最高价 - 最低价)<br />
+   - 若最高价=最低价（如一字涨跌停），CLV=0（无价格区间，无法判断主动程度）；<br />
+   - CLV取值范围：-1 ~ +1（+1表示收盘价=最高价，多头主动拉满；-1表示收盘价=最低价，空头主动拉满）。  </p>
+<ol>
+<li><strong>第二步：计算当期A/D Line</strong><br />
+   当期A/D Line = 前一期A/D Line + (CLV × 当期成交量)  </li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（某股票日线数据：最高价11元，最低价10元，收盘价10.8元，成交量1000手；前一期A/D Line=5000）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算CLV（资金流向强度）</td>
+<td>代入CLV公式，判断收盘价在价格区间的位置强度</td>
+<td>CLV = (10.8-10) - (11-10.8) / (11-10) = (0.8 - 0.2) / 1 = 0.6（正值，多头主动，强度0.6）</td>
+</tr>
+<tr>
+<td>2. 计算当期资金流向值</td>
+<td>CLV × 当期成交量，得到当期资金流入/流出的加权值</td>
+<td>当期资金流向值 = 0.6 × 1000 = 600（正值，资金流入）</td>
+</tr>
+<tr>
+<td>3. 计算当期A/D Line</td>
+<td>前一期A/D Line + 当期资金流向值</td>
+<td>当期A/D Line = 5000 + 600 = 5600（累计值上升，资金持续流入）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键周期适配（不同交易场景的周期选择）</h4>
+<p>A/D Line的“周期”决定了其反映的“资金流向周期”，周期越短，越贴近短期资金主动行为；周期越长，越反映中长期主力资金布局，需根据交易风格适配：
+- <strong>日内短线交易（15分钟/1小时，日内期货/股票T+0）</strong>：用“1小时/30分钟A/D Line”——短周期A/D Line能快速反映日内资金的主动买卖（如1小时CLV从0.3升至0.8，说明日内多头主动性增强），适合判断日内趋势的“持续性”；
+- <strong>日间波段交易（日线，股票/期货波段）</strong>：用“日线A/D Line”——日线A/D Line反映当日全市场资金的主动流向，适合识别“价格横盘时的主力吸筹/出货”（如价格横盘但A/D Line上涨，主力暗中吸筹）；
+- <strong>中长线交易（周线/月线，指数/大宗商品）</strong>：用“周线/月线A/D Line”——长期周期A/D Line过滤短期资金噪音，反映1-3个月的主力资金趋势（如周线价格下跌但A/D Line上涨，说明中长期资金在低位承接）；
+- <strong>品种适配</strong>：高流动性品种（大盘股、主力合约期货）的A/D Line信号更可靠（价格区间连续，成交量稳定）；低流动性品种（小盘股、冷门期货）易因“价格区间异常（如跳空导致高低价差过大）”失真，需结合成交量均值过滤。</p>
+<h2 id="_4">二、意义：它为什么能精准反映主力行为？</h2>
+<p>A/D Line的核心价值在于<strong>解决了“OBV仅看收盘价涨跌的粗糙性”，通过“价格区间位置”区分‘主动资金’与‘被动资金’</strong>，尤其擅长捕捉主力资金的“暗中操作”——例如，主力想在低位吸筹时，不会直接拉涨（避免吸引散户），而是在每日价格区间内“逢低买入”，导致价格横盘但收盘价持续靠近最高价，A/D Line同步上涨；反之，主力想在高位出货时，会“逢高卖出”，导致价格横盘但收盘价持续靠近最低价，A/D Line同步下跌。其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 识别“价格横盘时的主力布局”（抓横盘突破机会）</h3>
+<p>价格横盘时，OBV可能因“收盘价涨跌交替”走平，无法判断资金流向；而A/D Line能通过“收盘价在区间的位置”，精准捕捉主力的吸筹/出货：
+- <strong>主力吸筹（横盘+A/D Line上涨）</strong>：
+  1. 价格在窄幅区间横盘（波动范围&lt;5%），收盘价多数时间靠近当日最高价；
+  2. A/D Line持续上涨（CLV多为正值，资金流入累计）；
+  3. 逻辑：主力在横盘期间“主动承接抛盘”，虽未拉涨价格，但资金已持续入场，后续突破概率高（如某股票在10-10.5元横盘，A/D Line从5000升至7000）；
+- <strong>主力出货（横盘+A/D Line下跌）</strong>：
+  1. 价格在窄幅区间横盘（波动范围&lt;5%），收盘价多数时间靠近当日最低价；
+  2. A/D Line持续下跌（CLV多为负值，资金流出累计）；
+  3. 逻辑：主力在横盘期间“主动抛售筹码”，虽未砸跌价格，但资金已持续离场，后续破位概率高。</p>
+<h3 id="2-obv">2. 提前预警“趋势反转”（比OBV更灵敏）</h3>
+<p>A/D Line与价格的“背离”是趋势反转的强信号，且因能区分“主动资金”，比OBV的背离更精准（OBV可能因“被动涨跌”产生假背离，A/D Line仅反映主动资金的转向）：
+- <strong>顶背离（看跌反转）</strong>：
+  1. 价格创近期新高；
+  2. A/D Line未同步创新高，反而下跌；
+  3. 关键细节：价格新高时，当日收盘价多靠近最低价（CLV为负，多头主动力衰减，主力在高位暗中出货）；
+  4. 示例：股价从10元涨至12元（新高），但A/D Line从7000跌至6500，且新高当日CLV=-0.3（收盘价靠近最低价），反转信号明确；
+- <strong>底背离（看涨反转）</strong>：
+  1. 价格创近期新低；
+  2. A/D Line未同步创新低，反而上涨；
+  3. 关键细节：价格新低时，当日收盘价多靠近最高价（CLV为正，空头主动力衰减，主力在低位暗中吸筹）；
+  4. 示例：股价从10元跌至8元（新低），但A/D Line从5000升至5500，且新低当日CLV=0.4（收盘价靠近最高价），反转信号明确。</p>
+<h3 id="3">3. 验证“趋势的有效性”（避免假突破）</h3>
+<p>A/D Line能通过“与价格的同步性”，判断趋势是否由“主动资金推动”——主动资金推动的趋势更稳固，被动资金推动的趋势易反转：
+- <strong>有效多头趋势</strong>：价格持续上涨（高点上移），A/D Line同步上涨，且每次上涨时CLV多为正值（收盘价靠近最高价，多头主动）；
+- <strong>无效多头趋势（假涨）</strong>：价格上涨，但A/D Line下跌或走平，且上涨时CLV多为负值（收盘价靠近最低价，多头被动拉涨后回落，主力未跟进）；
+- <strong>有效空头趋势</strong>：价格持续下跌（低点下移），A/D Line同步下跌，且每次下跌时CLV多为负值（收盘价靠近最低价，空头主动）；
+- <strong>无效空头趋势（假跌）</strong>：价格下跌，但A/D Line上涨或走平，且下跌时CLV多为正值（收盘价靠近最高价，空头被动砸跌后反弹，主力未跟进）。</p>
+<h2 id="_5">三、实战用法：从信号到交易决策</h2>
+<p>A/D Line的实战核心是“<strong>抓主力布局（横盘背离）+ 抓趋势反转（价格背离）</strong>”，需结合“价格形态”和“成交量”进一步确认，避免单一信号入场。</p>
+<h3 id="_6">用法一：横盘吸筹/出货交易（抓突破行情）</h3>
+<p>适用于<strong>价格窄幅横盘期</strong>，核心是“用A/D Line判断主力资金方向，价格突破后跟随入场”，捕捉横盘后的单边行情。</p>
+<h4 id="_7">横盘吸筹（做多，抓向上突破）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格横盘≥10个周期（日线≥10天），波动范围&lt;5%；</li>
+<li>A/D Line在横盘期间持续上涨（累计资金流入），且≥80%周期的CLV为正值（收盘价靠近最高价，多头主动）；</li>
+<li>价格突破横盘区间上沿，且突破时成交量≥5日均量×1.5倍（主动资金推动突破）；</li>
+<li><strong>入场时机</strong>：价格突破后，回调至横盘上沿（如横盘上沿10.5元，回调至10.6元），且当日CLV为正（确认多头延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格跌破横盘区间下沿（吸筹失效），或A/D Line跌破横盘期间的A/D Line低点；</li>
+<li>止盈：横盘区间幅度的1-2倍（如横盘0.5元，目标11-11.5元），或A/D Line出现顶背离。</li>
+</ul>
+<h4 id="_8">横盘出货（做空，抓向下破位）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格横盘≥10个周期（日线≥10天），波动范围&lt;5%；</li>
+<li>A/D Line在横盘期间持续下跌（累计资金流出），且≥80%周期的CLV为负值（收盘价靠近最低价，空头主动）；</li>
+<li>价格跌破横盘区间下沿，且跌破时成交量≥5日均量×1.5倍（主动资金推动破位）；</li>
+<li><strong>入场时机</strong>：价格跌破后，反弹至横盘下沿（如横盘下沿10元，反弹至9.9元），且当日CLV为负（确认空头延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格突破横盘区间上沿（出货失效），或A/D Line突破横盘期间的A/D Line高点；</li>
+<li>止盈：横盘区间幅度的1-2倍（如横盘0.5元，目标9.5-9元），或A/D Line出现底背离。</li>
+</ul>
+<h3 id="_9">用法二：趋势反转交易（抓顶底拐点）</h3>
+<p>适用于<strong>趋势末期</strong>，核心是“用A/D Line与价格的背离确认主动资金转向，结合价格形态入场”，捕捉趋势反转的拐点。</p>
+<h4 id="_10">顶部反转（做空，抓下跌拐点）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格创近期新高，且新高时出现“看跌K线形态”（如流星线、黄昏星）；</li>
+<li>A/D Line与价格形成顶背离（A/D Line未破前高，反而下跌）；</li>
+<li>新高当日CLV为负（收盘价靠近最低价，多头主动力衰减，主力出货）；</li>
+<li><strong>入场时机</strong>：次日价格低开，且A/D Line继续下跌（确认背离延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格重新突破新高（背离失效）；</li>
+<li>止盈：前期支撑位（如MA20或前低），或A/D Line出现底背离。</li>
+</ul>
+<h4 id="_11">底部反转（做多，抓上涨拐点）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格创近期新低，且新低时出现“看涨K线形态”（如锤子线、启明星）；</li>
+<li>A/D Line与价格形成底背离（A/D Line未破前低，反而上涨）；</li>
+<li>新低当日CLV为正（收盘价靠近最高价，空头主动力衰减，主力吸筹）；</li>
+<li><strong>入场时机</strong>：次日价格高开，且A/D Line继续上涨（确认背离延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格重新跌破新低（背离失效）；</li>
+<li>止盈：前期阻力位（如MA20或前高），或A/D Line出现顶背离。</li>
+</ul>
+<h2 id="_12">四、高级技巧与注意事项</h2>
+<h3 id="1-clv">1. 优化信号：结合“CLV均值”过滤噪音</h3>
+<p>A/D Line的单日数值可能因“偶然价格波动”（如单笔大单导致收盘价靠近高低价）产生噪音，可通过“CLV均值”（如5日CLV均值）平滑信号：
+- <strong>用法</strong>：当5日CLV均值持续为正（≥0.2），且A/D Line上涨，确认“多头主动趋势”；当5日CLV均值持续为负（≤-0.2），且A/D Line下跌，确认“空头主动趋势”；
+- <strong>优势</strong>：过滤单日CLV异常值（如某日CLV=0.8，但5日均值=0.1，说明是短期噪音，非趋势）；
+- <strong>示例</strong>：日线A/D Line上涨，但单日CLV=-0.3，若5日CLV均值=0.3（仍为正），说明是短期回调，多头主动趋势未变。</p>
+<h3 id="2-ad-line">2. 缺点与警示：避开这些“A/D Line陷阱”</h3>
+<p>A/D Line虽精准反映主动资金，但存在天生局限性，尤其在“极端行情”和“低流动性品种”中易产生误导，需重点规避：
+- <strong>极端行情（一字涨跌停）信号失真</strong>：
+  - 一字涨停：最高价=最低价=收盘价，CLV=0，A/D Line仅叠加“0×成交量=0”，无法反映涨停板上的资金分歧（如涨停缩量时，主力未继续入场，但A/D Line走平）；
+  - 一字跌停：同理，CLV=0，A/D Line走平，无法反映跌停板上的资金承接（如跌停放量时，多头接盘，但A/D Line无变化）；
+  - 应对：涨跌停行情中，需结合“封单量变化”（封单减少=分歧加大）和“开板后的CLV”判断，A/D Line仅作参考；
+- <strong>低流动性品种信号无效</strong>：
+  - 小盘股/冷门期货：单日成交量极低（如100手），且价格区间因“跳空”异常（如高开10%，高低价差异大），导致CLV失真（如收盘价靠近最高价，但仅10手成交，非主力主动）；
+  - 应对：低流动性品种需叠加“成交量≥5日均量”条件，仅在成交量正常时参考A/D Line；
+- <strong>高波动时段（开盘/收盘）信号不稳定</strong>：
+  - 开盘30分钟：价格波动剧烈（如高开低走或低开高走），收盘价在区间的位置易受“开盘情绪”影响（如开盘冲高后回落，CLV为负，但后续可能反弹），此时A/D Line的单日变化参考价值低；
+  - 应对：避开开盘/收盘30分钟分析A/D Line，选择“盘中稳定时段”（如上午10点-下午2点）结合多周期确认；
+- <strong>无法区分“主力对倒”</strong>：
+  - A/D Line仅反映“价格位置与成交量的结合”，无法识别主力“对倒交易”（如主力自己买自己卖，制造CLV为正的假象）；
+  - 应对：若A/D Line上涨但“外盘&lt;内盘”（主动性卖盘多），或A/D Line下跌但“外盘&gt;内盘”（主动性买盘多），需警惕对倒陷阱，避免入场。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：忽略“价格趋势”，仅看A/D Line</strong>——认为“A/D Line上涨就做多”，忽略价格仍在下降通道（如A/D Line上涨但价格跌，可能是短期主力试盘，非趋势反转）；正确做法是“先看价格趋势（如MA20方向），再看A/D Line是否与趋势同步，顺趋势交易优先”；</li>
+<li><strong>误区2：背离出现就立即入场，不等确认</strong>——认为“价格新高+A/D Line不新高=顶背离”，立即做空，忽略“背离后价格可能再创新高（二次背离）”；正确做法是“背离后等待‘价格跌破前期支撑位’或‘A/D Line跌破关键低点’，再入场，降低左侧风险”；</li>
+<li><strong>误区3：用短周期A/D Line判断长期趋势</strong>——用1小时A/D Line判断日线趋势（如1小时A/D Line底背离，日线A/D Line仍跌），导致“小周期信号干扰大周期判断”；正确做法是“大周期（日线）定趋势方向，小周期（1小时）用A/D Line找入场点”（如日线A/D Line上涨，1小时A/D Line底背离时做多）；</li>
+<li><strong>误区4：过度关注A/D Line的“绝对值”</strong>——认为“A/D Line数值高=多头强”，忽略“数值是累计结果”（如A/D Line从10000跌至8000，虽数值仍高，但趋势已向下）；正确做法是“仅关注A/D Line的‘趋势方向’和‘与价格的相对关系’，不看绝对值高低”。</li>
+</ul>
+<h2 id="_13">五、总结</h2>
+<p>累计/分配线（A/D Line）是技术分析中“精准捕捉主动资金”的核心工具——它通过“价格区间位置与成交量的结合”，解决了OBV仅看收盘价涨跌的粗糙性，既能识别主力在横盘期的暗中吸筹/出货，又能提前预警趋势反转，尤其适合“波段交易者”和“中长线交易者”判断主力行为。</p>
+<p>但A/D Line并非“主力探测器”，极端行情失真、低流动性无效、无法识别对倒仍是其局限。正确的用法是“将A/D Line与趋势指标（均线）、量能指标（成交量）、盘口数据（外盘/内盘）结合”——用A/D Line判断主动资金方向，用均线确认趋势，用成交量验证资金真实性，才能最大化其价值，做出更精准的交易决策。</p>
+<p><a href="../">返回成交量型指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

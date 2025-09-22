@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>平均真实波幅 (ATR) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#atr" class="nav-link">平均真实波幅 (ATR) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_6" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_7" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="atr">平均真实波幅 (ATR) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念：</h3>
+<p>平均真实波幅（Average True Range，简称ATR）是由美国技术分析大师威尔斯·威尔德（Welles Wilder）于1978年在《技术交易系统的新概念》中提出的纯波动率衡量指标。它不判断趋势方向（多头/空头），也不预测价格涨跌，仅通过计算价格在一定周期内的“真实波动范围”并进行平滑处理，量化市场的“波动剧烈程度”，帮助交易者制定止损、止盈和仓位管理策略，属于滞后性低、客观性极强的技术工具。</p>
+<p>ATR的核心是“真实波幅（TR）”——由于市场存在跳空（开盘价与前收盘价大幅偏离）或日内剧烈波动，单纯用“当日最高价-当日最低价”无法完整反映真实风险，而TR通过覆盖“跳空缺口”和“日内波动”，更精准地衡量单周期内的实际波动范围，ATR则是TR的平均值，平滑短期波动干扰。</p>
+<ul>
+<li>“真实波幅（TR）”：单周期内价格波动的“最大可能范围”，计算逻辑为以下三者中的最大值（确保覆盖所有极端情况）：</li>
+<li>当日最高价 - 当日最低价（日内正常波动）；</li>
+<li>|当日最高价 - 前一日收盘价|（若当日开盘跳空高开，覆盖高开缺口）；</li>
+<li>|当日最低价 - 前一日收盘价|（若当日开盘跳空低开，覆盖低开缺口）；</li>
+<li>“平均平滑”：ATR并非TR的简单算术平均，而是通过指数移动平均线（EMA） 或平滑移动平均线（SMA） 对TR进行平滑（威尔德原版使用14期EMA），避免单日极端TR（如涨停/跌停日）导致指标失真；</li>
+<li>“只测波动，不测方向”：ATR的数值（如股价ATR=5元、汇率ATR=0.002）仅代表“当前周期内的平均波动幅度”，不反映波动方向——例如，ATR=5元既可能对应“连续上涨的剧烈波动”，也可能对应“连续下跌的剧烈波动”，需结合趋势指标判断方向。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑：</h3>
+<p>ATR的计算分为“两步”：先算单周期的真实波幅（TR），再对TR进行平滑得到ATR，核心参数为“计算周期”，默认14期（威尔德原版设定）。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（单位：元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算真实波幅（TR）</td>
+<td>取以下三者中的最大值：<br>① 当日最高价 - 当日最低价<br>②</td>
+<td>当日最高价 - 前一日收盘价</td>
+</tr>
+<tr>
+<td>2. 计算ATR</td>
+<td>对TR进行N期平滑（默认14期EMA）：<br>- 第14期ATR = 前14期TR的算术平均（初始值）<br>- 第15期及以后ATR = (前一期ATR × (N-1) + 当期TR) / N（EMA平滑公式）</td>
+<td>若前14期TR平均值=6，第15期TR=7（上例）：<br>ATR=(6×13 +7)/14≈6.07</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与数值含义</h4>
+<p>ATR的核心参数是“计算周期（N）”，默认14期，数值范围无固定上限（随品种波动率变化），不同周期和数值对应不同波动状态：
+- 周期选择逻辑：周期越短，ATR越灵敏（反映短期波动）；周期越长，ATR越稳定（反映长期波动）：
+  - 短线交易（15分钟/1小时，如日内期货）：周期设为10期——快速捕捉日内波动变化，及时调整止损；
+  - 中长线交易（日线/周线，如股票波段）：周期设为14-20期——过滤单日噪音，贴合中期波动规律；
+- 数值含义：ATR数值=“当前周期内的平均波动幅度”，需结合品种价格基数理解：
+  - 例1（低价股）：股价=10元，ATR=0.5元——意味着每日平均波动5%（0.5/10），波动剧烈；
+  - 例2（高价股）：股价=100元，ATR=2元——意味着每日平均波动2%（2/100），波动温和；
+  - 例3（外汇）：EUR/USD汇率=1.08，ATR=0.002——意味着每日平均波动0.185%（0.002/1.08），波动平缓。</p>
+<blockquote>
+<p>注意：不同交易软件的ATR平滑方式可能不同（EMA或SMA），需提前确认——EMA对近期TR更敏感，适合短线；SMA更平滑，适合长线。威尔德原版使用EMA，若软件默认SMA，可手动调整为EMA以贴合经典逻辑。</p>
+</blockquote>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>ATR的核心价值在于解决了“止损止盈凭感觉、仓位管理靠经验”的痛点。很多交易者因“止损设太窄被频繁扫损”或“止损设太宽承担过多风险”导致亏损，而ATR通过量化波动幅度，提供“客观、适配行情的风险控制标准”，具体体现在三大不可替代的功能：</p>
+<h3 id="1_1">1. 制定客观止损（适配波动，避免情绪化）</h3>
+<p>这是ATR最核心的功能——传统固定止损（如亏损5%止损）忽略“不同行情波动差异”（震荡市5%止损过宽，趋势市5%止损过窄），而ATR止损通过“波动幅度×倍数”，让止损宽度与市场风险匹配：
+- 波动剧烈时（ATR升高）：止损设宽（如2倍ATR），避免被短期剧烈波动“假突破”止损；
+- 波动平缓时（ATR降低）：止损设窄（如1.5倍ATR），避免承担过多不必要的风险；
+- 逻辑本质：ATR止损的核心是“允许价格在‘正常波动范围’内震荡，一旦突破正常范围，表明趋势可能反转或风险超出预期，立即离场”。</p>
+<h3 id="2_1">2. 设定合理止盈（贴合趋势，提高盈亏比）</h3>
+<p>ATR止盈避免“止盈设太低错过趋势”或“止盈设太高利润回吐”，通过“波动幅度×目标倍数”，让止盈目标与趋势强度匹配：
+- 强趋势行情（ATR持续升高）：止盈设宽（如3-5倍ATR），赚足趋势带来的波动利润；
+- 弱趋势/震荡行情（ATR持续降低）：止盈设窄（如2-3倍ATR），及时锁定有限利润；
+- 优势：相比固定价格止盈（如涨到10元止盈），ATR止盈能随波动变化动态调整（如趋势加速时ATR升高，止盈同步上移），避免“过早止盈”。</p>
+<h3 id="3">3. 辅助仓位管理（控制风险，稳定收益）</h3>
+<p>ATR是“仓位管理的量化工具”——通过“ATR占账户资金比例”控制单品种风险，避免因“高波动品种仓位过重”导致大幅亏损：
+- 核心逻辑：单品种风险暴露=仓位规模×ATR×止损倍数，需确保“单次风险≤账户资金的固定比例”（如1%-2%，专业交易者常用标准）；
+- 示例：账户资金=10万元，单品种风险上限=1%（1000元），某股票ATR=2元，计划2倍ATR止损（4元）：<br>仓位规模=1000元÷4元=250股（即买入250股，若触发止损，亏损恰好1000元，符合风险上限）；
+- 优势：无论品种价格高低、波动率大小，均能通过ATR将单品种风险控制在预设范围，避免“低价股重仓、高价股轻仓”的误区。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>ATR的用法核心是“风险控制”，不直接产生买卖信号，需结合趋势指标（如MA、ADX）判断方向后，用于“入场后的止损、止盈与仓位管理”。以下是三种经过实战验证的经典用法，覆盖“短线、中线、长线”不同交易场景：</p>
+<h3 id="atr_1">用法一：ATR止损（最经典用法，适配所有品种）</h3>
+<p>核心逻辑是“让止损宽度=‘正常波动范围×安全倍数’”，确保止损既不被“正常波动”触发，又能在“风险超出预期”时及时离场。</p>
+<h4 id="1_2">1. 多头趋势止损（买入后）</h4>
+<ul>
+<li>入场点：假设在股价=100元时买入（趋势指标确认多头）；</li>
+<li>ATR数值：当日ATR=2元（日线周期，14期EMA）；</li>
+<li>止损倍数选择：</li>
+<li>保守型（震荡市/低风险偏好）：1.5倍ATR——止损宽度=1.5×2=3元，止损价=100-3=97元；</li>
+<li>稳健型（中等趋势/中性风险偏好）：2倍ATR——止损宽度=2×2=4元，止损价=100-4=96元；</li>
+<li>激进型（强趋势/高风险偏好）：2.5倍ATR——止损宽度=2.5×2=5元，止损价=100-5=95元；</li>
+<li>动态调整：若股价上涨至105元，ATR升至2.2元，可将止损“上移”为105-2×2.2=100.6元（跟踪止损），锁定部分利润。</li>
+</ul>
+<h4 id="2_2">2. 空头趋势止损（卖出后）</h4>
+<ul>
+<li>入场点：假设在股价=100元时做空（趋势指标确认空头）；</li>
+<li>ATR数值：当日ATR=2元；</li>
+<li>止损倍数选择：</li>
+<li>保守型：1.5倍ATR——止损宽度=3元，止损价=100+3=103元；</li>
+<li>稳健型：2倍ATR——止损宽度=4元，止损价=100+4=104元；</li>
+<li>激进型：2.5倍ATR——止损宽度=5元，止损价=100+5=105元；</li>
+<li>动态调整：若股价下跌至95元，ATR升至2.2元，可将止损“下移”为95+2×2.2=99.4元，锁定部分利润。</li>
+</ul>
+<blockquote>
+<p>关键原则：止损倍数需与“趋势强度”匹配——强趋势（ADX≥40）可适当放大倍数（2-2.5倍），避免被小回调止损；震荡市（ADX&lt;20）需缩小倍数（1.5倍），避免承担过多风险。</p>
+</blockquote>
+<h3 id="atr_2">用法二：ATR止盈（贴合趋势，提高盈亏比）</h3>
+<p>核心逻辑是“让止盈目标=‘止损宽度×盈亏比倍数’”（专业交易者通常要求盈亏比≥2:1），或根据趋势强度设定固定ATR倍数，避免“过早止盈”或“利润回吐”。</p>
+<h4 id="1_3">1. 固定盈亏比止盈（适合短线交易）</h4>
+<ul>
+<li>步骤1：确定止损宽度——如2倍ATR（4元，上例）；</li>
+<li>步骤2：设定盈亏比目标——如2:1（利润是止损的2倍）；</li>
+<li>步骤3：计算止盈价——多头止盈价=买入价+（止损宽度×2）=100+8=108元；空头止盈价=卖出价-（止损宽度×2）=100-8=92元；</li>
+<li>优势：确保每笔交易的“潜在利润≥潜在亏损”，长期下来即使胜率仅50%，也能实现盈利。</li>
+</ul>
+<h4 id="2_3">2. 趋势强度止盈（适合中长线交易）</h4>
+<ul>
+<li>强趋势（ADX≥40，ATR持续升高）：止盈设为3-5倍ATR——如ATR=2元，止盈宽度=6-10元，多头止盈价=100+6=106元（或更高）；</li>
+<li>弱趋势（ADX 20-40，ATR平稳）：止盈设为2-3倍ATR——止盈宽度=4-6元，多头止盈价=100+4=104元；</li>
+<li>动态调整：若趋势持续增强（ATR从2元升至2.5元），可将止盈同步上移（如从106元升至100+3×2.5=107.5元），避免“趋势未结束就离场”。</li>
+</ul>
+<h3 id="atr_3">用法三：ATR仓位管理（控制风险，稳定账户）</h3>
+<p>核心逻辑是“单品种风险=账户资金×固定比例”，通过ATR计算“安全仓位规模”，避免因品种波动率差异导致风险失控。</p>
+<h4 id="1_4">1. 核心计算公式</h4>
+<p>仓位规模（股/手）=（账户资金×单品种风险比例）÷（ATR×止损倍数）
+- 账户资金：交易者可用于交易的总资金（如10万元）；
+- 单品种风险比例：单次交易允许亏损的资金占比（通常1%-2%，如1%=1000元）；
+- ATR：当前品种的ATR数值（如2元/股）；
+- 止损倍数：计划的ATR止损倍数（如2倍）。</p>
+<h4 id="2-1011000">2. 不同品种示例（账户资金=10万元，风险比例=1%=1000元）</h4>
+<table>
+<thead>
+<tr>
+<th>品种类型</th>
+<th>价格（元）</th>
+<th>ATR（元）</th>
+<th>止损倍数</th>
+<th>仓位规模计算</th>
+<th>实际仓位（股/手）</th>
+<th>风险验证（触发止损时亏损）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>低价股</td>
+<td>10</td>
+<td>0.5</td>
+<td>2</td>
+<td>1000 ÷ (0.5×2) = 1000股</td>
+<td>1000股</td>
+<td>1000股×1元=1000元</td>
+</tr>
+<tr>
+<td>高价股</td>
+<td>100</td>
+<td>2</td>
+<td>2</td>
+<td>1000 ÷ (2×2) = 250股</td>
+<td>250股</td>
+<td>250股×4元=1000元</td>
+</tr>
+<tr>
+<td>期货（沪铜）</td>
+<td>68000元/吨</td>
+<td>1200元/吨</td>
+<td>2</td>
+<td>1000 ÷ (1200×2) ≈ 0.41手（取0.4手）</td>
+<td>0.4手</td>
+<td>0.4手×2400元=960元（接近1000元）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>优势：无论品种价格高低、波动率大小，均能通过ATR将单品种风险控制在预设范围，避免“低价股重仓导致大幅亏损”或“高价股轻仓浪费机会”。</p>
+</blockquote>
+<h2 id="_6">高级技巧与注意事项</h2>
+<h3 id="1_5">1. 参数优化：适配不同交易周期与品种</h3>
+<p>ATR的默认14期参数需根据“交易周期”和“品种波动率”调整，确保指标与行情节奏匹配：
+- 按交易周期调整：
+  - 日内短线（15分钟/1小时）：周期设为10期——快速反映日内波动变化，如1小时周期ATR能及时捕捉早盘、午盘的波动差异；
+  - 波段交易（日线）：周期设为14期（默认）——平衡灵敏度与稳定性，贴合日线级别的中期波动；
+  - 长线投资（周线）：周期设为20期——过滤日线级别噪音，反映周线级别的长期波动趋势；
+- 按品种波动率调整：
+  - 高波动品种（加密货币、原油期货）：周期设为12-14期——高波动品种TR变化快，需稍短周期捕捉波动；
+  - 低波动品种（蓝筹股、国债期货）：周期设为16-20期——低波动品种TR变化慢，需稍长周期避免指标频繁跳动。</p>
+<h3 id="2-atr">2. 缺点与警示：避开这些“ATR陷阱”</h3>
+<p>ATR虽为“风险控制利器”，但存在天生局限性，尤其在“趋势反转期”和“极端行情”中易产生误导，需警惕：
+- ATR不判断趋势方向：单独看ATR无法区分“上涨波动”和“下跌波动”——例如，ATR升高既可能是“多头趋势加速”，也可能是“空头趋势加速”，必须结合MA、ADX等趋势指标判断方向，避免“逆势交易”；
+- 极端行情后ATR滞后：在“黑天鹅事件”（如突发政策、自然灾害）导致的极端波动（如单日涨停/跌停）后，ATR会因“极端TR”而快速升高，但此时行情可能已进入修复期，若按“新高ATR”设止损，会导致止损过宽，承担过多风险；
+- 震荡市ATR失效（止盈止损）：在窄幅震荡行情（ADX&lt;20）中，ATR持续降低，若按“低ATR×倍数”设止盈，会导致止盈目标过低，频繁触发止盈（赚小钱）；若按“低ATR×倍数”设止损，虽止损窄，但震荡市中假突破多，仍可能频繁扫损；
+- 单一ATR不可信：ATR需与“趋势指标+价格行为”结合——例如，ATR止损触发时，若同时出现“顶背离”或“跌破趋势线”，则确认趋势反转；若仅ATR止损触发，但趋势指标仍完好，可能是“假突破”，需谨慎离场。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：ATR数值“越高越好”或“越低越好”：ATR无绝对高低，需结合“历史波动”判断——例如，某股票历史ATR均值=2元，当前ATR=4元，说明波动“异常剧烈”（需警惕风险）；当前ATR=1元，说明波动“异常平缓”（可能即将突破）；</li>
+<li>误区2：止损倍数“固定不变”：无论行情是趋势还是震荡，均用2倍ATR止损——正确做法是“趋势市放大倍数，震荡市缩小倍数”，避免趋势市被频繁止损，震荡市承担过多风险；</li>
+<li>误区3：忽略ATR的“周期一致性”：用日线ATR设1小时周期止损——例如，日线ATR=2元（每日波动2元），若1小时周期止损用2倍日线ATR（4元），会导致止损过宽（1小时内波动4元概率极低），正确做法是“止损周期与ATR计算周期一致”（1小时止损用1小时ATR）；</li>
+<li>误区4：ATR用于“预测波动方向”：认为“ATR升高会上涨”或“ATR降低会下跌”——ATR仅反映“波动幅度”，不反映“波动方向”，预测方向需依赖趋势指标，ATR仅用于风险控制。</li>
+</ul>
+<h2 id="_7">总结：</h2>
+<p>ATR是技术分析中的“风险量化工具”——它不直接告诉你“买什么、卖什么”，但能通过量化波动幅度，帮你解决“止损设多少、止盈定多少、仓位买多少”的核心问题，避免因“情绪化风险控制”导致的亏损。</p>
+<p>但ATR并非“交易信号机”，它无法预测价格涨跌，也不能判断趋势方向，必须与趋势指标（MA、ADX）、价格形态（K线、支撑阻力）结合使用。掌握ATR的核心，不在于“记住计算公式”，而在于“建立‘风险与波动匹配’的思维”——当市场波动剧烈时，放宽止损、控制仓位；当市场波动平缓时，收紧止损、把握突破机会，这才是ATR最核心的交易价值。</p>
+<p><a href="../">返回趋势指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

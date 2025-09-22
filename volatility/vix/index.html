@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>恐慌指数（VIX）深度解析：市场情绪的“恐慌晴雨表” - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#vix" class="nav-link">恐慌指数（VIX）深度解析：市场情绪的“恐慌晴雨表”</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么是“市场情绪的核心锚”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：三大核心交易策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_8" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="vix">恐慌指数（VIX）深度解析：市场情绪的“恐慌晴雨表”</h1>
+<p>恐慌指数（VIX，全称“芝加哥期权交易所波动率指数”）由芝加哥期权交易所（CBOE）于1993年推出，2003年升级计算逻辑，是<strong>基于标普500指数（S&amp;P 500）期权价格，量化市场对未来30天预期波动率的情绪指标</strong>。其核心逻辑是“<strong>通过投资者为规避市场波动所支付的期权溢价，反向推导市场的恐慌程度</strong>”——不直接反映价格涨跌，而是聚焦“市场对风险的预期”，帮助投资者判断市场情绪极值（过度恐慌/过度乐观）、调整资产配置、对冲系统性风险，是全球金融市场最重要的“情绪风向标”之一。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>VIX的本质是“<strong>市场对未来30天标普500指数波动率的隐含预期</strong>”。传统波动率（如ATR、标准差）是“基于历史价格计算的已实现波动率”，而VIX是“基于期权价格推导的隐含波动率”——期权买方为应对未来波动，会愿意支付更高溢价，推高隐含波动率，进而使VIX上升；反之，若市场认为未来波动小，期权溢价低，VIX则下降。</p>
+<p>其核心优势是“<strong>提前反映市场情绪变化</strong>”：当股市尚未大幅下跌，但投资者已开始担忧风险（提前买入看跌期权避险），VIX会率先上升；当股市恐慌下跌后，VIX若回落，往往预示情绪修复、下跌动能减弱。正因如此，VIX被广泛称为“恐慌指数”，成为判断市场顶部/底部的重要参考。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>前瞻性</strong>：反映“未来30天预期波动率”，而非历史波动，能提前预警风险；</li>
+<li><strong>情绪属性</strong>：数值高低直接对应市场恐慌程度（高VIX=高恐慌，低VIX=低恐慌/过度乐观）；</li>
+<li><strong>反向关联性</strong>：与标普500指数通常呈负相关（股市下跌→VIX上升，股市上涨→VIX下降），但极端行情下可能短期同步（如流动性危机时，股市与VIX同时上涨）；</li>
+<li>
+<p><strong>标准化</strong>：取值范围通常在10-80之间（历史极值：2008年金融危机时曾达80.86，2017年低波动周期曾低于10），均值约为19，数值越极端，反转概率越高。</p>
+</li>
+<li>
+<p><strong>与历史波动率（如ATR）的核心区别</strong>：
+  | 指标类型       | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+  |----------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | 恐慌指数（VIX） | 基于标普500指数期权价格，推导“未来30天隐含波动率” | 前瞻性强，直接反映市场情绪与风险预期 | 判断市场情绪极值、对冲系统性风险、资产配置调整 |
+  | 历史波动率（ATR/标准差） | 基于历史价格数据，计算“过去N天已实现波动率” | 数据客观，反映实际波动大小 | 动态止损止盈、品种波动率筛选、短期波动强度判断 |</p>
+</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>VIX的计算逻辑复杂（涉及期权定价模型），但核心是通过“近月+次月期权的隐含波动率加权平均”，确保指数始终反映“未来30天”的预期，而非单一到期日的期权波动。</p>
+<h4 id="1">1. 核心计算步骤（简化版）</h4>
+<p>VIX的计算需筛选特定期权合约、计算隐含波动率、加权调整到期时间，最终得到标准化指数：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>关键说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 筛选期权合约</td>
+<td>选取“标普500指数近月期权”和“次月期权”，且仅保留“平值附近”（行权价接近当前指数）的看涨/看跌期权</td>
+<td>平值期权对波动率变化最敏感，能更精准反映市场预期</td>
+</tr>
+<tr>
+<td>2. 计算隐含波动率</td>
+<td>基于“布莱克-斯科尔斯期权定价模型”，通过期权当前价格反推“隐含波动率”（即市场认为该期权对应的未来波动率）</td>
+<td>隐含波动率越高，说明投资者认为未来波动越大，愿意为期权支付更高溢价</td>
+</tr>
+<tr>
+<td>3. 加权平均调整</td>
+<td>① 按“近月期权到期时间”和“次月期权到期时间”，计算两者的权重（确保总期限为30天）；<br>② 近月期权波动率×近月权重 + 次月期权波动率×次月权重，得到“30天隐含波动率”</td>
+<td>例如：近月期权还有15天到期，次月还有45天到期→ 近月权重=（45-30）/(45-15)=0.5，次月权重=0.5，两者各占一半</td>
+</tr>
+<tr>
+<td>4. 标准化为VIX指数</td>
+<td>将“30天隐含波动率”×100，得到最终VIX指数（如隐含波动率为0.25，VIX=25）</td>
+<td>标准化后数值更易解读，直接对应“年化波动率百分比”（VIX=25→预期未来30天年化波动率25%）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与市场解读</h4>
+<p>VIX的数值本身就是核心信号，不同区间对应不同市场状态，需结合历史分位数判断：
+- <strong>VIX＜15（低波动区间）</strong>：市场情绪乐观，风险预期低，通常对应股市慢牛或窄幅震荡；但数值过低（如＜10）可能预示“过度乐观”，需警惕回调风险（历史上VIX低于10后，1-3个月内股市回调概率上升）；
+- <strong>15≤VIX≤30（正常波动区间）</strong>：市场情绪中性，风险预期平稳，股市多为震荡或温和趋势，无明显极端情绪；
+- <strong>VIX＞30（高波动区间）</strong>：市场情绪恐慌，风险预期骤升，通常对应股市大幅下跌、地缘冲突或流动性危机；但数值过高（如＞50）可能预示“过度恐慌”，短期反弹概率上升（如2020年疫情冲击时VIX达82.69后，股市快速反弹）；
+- <strong>VIX斜率与趋势</strong>：单日VIX涨幅＞20%（如从20升至24），说明恐慌情绪快速升温，需警惕短期系统性风险；VIX连续3天回落且跌幅＞15%，说明恐慌情绪缓解，可关注股市修复机会。</p>
+<h2 id="_4">二、意义：它为什么是“市场情绪的核心锚”？</h2>
+<p>VIX的核心价值在于<strong>解决了“传统指标无法量化市场情绪”的缺陷</strong>——K线、成交量只能反映价格与交易结果，而VIX能直击“投资者对未来的担忧或乐观”，其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 判断市场情绪极值：识别“过度恐慌”与“过度乐观”</h3>
+<p>市场情绪具有“极端反转”特性：当多数人恐慌（VIX高）时，往往是股市底部；当多数人乐观（VIX低）时，往往是股市顶部。VIX通过数值区间精准定位这种极值：
+- <strong>过度恐慌（VIX＞35，且处于历史80%分位以上）</strong>：此时投资者因恐惧大量抛售股票、买入看跌期权，推高VIX；但极端恐慌往往伴随“超卖”，后续1-4周内股市反弹概率超70%（如2008年11月VIX＞70后，标普500指数3个月内上涨20%+）；
+- <strong>过度乐观（VIX＜12，且处于历史20%分位以下）</strong>：此时投资者忽视风险，大量买入股票、卖出期权（期权溢价低），压低VIX；但过度乐观往往伴随“超买”，后续1-3个月内股市回调概率超60%（如2021年12月VIX＜16，2022年1月标普500指数下跌5%+）。</p>
+<h3 id="2_1">2. 对冲系统性风险：为股票组合“上保险”</h3>
+<p>当VIX上升时，股票通常下跌，而“VIX相关衍生品”（如VIX期货、VIX ETF）会上涨，可通过配置这类资产对冲股票组合的下跌风险：
+- <strong>原理</strong>：股票组合与VIX呈负相关，当股市下跌（如跌幅10%），VIX可能上涨50%，VIX衍生品的收益可抵消部分股票亏损；
+- <strong>示例</strong>：持有100万元标普500指数基金，同时买入10万元“VIX看涨期权”（或VIX ETF）；若标普500下跌10%（亏损10万元），VIX上涨50%（VIX资产盈利5万元），则组合净亏损降至5万元，风险显著降低。</p>
+<h3 id="3">3. 指导资产配置：动态调整股债比例</h3>
+<p>VIX是“资产配置的信号灯”：高VIX时增加低风险资产（债券、现金），低VIX时增加高风险资产（股票、商品），实现“逆情绪配置”：
+- <strong>高VIX时期（VIX＞30）</strong>：市场风险高，降低股票仓位（如从60%降至30%），增加国债、货币基金等低风险资产（如从40%升至70%），避免系统性下跌冲击；
+- <strong>低VIX时期（VIX＜15）</strong>：市场风险低，提高股票仓位（如从50%升至70%），减少低风险资产（如从50%降至30%），把握趋势性收益；
+- <strong>优势</strong>：通过VIX动态调整，可在“风险来临时少亏，行情好时多赚”，长期提升组合夏普比率（风险调整后收益）。</p>
+<h2 id="_5">三、实战用法：三大核心交易策略</h2>
+<p>VIX本身不直接对应个股交易，但其信号可指导大盘方向、资产配置与风险对冲，以下为三类实用策略：</p>
+<h3 id="_6">用法一：情绪极值反转策略（适用于股市择时）</h3>
+<p>核心是“<strong>当VIX突破历史极值区间时，逆向布局股市</strong>”——VIX高时买股票，VIX低时卖股票，适合波段投资者：
+1. <strong>入场条件</strong>：
+   - 多头入场（抄底）：① VIX＞35（或处于近5年80%分位以上）；② VIX从高点回落超10%（恐慌情绪开始缓解）；③ 标普500指数出现“止跌信号”（如日线收出长下影线、成交量萎缩）；
+   - 空头入场（逃顶）：① VIX＜12（或处于近5年20%分位以下）；② VIX从低点上升超20%（乐观情绪开始消退）；③ 标普500指数出现“滞涨信号”（如日线收出长上影线、成交量放大但价格不涨）；
+2. <strong>入场时机</strong>：
+   - 多头：VIX回落超10%后的首个交易日，或标普500站稳5日均线时；
+   - 空头：VIX上升超20%后的首个交易日，或标普500跌破5日均线时；
+3. <strong>止损止盈</strong>：
+   - 多头止损：VIX再次突破前期高点（如VIX回落至30后，又升至35以上），或标普500跌破前期低点；
+   - 多头止盈：VIX回落至正常区间（20-25），或标普500反弹至前期阻力位；
+   - 空头止损：VIX再次跌破前期低点（如VIX升至15后，又跌至12以下），或标普500突破前期高点；
+   - 空头止盈：VIX升至正常区间（20-25），或标普500回调至前期支撑位；
+- <strong>示例</strong>：2022年10月，VIX升至34.5（近5年80%分位以上），随后回落至28（跌幅超18%），标普500收出长下影线→ 此时入场做多，止损VIX重回34.5，止盈VIX降至22，最终标普5001个月内上涨8%+。</p>
+<h3 id="vix_1">用法二：VIX对冲策略（适用于股票组合风险控制）</h3>
+<p>核心是“<strong>通过配置VIX相关衍生品，抵消股票组合的下跌风险</strong>”，适合持有大量股票的投资者（如基金、高净值客户）：
+1. <strong>工具选择</strong>：
+   - 短期对冲（1-3个月）：选择“VIX看涨期权”（成本低，仅需支付权利金，亏损有限）；
+   - 长期对冲（3-12个月）：选择“VIX期货合约”或“VIX ETF”（如美国的UVXY、VXX，需注意展期成本）；
+2. <strong>仓位计算</strong>：
+   - 对冲仓位≈（股票组合市值×预期最大跌幅）÷（VIX资产预期最大涨幅）；
+   - 示例：股票组合市值1000万元，预期最大跌幅10%（亏损100万元）；VIX从20升至30（涨幅50%），VIX看涨期权预期涨幅100%→ 对冲仓位=100万元÷100%=100万元（买入100万元VIX看涨期权）；
+3. <strong>调整时机</strong>：
+   - 当VIX升至30以上，且股票组合已出现5%+亏损时，平仓部分VIX资产（锁定对冲收益）；
+   - 当VIX回落至15以下，且股票组合盈利5%+时，卖出VIX资产（避免对冲成本侵蚀收益）；
+- <strong>风险提示</strong>：VIX衍生品多为“损耗性资产”（如VIX ETF长期因展期亏损），不宜长期持有，仅在“VIX低、风险预期上升”时配置。</p>
+<h3 id="_7">用法三：跨资产轮动策略（适用于大类资产配置）</h3>
+<p>核心是“<strong>以VIX为信号，在股票、债券、现金之间动态轮动</strong>”，适合追求稳健收益的长期投资者（如养老金、理财组合）：
+1. <strong>信号划分</strong>：
+   - 高风险信号（VIX＞30）：配置“现金（50%）+ 国债（40%）+ 黄金（10%）”，规避股票风险；
+   - 中性风险信号（15≤VIX≤30）：配置“股票（40%）+ 国债（40%）+ 现金（20%）”，平衡风险与收益；
+   - 低风险信号（VIX＜15）：配置“股票（60%）+ 国债（20%）+ 商品（15%）+ 现金（5%）”，把握风险资产收益；
+2. <strong>调仓频率</strong>：
+   - 每月观察VIX数值，若VIX突破当前区间（如从25升至31，进入高风险信号），则在5个交易日内完成调仓；
+   - 若VIX在区间内波动（如22-28），则不调仓，避免频繁交易增加成本；
+3. <strong>品种选择</strong>：
+   - 股票：优先宽基指数（如标普500、沪深300），避免个股风险；
+   - 债券：优先国债或高评级信用债（如美国10年期国债、中国国债ETF）；
+   - 商品：黄金（避险属性）、原油（经济复苏预期）；
+- <strong>优势</strong>：通过VIX划分风险等级，实现“涨时跟涨、跌时抗跌”，长期年化收益通常比单一持有股票高1-2个百分点，最大回撤降低30%-50%。</p>
+<h2 id="_8">四、高级技巧与注意事项</h2>
+<h3 id="1-vix">1. 优化信号：结合“VIX期限结构”判断趋势</h3>
+<p>VIX期限结构（不同到期日的VIX期货价格曲线）能进一步判断“恐慌是短期还是长期”，避免误判情绪反转：
+- <strong>正向期限结构</strong>：远期VIX期货价格＞近期VIX期货价格（如1个月VIX=20，3个月VIX=25）→ 市场认为短期恐慌将缓解，长期波动正常，适合“短期对冲后逐步加仓股票”；
+- <strong>反向期限结构</strong>：远期VIX期货价格＜近期VIX期货价格（如1个月VIX=30，3个月VIX=25）→ 市场认为短期恐慌严重，长期波动将下降，适合“短期抄底，长期观望”；
+- <strong>技巧</strong>：仅当“VIX突破极值+期限结构符合反转预期”时入场（如VIX＞35且反向期限结构开始转为正向，说明短期恐慌见顶）。</p>
+<h3 id="2-vix">2. 缺点与警示：避开这些“VIX陷阱”</h3>
+<p>VIX虽为情绪核心指标，但存在天生局限性，需重点规避：
+- <strong>流动性危机时“负相关失效”</strong>：
+  - 极端流动性危机（如2020年3月疫情冲击、2008年雷曼破产）时，投资者为筹集现金会同时抛售股票和VIX衍生品（即使VIX高也卖），导致“股市下跌+VIX下跌”，负相关暂时失效，对冲策略可能亏损；
+  - 应对：流动性危机时，优先持有现金，暂停VIX对冲，待市场流动性恢复（如美联储释放流动性）后再配置；
+- <strong>VIX低≠股市一定跌</strong>：
+  - VIX低于15仅说明“市场乐观”，但不代表“马上回调”——低VIX可能持续数月（如2017年VIX全年低于15，标普500上涨21%），过早做空可能踏空；
+  - 应对：VIX低时不盲目做空，需搭配“股市超买指标”（如RSI＞70、MACD顶背离），确认顶部信号后再行动；
+- <strong>VIX高≠股市一定涨</strong>：
+  - VIX高于30仅说明“市场恐慌”，但恐慌可能持续（如2008年VIX＞30持续6个月，标普500下跌40%），过早抄底可能套牢；
+  - 应对：VIX高时不盲目抄底，需等待“恐慌缓解信号”（如VIX回落超10%、股市止跌企稳、政策利好出台）。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：用VIX判断个股方向</strong>——VIX反映标普500指数的情绪，与个股（尤其是小盘股、题材股）相关性低，不能用VIX指导个股交易；正确做法是“VIX指导大盘方向，个股交易结合自身基本面与技术面”；</li>
+<li><strong>误区2：过度交易VIX衍生品</strong>——VIX期货、ETF存在“展期成本”（远期合约与近期合约的价格差导致的亏损），长期持有（如6个月以上）多数亏损；正确做法是“VIX衍生品仅用于短期对冲（1-3个月），不长期投资”；</li>
+<li><strong>误区3：忽视“市场结构变化”</strong>——2020年后，被动型VIX产品（如UVXY）规模扩大，可能导致VIX短期波动加剧（如算法交易引发VIX暴涨暴跌），需结合“成交量”判断VIX信号是否真实（如VIX上涨但成交量萎缩，可能是算法导致的虚假波动）；</li>
+<li><strong>误区4：单一依赖VIX</strong>——VIX仅反映情绪，不反映基本面（如经济增速、企业盈利），若经济恶化导致的VIX高（如2022年美联储加息），恐慌可能持续更久；正确做法是“VIX+基本面（GDP、PMI）+技术面（均线、成交量）”三者验证，再决策。</li>
+</ul>
+<h2 id="_9">五、总结</h2>
+<p>恐慌指数（VIX）是金融市场“情绪与风险的核心解码器”——它通过期权价格提前反映市场对未来波动的预期，既解决了传统指标“滞后反映情绪”的缺陷，又为情绪极值判断、风险对冲、资产配置提供了量化工具，是全球投资者不可或缺的“市场晴雨表”。</p>
+<p>但VIX并非“交易圣杯”：流动性危机时负相关失效，低VIX可能持续，高VIX可能延续，且需结合期限结构、基本面等指标验证。正确的用法是“将VIX作为‘情绪参考锚’，而非唯一决策依据”——用VIX识别风险边界，用基本面判断趋势方向，用技术面捕捉入场时机，三者结合才能在“恐慌中不慌，乐观中不贪”，实现稳健的长期收益。</p>
+<p><a href="../">返回波动率指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

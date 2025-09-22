@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>抛物线转向指标 (SAR) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#sar" class="nav-link">抛物线转向指标 (SAR) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_11" class="nav-link">高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_12" class="nav-link">总结：</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="sar">抛物线转向指标 (SAR) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念：</h3>
+<p>抛物线转向指标（Parabolic Stop and Reverse，简称SAR），由美国技术分析大师威尔斯·威尔德（Welles Wilder）于1978年在《技术交易系统的新概念》中提出，是一种<strong>兼具趋势跟踪与止损功能的动态指标</strong>。它通过在价格图表上绘制“抛物线路径的点”（即SAR点），直观标记价格的“潜在反转位置”——当价格突破SAR点时，指标同步反向，发出“趋势转向”信号；同时，SAR点本身可作为“动态止损位”，随价格趋势逐步移动，帮助交易者锁定利润、控制风险，属于滞后性低、实操性极强的技术工具。</p>
+<p>SAR的核心逻辑是“趋势会延续，直到出现明确反转信号”——它借鉴了“抛物线运动”的特性：在趋势初期，SAR点与价格间距较宽（允许价格正常震荡）；随着趋势延续，SAR点跟随价格逐步靠近（收紧止损，锁定已获利润）；当价格跌破/突破SAR点时，表明趋势动能衰减，需反向操作。</p>
+<ul>
+<li>“抛物线路径”：SAR点的移动轨迹呈抛物线形态——多头趋势中，SAR点从价格下方逐步上移（支撑位上移）；空头趋势中，SAR点从价格上方逐步下移（阻力位下移），轨迹曲率随趋势强度变化；</li>
+<li>“反转机制”：SAR是“自动反转指标”——无需手动调整，当价格收盘价跌破多头SAR点时，指标立即转为空头SAR（点移至价格上方）；当价格收盘价突破空头SAR点时，指标立即转为多头SAR（点移至价格下方），实现“信号自动切换”；</li>
+<li>“双重功能”：SAR既是“趋势转向信号源”（突破SAR点=趋势反转），也是“动态止损工具”（以当前SAR点作为止损位），解决了“趋势跟踪中何时止损、何时反转”的核心问题。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑：</h3>
+<p>SAR的核心是“SAR点的动态计算”，依赖两个关键参数：<strong>初始步长（Initial Step）</strong> 和<strong>最大步长（Maximum Step）</strong>，威尔德原版默认参数为“初始步长=0.02，最大步长=0.2”（即2%和20%），计算逻辑分“多头趋势”和“空头趋势”两种场景，且SAR点每日（或每周期）更新。</p>
+<h4 id="1">1. 核心参数定义</h4>
+<table>
+<thead>
+<tr>
+<th>参数名称</th>
+<th>英文表述</th>
+<th>核心作用</th>
+<th>原版设定与调整逻辑</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初始步长</td>
+<td>Initial Step</td>
+<td>趋势启动时，SAR点与价格的初始间距比例，决定指标“灵敏度”——步长越大，SAR点越靠近价格，信号越灵敏</td>
+<td>默认0.02（2%）：短线交易可增至0.03（3%），长线交易可降至0.01（1%）</td>
+</tr>
+<tr>
+<td>最大步长</td>
+<td>Maximum Step</td>
+<td>步长增长的上限，防止趋势延续过久后SAR点过度靠近价格（导致过早止损）——最大步长越大，允许趋势震荡空间越大</td>
+<td>默认0.2（20%）：高波动品种（如加密货币）可增至0.3（30%），低波动品种（如蓝筹股）可降至0.15（15%）</td>
+</tr>
+<tr>
+<td>步长递增规则</td>
+<td>Step Increment</td>
+<td>当趋势延续（如多头趋势中价格创新高），步长从初始值开始，每创新高/新低一次增加0.02（即初始步长的1倍），直至达到最大步长后不再增长</td>
+<td>例：初始步长0.02→首次创新高→0.04→二次创新高→0.06→…→直至0.2后稳定</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 核心计算步骤（以日线周期为例）</h4>
+<p>SAR的计算需区分“当前趋势类型”，且首次计算需确定“初始趋势方向”（通常以近期高低点判断，如价格创新高则先按多头计算）。</p>
+<h5 id="1sarsar">（1）多头趋势下的SAR计算（价格处于上升趋势，SAR点在价格下方）</h5>
+<ul>
+<li>前提：当前为多头趋势，且当日价格创新高（或延续上涨）；</li>
+<li>计算逻辑：<br />
+<strong>当日SAR = 前一日SAR + 步长 × (前一日最高价 - 前一日SAR)</strong>  </li>
+<li>关键规则：  </li>
+<li>若当日SAR &gt; 当日最低价，需将当日SAR调整为“当日最低价”（避免SAR点高于价格，失去支撑意义）；  </li>
+<li>若当日价格创新高，步长按规则递增（如从0.02增至0.04），未创新高则步长保持不变；  </li>
+<li>若当日收盘价 &lt; 当日SAR，趋势反转，次日转为空头SAR计算。</li>
+</ul>
+<h5 id="2sarsar">（2）空头趋势下的SAR计算（价格处于下降趋势，SAR点在价格上方）</h5>
+<ul>
+<li>前提：当前为空头趋势，且当日价格创新低（或延续下跌）；</li>
+<li>计算逻辑：<br />
+<strong>当日SAR = 前一日SAR - 步长 × (前一日SAR - 前一日最低价)</strong>  </li>
+<li>关键规则：  </li>
+<li>若当日SAR &lt; 当日最高价，需将当日SAR调整为“当日最高价”（避免SAR点低于价格，失去阻力意义）；  </li>
+<li>若当日价格创新低，步长按规则递增（如从0.02增至0.04），未创新低则步长保持不变；  </li>
+<li>若当日收盘价 &gt; 当日SAR，趋势反转，次日转为多头SAR计算。</li>
+</ul>
+<blockquote>
+<p>示例（多头趋势）：<br />
+假设前一日SAR=10元，前一日最高价=12元，当前步长=0.02；<br />
+当日SAR=10 + 0.02×(12-10)=10.04元；<br />
+若当日价格创新高（如最高价=13元），步长增至0.04，次日SAR=10.04 + 0.04×(13-10.04)≈10.16元。</p>
+</blockquote>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>SAR的核心价值在于<strong>用“动态跟随的SAR点”解决“趋势跟踪中止损难、反转判断难”的痛点</strong>。传统趋势交易中，交易者常因“固定止损被扫”或“错过反转信号”亏损，而SAR通过“自动反转+动态止损”双重功能，实现“趋势延续时持有、趋势反转时离场”，具体体现在三大不可替代的功能：</p>
+<h3 id="1-ma">1. 自动识别趋势反转（比MA交叉更及时）</h3>
+<p>SAR的“突破反转机制”能快速捕捉趋势转向信号，避免滞后：
+- 多头转空头：价格收盘价跌破下方SAR点，SAR立即移至价格上方，明确提示“多头趋势结束，空头趋势启动”——无需等待MA死叉或形态确认，反转信号更及时；
+- 空头转多头：价格收盘价突破上方SAR点，SAR立即移至价格下方，明确提示“空头趋势结束，多头趋势启动”——尤其适合捕捉V型反转（如快速下跌后的反弹）；
+- 反转信号可靠性：SAR反转需“收盘价突破”（非盘中突破），且突破后SAR点同步反向，避免盘中波动导致的假信号，比单纯的价格突破更可靠。</p>
+<h3 id="2_1">2. 动态锁定止损（比固定比例止损更智能）</h3>
+<p>SAR的“跟随式止损”能根据趋势强度调整止损位，既避免过早止损，又能锁定利润：
+- 趋势初期（步长小）：SAR点与价格间距宽（如2%），允许价格正常震荡（如多头趋势中的小幅回调），避免被短期波动“假突破”止损；
+- 趋势中期（步长递增）：随着价格创新高/新低，步长逐步增加，SAR点加速靠近价格（如从2%增至10%），收紧止损，锁定已获利润（如多头趋势中，价格涨10元后，止损从成本价上移至8元处）；
+- 趋势末期（步长达最大）：步长稳定在最大步长（如20%），SAR点与价格间距保持固定，若价格反转突破SAR点，立即止损离场，避免利润大幅回吐。</p>
+<h3 id="3">3. 简化交易决策（比多指标叠加更直观）</h3>
+<p>SAR直接在价格图表上标记“红点/绿点”（多数软件中，多头SAR为绿点，空头SAR为红点），无需解读复杂数值，决策更简单：
+- 持仓判断：价格在SAR点上方（绿点）→ 持有多头；价格在SAR点下方（红点）→ 持有空头；无需纠结“趋势是否延续”，按SAR位置直接决策；
+- 入场时机：SAR点反转时（绿点变红点或红点变绿点），即是入场信号——多头入场=红点变绿点（价格突破空头SAR），空头入场=绿点变红点（价格跌破多头SAR）；
+- 止损设置：入场后，直接以当前SAR点作为止损位（多头止损=绿点价格，空头止损=红点价格），无需手动计算止损幅度，减少情绪化决策。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>SAR的用法核心是“跟随信号，简化决策”——无需复杂分析，只需关注“价格与SAR点的位置关系”和“SAR点的反转信号”，以下是三种经典实战用法，覆盖“趋势跟踪、波段交易、日内短线”不同场景：</p>
+<h3 id="sar_1">用法一：趋势跟踪（顺趋势持仓，靠SAR止损）</h3>
+<p>核心逻辑是“SAR点不反转，趋势不结束”，适合明确的中长期趋势（如日线级别牛市/熊市），赚足趋势主浪利润。</p>
+<h4 id="_6">多头趋势跟踪（适合股票/指数牛市）</h4>
+<ul>
+<li>步骤1：确认趋势启动——</li>
+<li>价格收盘价突破空头SAR点（红点），SAR转为多头绿点，且绿点在价格下方；</li>
+<li>伴随价格创新高（如突破过去20日高点），步长开始递增（从0.02增至0.04），确认多头趋势启动；</li>
+<li>步骤2：持仓与加仓——</li>
+<li>持仓规则：只要价格在绿点上方，且绿点持续上移，始终持有多头，不轻易离场；</li>
+<li>加仓时机：价格每创新高一次（步长递增），且SAR点与价格间距保持合理（如不小于5%），可轻仓加仓（如原有仓位的50%）；</li>
+<li>步骤3：止损离场——</li>
+<li>止损位：每日以最新绿点价格作为止损位（如当日绿点=10元，止损设为10元下方0.1元）；</li>
+<li>离场信号：当价格收盘价跌破绿点，SAR立即转为红点，当天收盘前清仓离场，避免趋势反转；</li>
+</ul>
+<h4 id="_7">空头趋势跟踪（适合期货/指数熊市）</h4>
+<ul>
+<li>步骤1：确认趋势启动——</li>
+<li>价格收盘价跌破多头SAR点（绿点），SAR转为空头红点，且红点在价格上方；</li>
+<li>伴随价格创新低（如突破过去20日低点），步长开始递增，确认空头趋势启动；</li>
+<li>步骤2：持仓与加仓——</li>
+<li>持仓规则：只要价格在红点下方，且红点持续下移，始终持有空头；</li>
+<li>加仓时机：价格每创新低一次，步长递增，可轻仓加仓；</li>
+<li>步骤3：止损离场——</li>
+<li>止损位：每日以最新红点价格作为止损位（如当日红点=8元，止损设为8元上方0.1元）；</li>
+<li>离场信号：当价格收盘价突破红点，SAR转为绿点，立即清仓离场。</li>
+</ul>
+<h3 id="sar_2">用法二：波段交易（抓SAR反转，做中等趋势）</h3>
+<p>核心逻辑是“SAR反转信号=波段入场点”，适合日线/4小时级别的波段行情（如股票回调后的反弹、期货震荡后的突破），赚取波段利润。</p>
+<h4 id="_8">多头波段入场（空头转多头）</h4>
+<ul>
+<li>入场条件（需满足2个核心）：</li>
+<li>信号条件：SAR点从红点（空头）转为绿点（多头），且当日收盘价 &gt; 绿点价格（确认突破有效）；</li>
+<li>趋势辅助：价格同步突破近期阻力位（如MA20或前期高点），或ADX≥20（确认有趋势），避免假反转；</li>
+<li>入场时机：SAR反转当日收盘前入场（如日线收盘前30分钟），避免盘中突破后回落；</li>
+<li>止损止盈：</li>
+<li>止损：设为当前绿点价格（若价格回调跌破绿点，波段失效，止损离场）；</li>
+<li>止盈：两种方式——① 目标位设为前期高点（如突破前的震荡高点）；② 跟踪止盈（以每日绿点作为止盈位，绿点上移则止盈上移，跌破绿点则止盈离场）；</li>
+</ul>
+<h4 id="_9">空头波段入场（多头转空头）</h4>
+<ul>
+<li>入场条件（需满足2个核心）：</li>
+<li>信号条件：SAR点从绿点（多头）转为红点（空头），且当日收盘价 &lt; 红点价格；</li>
+<li>趋势辅助：价格同步跌破近期支撑位（如MA20或前期低点），ADX≥20；</li>
+<li>入场时机：SAR反转当日收盘前入场；</li>
+<li>止损止盈：</li>
+<li>止损：设为当前红点价格（突破红点则止损）；</li>
+<li>止盈：目标位设为前期低点，或跟踪止盈（以每日红点作为止盈位）；</li>
+</ul>
+<h3 id="_10">用法三：日内短线（用小步长，抓短期波动）</h3>
+<p>核心逻辑是“缩短周期+调大步长”，适合15分钟/1小时级别的日内短线（如期货日内交易、股票T+0），捕捉短期快速波动。</p>
+<ul>
+<li>参数调整：</li>
+<li>周期选择：15分钟或1小时（避免超短周期如5分钟，信号噪音多）；</li>
+<li>步长调整：初始步长=0.03（3%），最大步长=0.15（15%）——调大步长让SAR点更灵敏，快速捕捉日内反转；</li>
+<li>交易规则：</li>
+<li>入场：SAR点反转（红点变绿点或绿点变红点），且日内价格突破近期高低点（如1小时内突破前3根K线高点）；</li>
+<li>止损：设为当前SAR点价格（日内短线止损需严格，避免亏损扩大）；</li>
+<li>止盈：目标位=入场价 ±（日内ATR×1.5）（如日内ATR=0.5元，止盈设为0.75元），或持仓不超过3个周期（如1小时周期持仓不超过3小时）；</li>
+<li>注意：日内短线需控制仓位（如1-2成仓），且避免在“无趋势时段”（如ADX&lt;20）交易，减少假信号干扰。</li>
+</ul>
+<h2 id="_11">高级技巧与注意事项</h2>
+<h3 id="1_1">1. 参数优化：适配不同品种与周期</h3>
+<p>SAR的默认参数（0.02, 0.2）需根据“品种波动率”和“交易周期”调整，确保信号与行情节奏匹配：
+- 按品种波动率调整：
+  - 高波动品种（加密货币、原油期货）：初始步长=0.03-0.05，最大步长=0.25-0.3——高波动品种价格震荡大，需调大步长让SAR点更灵敏，避免被大幅波动止损；
+  - 中波动品种（股票、黄金）：初始步长=0.02-0.03，最大步长=0.2-0.25——贴合默认逻辑，平衡灵敏度与稳定性；
+  - 低波动品种（蓝筹股、国债期货）：初始步长=0.01-0.02，最大步长=0.15-0.2——低波动品种价格震荡小，需缩小步长让SAR点间距宽，避免过早止损；
+- 按交易周期调整：
+  - 短线（15分钟/1小时）：初始步长=0.03，最大步长=0.15——短线需灵敏，快速捕捉短期反转；
+  - 中线（日线）：初始步长=0.02，最大步长=0.2（默认）——中线需稳定，过滤单日噪音；
+  - 长线（周线）：初始步长=0.01，最大步长=0.2——长线需宽松，允许价格长期震荡，避免过早离场。</p>
+<h3 id="2-sar">2. 缺点与警示：避开这些“SAR陷阱”</h3>
+<p>SAR虽为“趋势跟踪利器”，但存在天生局限性，尤其在“震荡市”和“极端行情”中易产生误导：
+- 震荡市信号泛滥：在窄幅震荡行情（ADX&lt;20）中，价格会频繁突破SAR点，导致SAR反复反转（绿点变红点再变绿点），产生大量“假信号”，此时交易易被频繁止损，需暂停使用SAR，或结合“趋势指标过滤”（如仅在MA多头排列时用SAR多头信号）；
+- 极端行情后信号滞后：在“黑天鹅事件”（如单日涨停/跌停）导致的极端趋势中，SAR点会因“步长未及时递增”而与价格间距过大——例如，多头趋势中价格单日涨10%，SAR点仅上移2%，此时止损位过宽，会导致利润大幅回吐；需在极端行情后手动调整步长（如临时增至0.05），或结合“固定比例止盈”（如盈利达20%后部分止盈）；
+- 单一SAR不可信：SAR需与“趋势指标+成交量”结合——例如，SAR反转时，若MA仍呈多头排列（如5EMA&gt;20EMA），则可能是“短期回调”，而非趋势反转；若SAR反转时伴随成交量放大（股票），则反转有效性提升；
+- 不适合“抄底逃顶”：SAR是“趋势跟随指标”，而非“反转预测指标”——它只能在趋势反转后发出信号，无法提前预测“顶部/底部”，若在趋势末期（如SAR步长达最大）盲目追单，易陷入“反转陷阱”（如多头趋势末期突破SAR后立即反转）。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li>误区1：震荡市中强行使用SAR——在ADX&lt;20的横盘行情中，无视SAR反复反转的假信号，频繁交易，导致持续亏损；正确做法是“震荡市暂停SAR，改用水平通道交易”；</li>
+<li>误区2：用“盘中突破”作为反转信号——SAR反转需“收盘价突破”，若仅盘中突破SAR点（收盘价未突破），则为假信号，此时入场易被套；例如，日线盘中跌破绿点，但收盘价仍在绿点上方，SAR未反转，不应离场；</li>
+<li>误区3：忽略步长递增规则——认为步长固定不变，未按“创新高/新低”递增步长，导致SAR点与价格间距过大，止损过宽，利润回吐；例如，多头趋势中价格连创新高，步长仍保持0.02，SAR点上移慢，止损位过低；</li>
+<li>误区4：SAR与趋势指标矛盾时入场——当SAR发出多头信号（红点变绿点），但MA呈空头排列（5EMA&lt;20EMA），此时为“矛盾信号”，大概率是短期反弹，不应入场；正确做法是“SAR信号与趋势指标方向一致时才入场”。</li>
+</ul>
+<h2 id="_12">总结：</h2>
+<p>SAR是技术分析中的“趋势跟踪执行官”——它不依赖复杂分析，仅通过“动态SAR点”实现“自动反转+动态止损”，帮交易者解决“何时持有、何时止损、何时反转”的核心问题，尤其适合新手建立“趋势交易思维”，也适合老手简化交易决策。</p>
+<p>但SAR并非“万能指标”，震荡市信号泛滥、极端行情滞后是其无法回避的缺点。掌握SAR的核心，不在于“精准计算SAR点”，而在于“理解趋势跟随的逻辑”——SAR点在价格下方，就做多；在上方，就做空；突破SAR点，就反转；始终顺趋势而为，不与SAR信号对抗。同时，结合ADX（筛选趋势行情）、成交量（验证反转有效性），才能让SAR成为交易中的“可靠助手”。</p>
+<p><a href="../">返回趋势指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

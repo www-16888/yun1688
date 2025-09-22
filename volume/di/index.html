@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>需求指数 (Demand Index) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#demand-index" class="nav-link">需求指数 (Demand Index) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么能精准反映资金供需？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：如何用需求指数做交易决策？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_15" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_16" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="demand-index">需求指数 (Demand Index) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>需求指数（Demand Index）由技术分析师詹姆斯·西贝特（James Sibbet）于20世纪90年代初提出，是一种<strong>结合“价格波动特征”与“成交量强度”的资金供需量化指标</strong>。其核心逻辑是“<strong>通过判断当期价格在波动区间的位置，结合成交量加权计算主动买入与主动卖出力量，量化市场‘真实需求’与‘供给’的失衡关系</strong>”——例如，股票收盘价靠近最高价且放量，说明主动买入需求旺盛，需求指数向上；若收盘价靠近最低价且放量，说明主动卖出供给占优，需求指数向下。</p>
+<p>与仅依赖价格的震荡指标（如RSI）或仅依赖成交量的指标（如VOL）不同，需求指数的核心优势是“<strong>区分主动资金与被动资金</strong>”：它不单纯看价格涨跌或成交量大小，而是通过“价格位置-成交量”的加权关系，捕捉“有资金支撑的有效趋势”（如价格涨但需求指数跌，说明上涨缺乏主动买入，易回调），尤其擅长识别主力资金在趋势末期的“动能衰竭”信号。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>量价双重加权</strong>：既考虑价格在波动区间的相对位置，又以成交量为权重，避免“无量价格波动”或“无价格支撑的放量”对信号的干扰；</li>
+<li><strong>无固定取值范围</strong>：理论上可从负无穷到正无穷（实际交易中多在-1000~1000区间波动，因品种成交量差异而异），通过“数值正负”和“与价格的背离关系”传递信号，无明确超买超卖阈值；</li>
+<li><strong>趋势与反转兼顾</strong>：既能通过“与价格同步”验证趋势强度（如多头趋势中需求指数持续为正），又能通过“与价格背离”预警趋势反转（如价格新高但需求指数未新高）；</li>
+<li><strong>与MFI（资金流量指数）的核心区别</strong>：
+  | 指标类型       | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+  |----------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+  | MFI（资金流量指数） | 基于“典型价格（最高价+最低价+收盘价）/3 × 成交量”，通过多周期资金流比率映射至0-100区间 | 有明确超买超卖区间（70/30），信号更直观 | 短期资金供需极限判断，适合波段超买超卖交易 |
+  | 需求指数（Demand Index） | 基于“加权价格（最高价+最低价+2×收盘价）/4”，通过主动买入/卖出力量差值平滑计算，无固定区间 | 更精准区分主动/被动资金，反映资金动能趋势 | 中长期趋势反转预警与趋势强度验证，适合趋势交易 |</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>需求指数的计算围绕“主动资金力量的量化”展开，核心是“先通过价格位置与成交量计算单周期主动买入/卖出力量，再通过平滑处理反映趋势性变化”，步骤清晰可复现，核心参数为“平滑周期”（默认14周期，可根据交易风格调整）。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<p>需求指数的计算分为4步，核心是“从基础价格处理到主动力量量化，再到平滑优化”，具体公式与步骤如下：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某股票日线数据：最高价25元，最低价23元，收盘价24.5元，成交量2000手；前一期加权价格23.8元，前一期平滑后需求指数=300）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算“加权价格（Weighted Price）”</td>
+<td>加权价格 = (最高价 + 最低价 + 2×收盘价) ÷ 4<br>——突出收盘价的多空博弈结果，避免单一价格失真</td>
+<td>加权价格 = (25 + 23 + 2×24.5) ÷ 4 = (48 + 49) ÷ 4 = 24.25（元）</td>
+</tr>
+<tr>
+<td>2. 计算“价格变化方向”与“原始波动范围”</td>
+<td>价格变化方向 = 当期加权价格 - 前一期加权价格<br>原始波动范围 = 最高价 - 最低价<br>——判断主动力量方向与强度基准</td>
+<td>价格变化方向 = 24.25 - 23.8 = 0.45（元，正值，当期上涨）<br>原始波动范围 = 25 - 23 = 2（元）</td>
+</tr>
+<tr>
+<td>3. 计算“主动买入/卖出力量”</td>
+<td>若价格变化方向为正（上涨）：<br>主动买入力量 = 成交量 × 价格变化方向 ÷ 原始波动范围，主动卖出力量=0<br>若价格变化方向为负（下跌）：<br>主动卖出力量 = 成交量 × ｜价格变化方向｜ ÷ 原始波动范围，主动买入力量=0</td>
+<td>主动买入力量 = 2000 × 0.45 ÷ 2 = 450<br>主动卖出力量 = 0</td>
+</tr>
+<tr>
+<td>4. 计算“平滑后需求指数”</td>
+<td>当期需求指数 = 前一期平滑后需求指数 + (主动买入力量 - 主动卖出力量)<br>——通过指数移动平均（EMA）逻辑平滑，消除短期噪音</td>
+<td>当期需求指数 = 300 + (450 - 0) = 750（正值，主动买入占优，需求旺盛）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数适配（周期与品种选择）</h4>
+<p>需求指数的“平滑周期”和“品种流动性”直接影响信号有效性，需根据交易场景适配：
+- <strong>平滑周期适配</strong>：
+  - 短线交易（30分钟/1小时，日内T+0）：用<strong>6-9周期</strong>——短周期能快速反映日内主动资金转向（如1小时需求指数从-200升至100，说明日内需求快速增强），但信号波动大，需结合K线形态确认；
+  - 波段交易（日线，持有3-10天）：用<strong>14周期</strong>（默认周期）——平衡“灵敏度”与“稳定性”，能反映1-2周的主动资金趋势，是最常用的周期；
+  - 中长线交易（周线/月线，持有1个月以上）：用<strong>20-25周期</strong>——长期周期过滤短期资金噪音，反映3个月以上的主力资金布局（如周线需求指数从-500升至200，说明中长期需求逐步复苏）；
+- <strong>品种适配</strong>：
+  - 高流动性品种（大盘股、主力合约期货）：需求指数信号更可靠（价格波动连续，成交量稳定，主动力量量化精准）；
+  - 低流动性品种（小盘股、冷门期货）：因“成交量极低”或“价格跳空导致原始波动范围异常”，易导致主动力量计算失真，需慎用或叠加“成交量≥5日均量”条件过滤。</p>
+<h2 id="_4">二、意义：它为什么能精准反映资金供需？</h2>
+<p>需求指数的核心价值在于<strong>解决了“传统指标无法区分主动/被动资金”的痛点</strong>——RSI仅看价格涨跌，可能因“无量上涨”误判趋势强度；MFI虽结合成交量，但固定0-100区间易在极端趋势中失效；而需求指数通过“价格位置加权成交量”，让“主动资金行为”成为信号核心，能更精准捕捉“资金供需的真实变化”，其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 预警“趋势反转”（捕捉主力动能衰竭）</h3>
+<p>趋势末期，价格往往仍创新高/新低，但主动资金已开始撤离/介入，需求指数通过“与价格背离”提前预警：
+- <strong>顶背离（多头趋势反转预警）</strong>：
+  1. 价格创近期新高（如近20日新高）；
+  2. 需求指数未创同期新高，反而较前高回落≥20%（如前高需求指数800，当前600）；
+  3. 逻辑：价格上涨但“主动买入需求”已衰减，主力开始暗中出货，后续回调概率高（如某股票从20元涨至28元，价格创新高但需求指数从700跌至500，随后回调至24元）；
+- <strong>底背离（空头趋势反转预警）</strong>：
+  1. 价格创近期新低（如近20日新低）；
+  2. 需求指数未创同期新低，反而较前低回升≥20%（如前低需求指数-600，当前-450）；
+  3. 逻辑：价格下跌但“主动买入需求”已增强，主力开始暗中吸筹，后续反弹概率高。</p>
+<h3 id="2_1">2. 验证“趋势强度”（判断趋势能否延续）</h3>
+<p>趋势中期，需求指数与价格的“同步性”直接反映趋势是否有主动资金支撑：
+- <strong>多头趋势同步（趋势健康）</strong>：
+  1. 价格持续在MA20（20日均线）上方运行（确认多头趋势）；
+  2. 需求指数持续为正值（主动买入需求＞主动卖出供给），且每次回调时需求指数未跌破0轴；
+  3. 逻辑：多头趋势有持续主动资金入场支撑，趋势大概率延续（如某股票沿MA20上涨，需求指数始终在100以上，上涨趋势持续2个月）；
+- <strong>空头趋势同步（趋势健康）</strong>：
+  1. 价格持续在MA20下方运行（确认空头趋势）；
+  2. 需求指数持续为负值（主动卖出供给＞主动买入需求），且每次反弹时需求指数未突破0轴；
+  3. 逻辑：空头趋势有持续主动资金离场支撑，趋势大概率延续。</p>
+<h3 id="3">3. 过滤“假突破”（识别无资金支撑的价格波动）</h3>
+<p>价格突破阻力/支撑位时，需求指数可验证突破的有效性：
+- <strong>真突破（有资金支撑）</strong>：
+  1. 价格突破阻力位（如前高25元）；
+  2. 突破当日需求指数大幅上升（如从300升至600），且成交量≥5日均量×1.5倍；
+  3. 逻辑：突破有主动买入资金推动，后续上涨概率高；
+- <strong>假突破（无资金支撑）</strong>：
+  1. 价格突破阻力位，但收盘回落至阻力位下方；
+  2. 突破当日需求指数未上升反而下跌（如从300降至100），成交量＜5日均量；
+  3. 逻辑：突破是短期资金炒作，无真实需求支撑，后续易回落。</p>
+<h2 id="_5">三、实战用法：如何用需求指数做交易决策？</h2>
+<p>需求指数的实战核心是“<strong>背离看反转，同步看延续，突破看验证</strong>”，需结合价格形态、支撑阻力位和均线使用，以下分“趋势反转交易”“趋势延续交易”“突破验证交易”三类场景详解：</p>
+<h3 id="_6">用法一：趋势反转交易（抓顶底拐点）</h3>
+<p>适用于<strong>趋势末期</strong>，核心是“用需求指数与价格的背离确认主动资金转向，结合价格形态入场”，捕捉趋势反转的拐点。</p>
+<h4 id="_7">顶部反转（做空/止盈，抓下跌拐点）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格创近期新高，且新高K线出现“看跌形态”（如流星线、黄昏星、阴包阳）；</li>
+<li>需求指数与价格形成顶背离（需求指数未破前高，且较前高回落≥20%）；</li>
+<li>新高当日成交量虽放大，但需求指数未同步上升（说明放量是主动卖出导致）；</li>
+<li><strong>入场时机</strong>：次日价格低开，且需求指数继续下跌（确认背离延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格重新突破新高（背离失效），或需求指数回升至前高附近；</li>
+<li>止盈：前期支撑位（如MA20或前次回调低点），或需求指数出现底背离。</li>
+</ul>
+<h4 id="_8">底部反转（做多/建仓，抓上涨拐点）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格创近期新低，且新低K线出现“看涨形态”（如锤子线、启明星、阳包阴）；</li>
+<li>需求指数与价格形成底背离（需求指数未破前低，且较前低回升≥20%）；</li>
+<li>新低当日成交量虽放大，但需求指数未同步下跌（说明放量是主动买入导致）；</li>
+<li><strong>入场时机</strong>：次日价格高开，且需求指数继续上涨（确认背离延续）；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格重新跌破新低（背离失效），或需求指数回落至前低附近；</li>
+<li>止盈：前期阻力位（如MA20或前次反弹高点），或需求指数出现顶背离。</li>
+</ul>
+<h3 id="_9">用法二：趋势延续交易（顺趋势加仓）</h3>
+<p>适用于<strong>趋势中期</strong>，核心是“用需求指数与价格的同步性确认趋势健康，结合均线支撑/阻力加仓”，最大化趋势利润。</p>
+<h4 id="_10">多头趋势加仓（顺涨势加仓）</h4>
+<ul>
+<li><strong>加仓条件</strong>（满足2项）：</li>
+<li>价格持续在MA20上方运行（确认多头趋势），且每次回调不跌破MA20；</li>
+<li>需求指数持续为正值，且回调时需求指数未跌破0轴（主动买入未大规模撤离）；</li>
+<li><strong>加仓时机</strong>：价格回调至MA20附近止跌，且当日需求指数从低位回升（如从100升至300）；</li>
+<li><strong>减仓条件</strong>：需求指数跌破0轴，或价格跌破MA20（趋势弱化）。</li>
+</ul>
+<h4 id="_11">空头趋势加仓（顺跌势加仓，仅用于融券交易）</h4>
+<ul>
+<li><strong>加仓条件</strong>（满足2项）：</li>
+<li>价格持续在MA20下方运行（确认空头趋势），且每次反弹不突破MA20；</li>
+<li>需求指数持续为负值，且反弹时需求指数未突破0轴（主动卖出未大规模停止）；</li>
+<li><strong>加仓时机</strong>：价格反弹至MA20附近遇阻回落，且当日需求指数从高位回落（如从-100降至-300）；</li>
+<li><strong>减仓条件</strong>：需求指数突破0轴，或价格突破MA20（趋势弱化）。</li>
+</ul>
+<h3 id="_12">用法三：突破验证交易（过滤假突破）</h3>
+<p>适用于<strong>价格震荡突破时</strong>，核心是“用需求指数验证突破的资金支撑，避免假突破陷阱”。</p>
+<h4 id="_13">阻力位突破验证（做多）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格突破前期阻力位（如前高30元），且收盘价站稳阻力位上方；</li>
+<li>突破当日需求指数大幅上升（如从200升至500），说明有主动买入支撑；</li>
+<li>突破当日成交量≥5日均量×1.5倍（资金关注度提升）；</li>
+<li><strong>入场时机</strong>：突破次日价格回踩阻力位（转化为支撑位）时；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格回落至阻力位下方（突破失效）；</li>
+<li>止盈：阻力位+（阻力位-前期低点）×1（如阻力位30元，前期低点25元，目标35元）。</li>
+</ul>
+<h4 id="_14">支撑位破位验证（做空，仅用于融券交易）</h4>
+<ul>
+<li><strong>入场条件</strong>（满足3项）：</li>
+<li>价格跌破前期支撑位（如前低25元），且收盘价站稳支撑位下方；</li>
+<li>破位当日需求指数大幅下跌（如从-100降至-400），说明有主动卖出推动；</li>
+<li>破位当日成交量≥5日均量×1.5倍（资金恐慌离场）；</li>
+<li><strong>入场时机</strong>：破位次日价格反弹至支撑位（转化为阻力位）时；</li>
+<li><strong>止损止盈</strong>：</li>
+<li>止损：价格回升至支撑位上方（破位失效）；</li>
+<li>止盈：支撑位-（前期高点-支撑位）×1（如支撑位25元，前期高点30元，目标20元）。</li>
+</ul>
+<h2 id="_15">四、高级技巧与注意事项</h2>
+<h3 id="1_2">1. 优化信号：结合“需求指数斜率”过滤噪音</h3>
+<p>需求指数的“斜率变化”（即指标的涨跌速度）能进一步区分“资金转向的强度”，避免因短期波动误判趋势：
+- <strong>强反转信号</strong>：背离出现时，需求指数斜率绝对值≥前期斜率的2倍（如顶背离时，需求指数从“上涨斜率10”转为“下跌斜率-20”），说明主动资金转向剧烈，反转概率高；
+- <strong>弱反转信号</strong>：背离出现时，需求指数斜率绝对值＜前期斜率的1倍（如顶背离时，需求指数从“上涨斜率10”转为“下跌斜率-5”），说明主动资金转向平缓，需等待二次背离确认；
+- <strong>示例</strong>：价格创新高，需求指数未新高（第一次背离），但斜率仅从5降至-3（弱转向）；后续价格再创新高，需求指数仍未新高，斜率从-3降至-15（强转向），此时入场更安全。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“需求指数陷阱”</h3>
+<p>需求指数虽精准反映主动资金，但存在天生局限性，尤其在“极端行情”和“低流动性品种”中易产生误导，需重点规避：
+- <strong>极端行情（一字涨跌停）信号失真</strong>：
+  - 一字涨停：最高价=最低价=收盘价，原始波动范围=0，主动买入力量计算为“成交量×价格变化方向÷0”（无意义），需求指数仅叠加“前值+0”，无法反映涨停板上的资金分歧（如涨停缩量时，需求指数走平，但主力未继续入场）；
+  - 一字跌停：同理，主动卖出力量计算失真，需求指数走平，无法反映跌停板上的资金承接；
+  - 应对：涨跌停行情中，需结合“封单量变化”（封单减少=分歧加大）和“开板后的需求指数”判断，指标仅作参考；
+- <strong>低流动性品种信号无效</strong>：
+  - 小盘股/冷门期货：单日成交量极低（如＜1000手），且价格因“单笔大单”跳空（如高开5%），导致“加权价格”和“主动力量”失真（如收盘价靠近最高价，但仅100手成交，非真实需求）；
+  - 应对：低流动性品种需叠加“成交量≥5日均量”条件，仅在成交量正常时参考需求指数；
+- <strong>短周期信号波动过大</strong>：
+  - 30分钟以内周期：需求指数因“单日价格波动频繁”（如1小时内价格从涨2%到跌1%），导致主动力量反复切换，信号频繁（如1天内出现3次背离），多数为短期噪音；
+  - 应对：短线交易建议用60分钟周期，中长线用日线/周线周期，减少波动干扰。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：忽略“价格趋势”，仅看背离</strong>——认为“价格新高+需求指数不新高=顶背离”，立即做空，忽略价格仍在MA60上方（多头趋势未破）；正确做法是“先看趋势方向（MA20/MA60），顺趋势方向交易，背离仅作为顺趋势的止盈信号，不可逆势入场”；</li>
+<li><strong>误区2：背离出现就立即入场，不等确认</strong>——认为“价格新低+需求指数不新低=底背离”，立即做多，忽略“背离后价格可能再创新低（二次背离）”；正确做法是“背离后等待‘价格突破趋势线’（如跌破MA20/突破MA20）或‘需求指数突破关键阈值’（如突破0轴），再入场，降低左侧风险”；</li>
+<li><strong>误区3：用需求指数判断短期涨跌，忽略周期匹配</strong>——用1小时需求指数判断日线趋势（如1小时底背离，日线需求指数仍跌），导致“小周期信号干扰大周期判断”；正确做法是“大周期（日线）定趋势方向，小周期（1小时）用需求指数找顺趋势入场点”（如日线需求指数上涨，1小时需求指数底背离时做多）；</li>
+<li><strong>误区4：将需求指数数值大小等同于趋势强度</strong>——认为“需求指数数值高（如800）=多头趋势强”，忽略“数值是累计结果”（如需求指数从1000跌至800，虽数值高，但趋势已向下）；正确做法是“关注需求指数的‘趋势方向（上涨/下跌）’和‘与价格的同步性’，不看绝对值大小”。</li>
+</ul>
+<h2 id="_16">五、总结</h2>
+<p>需求指数（Demand Index）是技术分析中“主动资金供需的量化标尺”——它通过“价格位置加权成交量”，解决了传统指标无法区分主动/被动资金的痛点，既能通过“背离”预警趋势反转，又能通过“同步”验证趋势强度，还能通过“突破验证”过滤假信号，是“趋势交易者”和“波段交易者”的核心辅助工具。</p>
+<p>但需求指数并非“万能资金指标”，极端行情失真、低流动性无效、短周期波动大仍是其局限。正确的用法是“将需求指数与趋势指标（MA20/MA60）、量能指标（成交量）、价格形态（K线形态）结合”——用MA确认趋势方向，用需求指数寻找资金转向点，用成交量验证信号真实性，多维度验证后再决策，才能最大化其价值，做出更精准的交易判断。</p>
+<p><a href="../">返回成交量型指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>BIAS（乖离率）实战用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#bias" class="nav-link">BIAS（乖离率）实战用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#bias_1" class="nav-link">一、BIAS 核心构成与计算（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#bias_2" class="nav-link">二、BIAS 核心买卖信号：超买与超卖（核心应用）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#bias_3" class="nav-link">三、BIAS 进阶用法：趋势配合与背离（提升胜率）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#bias_4" class="nav-link">四、BIAS 实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#bias_5" class="nav-link">五、BIAS 买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="bias">BIAS（乖离率）实战用法全解析</h1>
+<p>BIAS（Bias Ratio，乖离率）是技术分析中核心的<strong>价格偏离度指标</strong>，通过计算“股价与某周期移动平均线（如5日、10日、20日）的偏离百分比”，判断市场是否处于“超买”或“超卖”状态，进而捕捉价格回归均线的交易机会（即“低买高卖”信号）。其核心逻辑是“价格围绕均线波动，偏离过大后终将回归”，以下是详细应用逻辑与实战技巧。</p>
+<h2 id="bias_1">一、BIAS 核心构成与计算（基础必知）</h2>
+<p>BIAS的核心是“股价与均线的差值占均线的比例”，不同周期的均线对应不同灵敏度的BIAS指标，需先明确计算逻辑与常用周期：</p>
+<h3 id="1">1. 计算公式</h3>
+<p><strong>BIAS（N日）= [（当日收盘价 - N日移动平均线收盘价）÷ N日移动平均线收盘价] × 100%</strong><br />
+- 若BIAS为正值：股价在均线之上，说明价格高于平均成本，可能处于超买状态。<br />
+- 若BIAS为负值：股价在均线之下，说明价格低于平均成本，可能处于超卖状态。  </p>
+<h3 id="2">2. 常用周期与特点</h3>
+<p>不同周期的BIAS适用场景不同，实战中需根据交易周期选择，通常搭配使用（如“短周期+中周期”确认信号）：</p>
+<table>
+<thead>
+<tr>
+<th>周期类型</th>
+<th>常用参数（N日）</th>
+<th>灵敏度</th>
+<th>核心作用</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>短期BIAS</td>
+<td>5、6</td>
+<td>高</td>
+<td>捕捉短期超买/超卖（如1-3天反弹/回调）</td>
+<td>短线交易（日内、隔日）</td>
+</tr>
+<tr>
+<td>中期BIAS</td>
+<td>10、20</td>
+<td>中</td>
+<td>判断中期趋势偏离（如1-2周趋势修正）</td>
+<td>中线交易（1-4周）</td>
+</tr>
+<tr>
+<td>长期BIAS</td>
+<td>60、120</td>
+<td>低</td>
+<td>识别长期极端行情（如牛市顶部/熊市底部）</td>
+<td>长线投资（半年以上）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="bias_2">二、BIAS 核心买卖信号：超买与超卖（核心应用）</h2>
+<p>BIAS的核心功能是通过“数值区间”判断超买/超卖，进而生成买卖信号。但需注意：<strong>不同市场（如A股、港股）、不同标的（如大盘股、小盘股）的超买/超卖阈值不同</strong>，需结合历史数据调整，以下为通用参考区间：</p>
+<h3 id="1_1">1. 买入信号：超卖状态（价格低估，大概率反弹）</h3>
+<p>当BIAS数值跌至“超卖阈值”以下，说明股价大幅低于均线，市场情绪过度悲观，价格有回归均线的需求，此时可考虑买入。</p>
+<h4 id="_1">通用超卖阈值（需结合周期调整）</h4>
+<ul>
+<li>短期BIAS（5日）：≤ -5% ~ -8%（小盘股波动大，可放宽至-10%；大盘股波动小，-5%即可）。  </li>
+<li>中期BIAS（10日）：≤ -8% ~ -12%（如指数或蓝筹股，-8%为预警，-10%以上为强买入信号）。  </li>
+<li>长期BIAS（60日）：≤ -15% ~ -20%（极端熊市中可能跌至-25%，但此时需结合基本面判断，避免抄底过早）。</li>
+</ul>
+<h4 id="_2">信号确认条件（避免假信号）</h4>
+<ul>
+<li>条件1：BIAS数值触及超卖阈值后，出现“止跌企稳”K线（如十字星、锤子线），证明下跌动能减弱。  </li>
+<li>条件2：成交量温和放大（若缩量超卖，可能继续横盘；放量超卖，反弹概率更高）。  </li>
+<li>条件3：多周期共振（如5日BIAS超卖的同时，10日BIAS也接近超卖阈值，信号更可靠）。</li>
+</ul>
+<h4 id="_3">实战案例</h4>
+<p>某小盘股日线级别中，5日BIAS从-3%跌至-10%（超卖阈值），当日收出锤子线（下影线是实体2倍以上），成交量比前一日增加30%，且10日BIAS同步跌至-8%（接近超卖），此时可视为有效超卖买入信号，短期反弹概率高。</p>
+<h3 id="2_1">2. 卖出信号：超买状态（价格高估，大概率回调）</h3>
+<p>当BIAS数值升至“超买阈值”以上，说明股价大幅高于均线，市场情绪过度乐观，价格有回归均线的需求，此时可考虑卖出。</p>
+<h4 id="_4">通用超买阈值（需结合周期调整）</h4>
+<ul>
+<li>短期BIAS（5日）：≥ 5% ~ 8%（小盘股波动大，可放宽至10%；大盘股波动小，5%即可）。  </li>
+<li>中期BIAS（10日）：≥ 8% ~ 12%（如热门题材股，12%以上为强卖出信号；蓝筹股8%即可预警）。  </li>
+<li>长期BIAS（60日）：≥ 15% ~ 20%（牛市中可能升至25%，但此时需警惕顶部风险，逐步减仓）。</li>
+</ul>
+<h4 id="_5">信号确认条件（避免假信号）</h4>
+<ul>
+<li>条件1：BIAS数值触及超买阈值后，出现“滞涨回落”K线（如流星线、乌云盖顶），证明上涨动能减弱。  </li>
+<li>条件2：成交量异常放大（如“天量天价”，说明资金高位出货，回调风险高）。  </li>
+<li>条件3：多周期共振（如5日BIAS超买的同时，10日BIAS也接近超买阈值，信号更可靠）。</li>
+</ul>
+<h4 id="_6">实战案例</h4>
+<p>某热门题材股日线级别中，5日BIAS从6%升至12%（超买阈值），当日收出流星线（上影线是实体2倍以上），成交量创近期新高（天量），且10日BIAS同步升至10%（接近超买），此时可视为有效超买卖出信号，短期回调概率高。</p>
+<h2 id="bias_3">三、BIAS 进阶用法：趋势配合与背离（提升胜率）</h2>
+<p>BIAS单独使用时，在“趋势市”中易出现“超买后继续超买”“超卖后继续超卖”的假信号，需结合<strong>趋势方向</strong>与<strong>背离信号</strong>进一步过滤，提升决策胜率。</p>
+<h3 id="1_2">1. 结合趋势方向：顺势用信号</h3>
+<p>通过均线（如20日均线）判断整体趋势，只在“顺势”时使用BIAS信号，避免逆势操作：
+- <strong>上升趋势（股价在20日均线上方，均线向上）</strong>：
+  - 只做“超卖买入”（下跌回调至超卖时买），忽略“超买卖出”（上升趋势中，超买可能是趋势延续，回调后仍会上涨）。<br />
+- <strong>下跌趋势（股价在20日均线下方，均线向下）</strong>：
+  - 只做“超买卖出”（反弹至超买时卖），忽略“超卖买入”（下跌趋势中，超卖可能是趋势延续，反弹后仍会下跌）。<br />
+- <strong>震荡趋势（股价在20日均线附近上下波动）</strong>：
+  - 可同时使用“超买卖出+超卖买入”，做区间高抛低吸。</p>
+<h3 id="2_2">2. 背离信号：趋势反转预警</h3>
+<p>BIAS背离是“股价与BIAS走势相反”，是趋势即将反转的强烈信号，比单纯超买/超卖更提前：
+- <strong>底背离（买入预警）</strong>：
+  - 定义：股价创新低（如跌至10元，低于前低11元），但BIAS未创新低（如5日BIAS前低-10%，本次最低-8%），说明“下跌动能衰竭，反弹即将来临”。<br />
+  - 用法：底背离出现后，若BIAS随后反弹至超卖阈值以上，可确认买入信号。<br />
+- <strong>顶背离（卖出预警）</strong>：
+  - 定义：股价创新高（如涨至20元，高于前高19元），但BIAS未创新高（如5日BIAS前高12%，本次最高10%），说明“上涨动能衰竭，回调即将来临”。<br />
+  - 用法：顶背离出现后，若BIAS随后回落至超买阈值以下，可确认卖出信号。</p>
+<h2 id="bias_4">四、BIAS 实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不机械套用阈值</strong>：不同标的（如银行股vs创业板股）、不同市场环境（牛市vs熊市）的超买/超卖阈值差异大，需回溯标的近1-2年的BIAS历史数据，确定“个性化阈值”（如某创业板股历史上5日BIAS跌至-12%必反弹，可将其设为超卖阈值）。  </li>
+<li><strong>避免单一依赖BIAS</strong>：BIAS是“震荡指标”，在强趋势市中易失效（如牛市中BIAS超买后仍会上涨），需搭配MACD（趋势）、成交量（资金）等指标综合判断（如BIAS超卖+MACD金叉，买入信号更可靠）。  </li>
+<li><strong>控制仓位与止损</strong>：超卖买入后，若股价继续下跌（如BIAS跌破个性化阈值），需立即止损（避免“抄底在半山腰”）；超买卖出后，若股价继续上涨（如BIAS突破个性化阈值），需放弃回补（避免“踏空趋势”）。  </li>
+<li><strong>匹配交易周期</strong>：短线交易用5/10日BIAS，中线交易用20/60日BIAS，长线投资用120/250日BIAS，避免“用短期BIAS指导长线操作”（如用5日BIAS超卖买入，却持有半年，易受短期波动干扰）。</li>
+</ol>
+<h2 id="bias_5">五、BIAS 买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>判趋势</strong>：用20日均线判断方向→上升趋势（均线向上）、下跌趋势（均线向下）、震荡趋势（均线走平）。  </li>
+<li><strong>定周期</strong>：短线选5/10日BIAS，中线选20/60日BIAS，长线选120/250日BIAS。  </li>
+<li><strong>找信号</strong>：</li>
+<li>上升趋势：BIAS跌至个性化超卖阈值+止跌K线+放量→买入。  </li>
+<li>下跌趋势：BIAS升至个性化超买阈值+滞涨K线+放量→卖出。  </li>
+<li>震荡趋势：BIAS超卖买、超买卖，配合区间高低点。  </li>
+<li><strong>验信号</strong>：确认多周期共振（如5日+10日BIAS同步超买/超卖）、搭配指标验证（如BIAS超卖+MACD金叉）。  </li>
+<li><strong>设风控</strong>：买入后以“BIAS跌破个性化超卖阈值”止损；卖出后以“BIAS突破个性化超买阈值”放弃回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>波动率比（Volatility Ratio）深度解析：跨周期波动偏离的“量化标尺” - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#volatility-ratio" class="nav-link">波动率比（Volatility Ratio）深度解析：跨周期波动偏离的“量化标尺”</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_3" class="nav-link">二、计算逻辑与核心参数</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">三、意义：它为什么是“波动异常的预警器”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">四、实战用法：三大核心交易策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_9" class="nav-link">五、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_10" class="nav-link">六、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="volatility-ratio">波动率比（Volatility Ratio）深度解析：跨周期波动偏离的“量化标尺”</h1>
+<p>波动率比（Volatility Ratio，简称VR）是<strong>通过计算“短期波动率”与“长期波动率”的比值，量化短期波动相对于长期波动偏离程度的技术指标</strong>。其核心逻辑是“<strong>以长期波动率为‘基准波动水平’，通过短期波动率与基准的比值，判断当前波动是否处于‘异常扩张’或‘异常收缩’状态</strong>”——不单独衡量波动大小，而是聚焦“短期波动与长期趋势的相对关系”，帮助交易者识别波动异常（如短期波动骤升/骤降）、验证趋势强度（如比值与价格趋势同步）、预警震荡突破（如波动收缩至极致后回升），是兼顾“波动基准”与“偏离判断”的实用工具。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>波动率比的本质是“<strong>短期波动相对于长期波动的相对强度</strong>”。传统波动率指标（如历史波动率、ATR）仅能反映“单一周期的波动幅度”，无法判断当前波动是否“异常”（例如，某股票10日波动率20%，若不清楚其长期波动率是10%还是30%，则无法判断20%是否过高）；而波动率比通过“短期/长期”的比值，将“绝对波动”转化为“相对偏离度”——例如，短期波动率20%、长期10%，比值=2（短期波动是长期的2倍，属于异常扩张）；短期8%、长期16%，比值=0.5（短期波动仅为长期的一半，属于异常收缩）。</p>
+<p>其核心优势是“<strong>快速定位波动异常状态</strong>”：长期波动率反映资产的“常态化波动水平”（如某蓝筹股长期波动率稳定在15%），短期波动率反映“当前动态波动”，比值能直观显示“当前波动是否脱离常态”——比值＞1.5通常意味着短期波动过度扩张（可能伴随趋势加速或反转），比值＜0.5意味着短期波动过度收缩（可能酝酿突破行情）。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>跨周期对比性</strong>：始终基于“短期+长期”两个周期的波动率对比，避免单一周期的片面性；</li>
+<li><strong>偏离度量化</strong>：用具体数值（如1.2、0.8）量化波动偏离程度，信号明确，无需主观判断；</li>
+<li><strong>基准稳定性</strong>：以长期波动率为基准（如60日、120日），基准波动相对平稳，避免短期噪音干扰；</li>
+<li>
+<p><strong>跨品种适配</strong>：适用于股票、期货、加密货币等所有有价格波动的资产，尤其对“波动周期明确”的品种（如大盘股、国债）效果更优。</p>
+</li>
+<li>
+<p><strong>与相关波动率指标的核心区别</strong>：
+| 指标类型               | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+|------------------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+| 波动率比（Volatility Ratio） | 短期波动率 ÷ 长期波动率（跨周期比值） | 快速识别波动异常，量化偏离程度 | 波动异常预警、趋势强度验证、突破行情预判 |
+| 历史波动率（Historical Volatility） | 单一周期内价格收益率的标准差（绝对波动） | 反映单一周期实际波动幅度 | 单一周期风险评估、止损止盈计算 |
+| 隐含波动率（如VIX）    | 期权价格推导的未来预期波动（前瞻性） | 反映市场情绪与未来风险预期 | 情绪极值判断、期权交易决策 |</p>
+</li>
+</ul>
+<h2 id="_3">二、计算逻辑与核心参数</h2>
+<p>波动率比的计算围绕“确定双周期→计算各周期波动率→求比值”三步展开，核心是“选择合理的短期/长期周期组合”，确保长期周期能反映“常态波动”，短期周期能捕捉“当前动态变化”。计算逻辑简单透明，可复现性强。</p>
+<h3 id="1">1. 核心计算步骤（以日线周期为例）</h3>
+<p>波动率比的计算需先明确“短期周期（如10日）”和“长期周期（如60日）”，再基于同一价格数据（通常为收盘价）计算两个周期的历史波动率，最终求比值：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某蓝筹股：短期周期=10日，长期周期=60日）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 确定“双周期组合”</td>
+<td>选择“短期周期（S）”和“长期周期（L）”，行业通用组合为：<br>- 常规品种（股票、ETF）：S=10日，L=60日；<br>- 高波动品种（期货、加密货币）：S=5日，L=30日；<br>- 低波动品种（债券、蓝筹）：S=20日，L=120日；<br>（原则：长期周期≥短期周期的5倍，确保长期为“常态基准”）</td>
+<td>选择常规组合：S=10日，L=60日</td>
+</tr>
+<tr>
+<td>2. 计算“短期波动率（HV_S）”</td>
+<td>基于短期周期收盘价，计算“日度对数收益率的标准差”，再年化（同历史波动率计算方法）：<br>HV_S = 日度收益率标准差 × √252（年化因子，股票市场）</td>
+<td>10日日度收益率标准差=0.012（1.2%）→ HV_S=0.012×√252≈0.19（19%）</td>
+</tr>
+<tr>
+<td>3. 计算“长期波动率（HV_L）”</td>
+<td>基于长期周期收盘价，用相同方法计算年化波动率：<br>HV_L = 日度收益率标准差 × √252</td>
+<td>60日日度收益率标准差=0.008（0.8%）→ HV_L=0.008×√252≈0.126（12.6%）</td>
+</tr>
+<tr>
+<td>4. 计算“波动率比（VR）”</td>
+<td>VR = HV_S ÷ HV_L<br>（若VR＞3，取3为上限；若VR＜0.3，取0.3为下限，避免极端值干扰）</td>
+<td>VR=19% ÷ 12.6%≈1.51（说明短期波动率是长期的1.5倍，接近异常扩张阈值）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2">2. 关键参数解读与适配</h3>
+<p>波动率比的核心参数是“短期周期（S）”和“长期周期（L）”，参数选择直接影响指标灵敏度，需结合资产类型和交易目标调整：
+- <strong>周期组合适配</strong>：
+  - 短线交易（1-5天）：S=5日，L=30日→ 短期周期更灵敏，捕捉日内/隔日波动异常；
+  - 波段交易（5-20天）：S=10日，L=60日（默认组合）→ 平衡灵敏度与稳定性，适配多数波段场景；
+  - 中长线交易（20天以上）：S=20日，L=120日→ 长期周期更平稳，避免短期噪音影响趋势判断；
+- <strong>数值区间含义</strong>：
+  - VR＞1.5：短期波动异常扩张（偏离长期常态）→ 可能伴随趋势加速（如多头趋势中波动加大）或短期反转（如超买后的回调）；
+  - 0.5≤VR≤1.5：短期波动与长期常态匹配→ 市场处于平稳状态，无明显异常；
+  - VR＜0.5：短期波动异常收缩（远低于长期常态）→ 市场进入窄幅震荡，可能酝酿突破行情（如收敛三角形后的方向选择）；
+- <strong>特殊情况处理</strong>：
+  - 若长期波动率接近0（如债券长期窄幅震荡），需将长期波动率下限设为5%（年化），避免分母过小导致VR失真；
+  - 极端行情（如黑天鹅）导致VR骤升（如＞3），需结合成交量判断是否为“有效波动”（放量扩张为有效，缩量扩张多为虚假）。</p>
+<h2 id="_4">三、意义：它为什么是“波动异常的预警器”？</h2>
+<p>波动率比的核心价值在于<strong>解决了“单一周期波动率无法判断波动是否异常”的痛点</strong>——传统指标只能告诉你“当前波动大/小”，但无法告诉你“这种波动是否正常”；而波动率比通过“长期基准”锚定常态，用比值量化偏离，其不可替代的功能体现在三点：</p>
+<h3 id="1_1">1. 快速识别波动异常：定位“扩张/收缩”临界点</h3>
+<p>长期波动率反映资产的“基因级波动水平”（如某科技股长期波动率稳定在25%，某国债稳定在5%），当VR突破1.5或跌破0.5时，说明短期波动脱离“基因常态”，进入异常区间：
+- <strong>VR＞1.5（扩张异常）</strong>：短期波动远超长期，可能是“资金快速入场推动趋势”（如利好消息导致股票放量上涨，波动加大）或“趋势尾声的非理性波动”（如牛市末期散户追涨，波动骤升）；
+- <strong>VR＜0.5（收缩异常）</strong>：短期波动远低于长期，说明市场多空分歧极小（如股票在重要消息发布前窄幅震荡），资金处于“观望状态”，一旦消息落地，易引发突破行情（如财报超预期后的放量上涨）。</p>
+<h3 id="2_1">2. 验证趋势强度：判断“趋势是否可持续”</h3>
+<p>趋势的可持续性与“波动扩张的合理性”密切相关——健康的趋势（如慢牛）应伴随“VR温和上升（1.0→1.3）”，而非“VR骤升（1.0→2.0）”；
+- <strong>多头趋势验证</strong>：价格持续上涨，VR从1.0升至1.4（温和扩张）→ 趋势动能健康，可继续持仓；若价格上涨但VR骤升至2.0（过度扩张）→ 趋势可能进入尾声，需减仓；
+- <strong>空头趋势验证</strong>：价格持续下跌，VR从1.0升至1.5（温和扩张）→ 空头动能未竭，可继续持空；若价格下跌但VR跌破1.0（收缩）→ 空头动能减弱，需平仓。</p>
+<h3 id="3">3. 预警震荡突破：捕捉“窄幅后的大行情”</h3>
+<p>当市场进入窄幅震荡（如收敛三角形、矩形），VR会因短期波动收缩而跌至0.5以下，此时是“突破行情的预警信号”——波动收缩至极致后，多空平衡终将被打破，VR回升时往往伴随突破：
+- 示例：某股票在15-17元震荡1个月，VR从1.2跌至0.4（收缩异常），随后VR回升至0.8，价格突破17元→ 突破后10天内上涨至19元（突破幅度2元）。</p>
+<h2 id="_5">四、实战用法：三大核心交易策略</h2>
+<p>波动率比的实战价值集中在“波动异常识别”“趋势强度验证”“震荡突破预警”，需结合价格形态、成交量等指标使用，避免单一信号误导。</p>
+<h3 id="_6">用法一：波动扩张异常策略（适用于趋势反转/加速）</h3>
+<p>核心是“<strong>VR突破1.5（扩张异常）+ 价格超买超卖 + 放量</strong>”，捕捉短期波动过度后的反转或趋势加速机会：
+1. <strong>入场条件（满足3项）</strong>：
+   - VR突破1.5（或回落至1.5以下后再次突破），确认波动扩张异常；
+   - 价格处于超买（RSI＞70）或超卖（RSI＜30）区间（波动扩张伴随价格极值）；
+   - 成交量≥5日均量1.5倍（波动扩张有资金支撑，排除虚假波动）；
+2. <strong>方向判断</strong>：
+   - 多头入场：VR突破1.5 + 价格超卖（RSI＜30）+ 价格收阳包阴；
+   - 空头入场：VR突破1.5 + 价格超买（RSI＞70）+ 价格收阴包阳；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=入场日最低价-1%，空头止损=入场日最高价+1%；
+   - 止盈：多头止盈=VR回落至1.0时，或价格反弹至近期压力位；空头止盈=VR回落至1.0时，或价格下跌至近期支撑位；
+- <strong>示例</strong>：股票VR突破1.6，RSI=28（超卖），成交量2倍均量，收阳包阴→ 买入，止损=阳包阴最低价-1%，止盈=VR回落至1.0（5天后VR=0.98，价格反弹5%，止盈离场）。</p>
+<h3 id="_7">用法二：趋势强度验证策略（适用于趋势持仓管理）</h3>
+<p>核心是“<strong>VR与价格趋势的一致性</strong>”——通过VR是否随趋势温和扩张，判断是否继续持仓或调整仓位：
+1. <strong>持仓条件</strong>：
+   - 多头持仓：价格沿20日EMA上升，VR维持在1.0-1.5之间（温和扩张）→ 满仓；若VR升至1.5-2.0（过度扩张）→ 减仓至50%；若VR跌破1.0（收缩）→ 减仓至30%；
+   - 空头持仓：价格沿20日EMA下降，VR维持在1.0-1.5之间（温和扩张）→ 满仓空；若VR升至1.5-2.0（过度扩张）→ 减仓至50%空；若VR跌破1.0（收缩）→ 减仓至30%空；
+2. <strong>清仓条件</strong>：
+   - 多头清仓：价格跌破20日EMA，且VR跌破0.8；
+   - 空头清仓：价格突破20日EMA，且VR跌破0.8；
+- <strong>优势</strong>：通过VR控制仓位，避免在趋势过度扩张时重仓（减少回调亏损），在趋势温和时满仓（把握最大收益）。</p>
+<h3 id="_8">用法三：震荡突破预警策略（适用于窄幅震荡后的大行情）</h3>
+<p>核心是“<strong>VR跌破0.5（收缩异常）后回升至0.8 + 价格突破震荡区间 + 放量</strong>”，捕捉震荡后的突破机会：
+1. <strong>入场条件（满足3项）</strong>：
+   - VR先跌破0.5（收缩至极致），且维持3个周期以上；
+   - VR回升至0.8以上（波动开始扩张），同时价格突破震荡区间上沿（多头）或下沿（空头）；
+   - 突破时成交量≥5日均量2倍（突破有资金共识）；
+2. <strong>入场时机</strong>：
+   - 价格突破区间当日（若当日VR同步回升至0.8，直接入场；若VR次日才回升，次日入场）；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=震荡区间下沿-1%，空头止损=震荡区间上沿+1%；
+   - 止盈：目标=震荡区间高度（如区间幅度2元，止盈2元），或VR升至1.5时（波动扩张至异常，可能回调）；
+- <strong>示例</strong>：股票震荡区间18-20元（幅度2元），VR跌破0.4并维持5天，随后VR回升至0.9，价格突破20元，成交量2.5倍均量→ 买入，止损=18-1%=17.82元，止盈=20+2=22元（10天后价格达22元，止盈）。</p>
+<h2 id="_9">五、高级技巧与注意事项</h2>
+<h3 id="1_2">1. 优化信号：结合“价格形态+成交量”过滤假信号</h3>
+<p>单纯依赖VR易在“无量波动”或“主力诱骗形态”中产生误信号，需叠加以下验证条件：
+- <strong>价格形态验证</strong>：VR突破1.5需对应“头肩顶/底”“双顶/底”等反转形态；VR回升需对应“收敛三角形”“矩形”等突破形态，避免孤立解读；
+- <strong>成交量验证</strong>：VR扩张时需“放量”（≥5日均量1.2倍），VR收缩时需“缩量”（≤5日均量0.8倍）——无量的VR扩张多为“主力对倒”，缩量的VR收缩才是“真震荡”；
+- <strong>示例</strong>：VR突破1.5，但价格无反转形态，成交量仅0.9倍均量→ 假信号，不入场。</p>
+<h3 id="2_2">2. 缺点与警示：避开这些“波动率比陷阱”</h3>
+<p>波动率比虽能快速识别波动异常，但存在固有局限性，需重点规避：
+- <strong>长期波动率失真导致的比值偏差</strong>：
+  - 若长期周期内包含“极端行情”（如某股票60日周期内有1次跌停），长期波动率会被拉高，导致VR偏低（如实际短期波动正常，但因长期波动率高，VR=0.8被误判为收缩）；
+  - 应对：计算长期波动率时，剔除“3倍标准差以上的极端收益率”，或用“加权长期波动率”（近期数据权重高，远期极端数据权重低）。</p>
+<ul>
+<li><strong>低波动品种的VR信号滞后</strong>：</li>
+<li>债券、蓝筹等低波动品种，短期波动变化缓慢，VR突破1.5或跌破0.5的时间较晚，可能错过趋势启动点（如价格已突破5%，VR才回升至0.8）；</li>
+<li>
+<p>应对：低波动品种需缩小“短期/长期周期比”（如S=15日，L=45日），提高指标灵敏度。</p>
+</li>
+<li>
+<p><strong>极端行情（黑天鹅）的VR失效</strong>：</p>
+</li>
+<li>突发利空/利好导致价格“一字涨跌停”，短期波动率骤升（VR＞3），但此时价格无交易机会，VR信号无实际意义；</li>
+<li>应对：极端行情当日（如涨跌停），暂停使用VR，改用“价格偏离EMA幅度”（如偏离20日EMA±8%）判断机会。</li>
+</ul>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：VR＞1.5必反转，VR＜0.5必突破</strong>：</li>
+<li>VR＞1.5可能是“趋势加速”（如多头趋势中波动加大，价格继续上涨），而非反转；VR＜0.5可能是“长期震荡”（如股票因缺乏资金关注，持续窄幅波动），而非突破；</li>
+<li>
+<p>正确做法：结合“价格趋势”判断——VR＞1.5+趋势向上=加速，VR＞1.5+趋势向下=反转；VR＜0.5+形态收敛=突破，VR＜0.5+形态混乱=持续震荡。</p>
+</li>
+<li>
+<p><strong>误区2：所有品种用同一周期组合</strong>：</p>
+</li>
+<li>对加密货币（高波动）用“10日/60日”组合，VR会因短期波动剧烈频繁突破1.5，信号噪音多；对债券（低波动）用“5日/30日”组合，VR会因短期波动小难以突破0.8，信号滞后；</li>
+<li>
+<p>正确做法：按品种波动率调整周期——高波动品种（加密货币、期货）用“5日/30日”，低波动品种（债券、蓝筹）用“20日/120日”。</p>
+</li>
+<li>
+<p><strong>误区3：忽视VR的“趋势性”，仅看单点数值</strong>：</p>
+</li>
+<li>认为“VR=1.6是异常”，忽略VR从1.0逐步升至1.6的“趋势性扩张”（趋势性扩张比单点突破更可靠）；或认为“VR=0.4是收缩”，忽略VR从0.8骤降至0.4的“突发性收缩”（突发性收缩多为虚假震荡）；</li>
+<li>正确做法：重点关注VR的“趋势变化”（如连续3天上升），而非单点数值，趋势性信号比单点信号胜率高30%以上。</li>
+</ul>
+<h2 id="_10">六、总结</h2>
+<p>波动率比（Volatility Ratio）是技术分析中“跨周期波动对比的核心工具”——它通过“短期/长期波动率比值”，将抽象的“波动异常”转化为可量化的数值，解决了单一周期波动率无法判断常态的痛点，既能快速预警波动扩张/收缩，又能验证趋势强度、预判突破行情，是兼顾“风险识别”与“机会捕捉”的实用指标。</p>
+<p>但它并非“交易圣杯”：长期波动率失真、低波动品种滞后、极端行情失效等问题需警惕，且需结合价格形态、成交量、趋势指标（如EMA）综合验证。正确的用法是“将波动率比作为‘波动异常锚’，搭配‘趋势指标定方向+形态定结构+量能定资金’，形成‘波动偏离+趋势+量能’的三维决策体系”，才能在波动异常中把握机会，在常态波动中控制风险，实现更精准的交易决策。</p>
+<p><a href="../">返回波动率指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

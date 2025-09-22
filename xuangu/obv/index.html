@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>OBV（能量潮指标）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#obv" class="nav-link">OBV（能量潮指标）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#obv_1" class="nav-link">一、OBV核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#obv3" class="nav-link">二、OBV选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#obv_2" class="nav-link">三、OBV选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="obv">OBV（能量潮指标）选股方法与核心要点</h1>
+<p>OBV（能量潮指标）是一种通过“成交量与股价涨跌的关联”反映市场资金流向的技术指标，核心逻辑是“量先于价行”——资金的进出（成交量变化）会提前预示股价的趋势方向，既能辅助验证股价趋势的有效性，也能识别资金潜伏或撤离的信号，是选股中重要的“量能趋势同步工具”。</p>
+<h2 id="obv_1">一、OBV核心逻辑</h2>
+<p>OBV的本质是“将成交量按股价涨跌方向累加计算”，通过数值变化体现资金的“净流入”或“净流出”：
+- <strong>计算规则</strong>：当日股价收盘价＞前一日收盘价，OBV=前一日OBV+当日成交量；当日股价收盘价＜前一日收盘价，OBV=前一日OBV-当日成交量；收盘价持平则OBV与前一日一致。
+- <strong>核心解读</strong>：
+  - OBV与股价<strong>同步上涨</strong>：代表股价上涨有成交量支撑（资金持续进场），趋势具备持续性，为“量价齐升”的健康状态；
+  - OBV与股价<strong>同步下跌</strong>：代表股价下跌伴随资金撤离（抛压明显），趋势弱势，为“量价齐跌”的风险状态；
+  - OBV与股价<strong>背离</strong>：股价创新高但OBV未创新高（顶背离），代表上涨缺乏资金支撑，可能反转；股价创新低但OBV未创新低（底背离），代表下跌动能减弱，可能反弹。
+- <strong>关键原则</strong>：OBV的“趋势方向”比具体数值更重要，需关注其长期均线（如OBV的20日或60日均线）的走向，判断资金的中长期流向。</p>
+<h2 id="obv3">二、OBV选股的3种核心方法</h2>
+<h3 id="1-obv">1. OBV与股价同步上涨选股（基础，抓健康趋势）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价持续上涨的同时，OBV也同步向上攀升（且OBV突破前期高点），代表每一轮上涨都有资金进场支撑，无“无量空涨”风险，趋势健康且可持续，适合捕捉中期上升机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“技术指标选股-OBV（能量潮）”；</li>
+<li>设置条件：① 当日收盘价＞前5日收盘价（股价持续上涨）；② 当日OBV值＞前5日OBV值（OBV同步上涨）；③ OBV当前值＞近30日OBV高点（OBV突破前期压力，资金进场明确）；</li>
+<li>执行选股，筛选量价同步、趋势健康的标的。</li>
+</ul>
+<h3 id="2-obv">2. OBV底背离选股（进阶，抓反转机会）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价持续创出新低（收盘价低于近60日低点），但OBV未同步创出新低（甚至逐步走高），形成“底背离”，代表股价下跌时资金并未持续撤离（可能有资金潜伏吸筹），空头动能耗尽，潜在反转概率高，适合捕捉中长期底部。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-OBV背离”；</li>
+<li>设置条件：① 当日收盘价创60日新低；② 当日OBV值未创60日新低；③ 近3日OBV呈上升趋势（确认资金开始回流）；</li>
+<li>执行选股，筛选下跌趋势末端、可能反转的标的。</li>
+</ul>
+<h3 id="3-obv">3. OBV突破均线选股（高阶，抓资金启动）</h3>
+<ul>
+<li><strong>逻辑</strong>：OBV长期在其20日或60日均线下方运行（代表资金持续流出），随后OBV向上突破该均线，且股价同步站稳短期均线（如MA10），代表资金流向由净流出转为净流入，趋势即将由弱转强，适合捕捉资金启动初期的机会。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-OBV”；</li>
+<li>设置条件：① 当日OBV值＞OBV的20日均线（突破短期资金均线）；② 前1日OBV值＜OBV的20日均线（确认“突破”动作）；③ 当日收盘价＞MA10（股价同步回暖，趋势配合）；</li>
+<li>执行选股，筛选资金由弱转强、趋势启动的标的。</li>
+</ul>
+<h2 id="obv_2">三、OBV选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>规避“无量空涨/放量滞涨”</strong>：股价上涨但OBV持平或下跌（无量空涨），代表上涨无资金支撑，易回调；股价滞涨（如收长上影线）但OBV大幅上涨（放量滞涨），可能是资金对倒出货，需警惕。</li>
+<li><strong>背离信号需等确认</strong>：底背离形成后，需等待股价站稳MA20、OBV持续在均线上方运行，再确认反转；顶背离形成后，需等待股价跌破MA20、OBV同步下跌，再确认趋势反转，避免过早操作。</li>
+<li><strong>结合流通盘与成交量规模</strong>：小盘股OBV波动较大（少量资金即可影响OBV），需结合更大周期（如周线OBV）判断；大盘股OBV波动平缓，需关注OBV突破长期均线（如60日均线）的信号，避免短期波动误导。</li>
+<li><strong>不单一依赖OBV</strong>：OBV需与股价趋势（均线排列）、换手率（资金活跃度）配合，例如OBV突破+MA20向上+换手率适中，信号可靠性远高于OBV单一突破。</li>
+<li><strong>设置动态止损</strong>：同步上涨选股以“OBV跌破20日均线”为止损线；底背离选股以“股价再次创出新低”为止损线，若资金信号失效，需及时离场控制风险。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

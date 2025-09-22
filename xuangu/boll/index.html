@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>BOLL（布林带）选股方法与核心要点 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#boll" class="nav-link">BOLL（布林带）选股方法与核心要点</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#boll_1" class="nav-link">一、BOLL核心逻辑</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll3" class="nav-link">二、BOLL选股的3种核心方法</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#boll_2" class="nav-link">三、BOLL选股的注意事项（避坑重点）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="boll">BOLL（布林带）选股方法与核心要点</h1>
+<p>BOLL（布林带）是一种基于标准差的趋势性指标，通过计算股价的标准差和移动平均线，构建出一个包含股价波动的通道，直观反映股价的运行区间、趋势强度及潜在反转信号，适合判断股价的超买超卖状态和趋势稳定性。</p>
+<h2 id="boll_1">一、BOLL核心逻辑</h2>
+<p>BOLL由三条线组成，核心构成包括：
+- <strong>中轨（BOLL-MID）</strong>：通常为20日移动平均线（MA20），代表股价的中期趋势方向。
+- <strong>上轨（BOLL-UP）</strong>：中轨加上2倍标准差，反映股价的上方压力位，代表强势区间的上边界。
+- <strong>下轨（BOLL-DN）</strong>：中轨减去2倍标准差，反映股价的下方支撑位，代表弱势区间的下边界。</p>
+<p>核心原则：股价在中轨上方运行=中期趋势向上；在中轨下方运行=中期趋势向下；上轨与下轨的宽度（带宽）收缩=股价波动变小，即将迎来突破；带宽扩张=股价波动加剧，趋势可能强化。</p>
+<h2 id="boll3">二、BOLL选股的3种核心方法</h2>
+<h3 id="1">1. 股价站稳中轨选股（基础，抓趋势回暖）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价从下轨附近回升并站稳中轨（BOLL-MID），且中轨呈向上趋势，代表中期趋势由弱转强，股价获得中期支撑，多头力量开始主导。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>炒股软件进入“选股”功能，选择“技术指标选股-布林带（BOLL）”；</li>
+<li>设置条件：① 收盘价＞BOLL-MID（股价站稳中轨）；② 前3日收盘价曾低于BOLL-MID（确认从下方回升）；③ BOLL-MID（20日均线）当前值＞5天前值（中轨向上，趋势向好）；</li>
+<li>执行选股，筛选中期趋势回暖的标的。</li>
+</ul>
+<h3 id="2">2. 下轨反弹+带宽收缩选股（进阶，抓底部机会）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价跌至下轨附近，同时布林带带宽（上轨-下轨）持续收缩至低位（波动率降至低点），随后股价反弹且带宽开始扩张，代表底部整理结束，趋势可能向上突破，属于“低波动后的启动”信号。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-BOLL”；</li>
+<li>设置条件：① 近3日收盘价触及或接近BOLL-DN（下轨）；② 近10日带宽持续缩小（上轨-下轨的差值逐步减小）；③ 当日收盘价＞前1日收盘价（开始反弹）；④ 中轨走平或微升（避免下跌趋势中的弱势反弹）；</li>
+<li>执行选股，筛选底部整理后可能启动的标的。</li>
+</ul>
+<h3 id="3">3. 上轨突破+带宽扩张选股（高阶，抓强势延续）</h3>
+<ul>
+<li><strong>逻辑</strong>：股价沿上轨向上运行，且布林带带宽同步扩张（上轨上移速度快于下轨下移），代表强势趋势持续，多头动能充足，属于“强者恒强”的延续信号。</li>
+<li><strong>操作步骤</strong>：</li>
+<li>进入“选股-技术指标选股-BOLL”；</li>
+<li>设置条件：① 连续3日收盘价在BOLL-UP附近或上方运行；② 带宽（上轨-下轨）较10天前扩大（趋势强度增强）；③ 中轨明显向上（中期趋势支撑）；</li>
+<li>执行选股，筛选强势趋势延续的标的。</li>
+</ul>
+<h2 id="boll_2">三、BOLL选股的注意事项（避坑重点）</h2>
+<ol>
+<li><strong>区分趋势性与震荡性</strong>：中轨向上时，下轨支撑和上轨突破更可靠；中轨向下时，股价触及上轨多为反弹阻力，不宜追涨。</li>
+<li><strong>警惕假突破</strong>：股价突破上轨后若迅速回落至中轨下方，且带宽收缩，可能是“假突破”；同理，跌破下轨后快速回升至中轨上方，可能是“空头陷阱”，需结合成交量判断（真突破通常伴随放量）。</li>
+<li><strong>结合其他指标验证</strong>：BOLL信号需与MACD（趋势动能）或成交量配合，例如上轨突破时MACD金叉且成交量放大，信号更有效。</li>
+<li><strong>避免超买追高</strong>：股价长期沿上轨运行且带宽极度扩张时，可能进入超买状态，随时有回调风险，此时不宜追涨。</li>
+<li><strong>设置动态止损</strong>：以中轨作为核心止损线，若股价跌破中轨且中轨走平或向下，应及时止损；强势股可将下轨作为宽松止损位。</li>
+</ol>
+<p><a href="../">返回选股类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

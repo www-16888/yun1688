@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>离散指标 (DeMarker - DeM) 深度解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#demarker-dem" class="nav-link">离散指标 (DeMarker - DeM) 深度解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么有用？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、用法：如何使用它？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_13" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_14" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="demarker-dem">离散指标 (DeMarker - DeM) 深度解析</h1>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>离散指标（DeMarker，简称DeM）由美国技术分析师托马斯·德马克（Thomas DeMark）于20世纪90年代提出，是一种<strong>基于“价格高低点相对变化”衡量市场多空动能强度的震荡指标</strong>。它通过对比“当期与前期价格的高低点差异”，计算多空动能的“相对离散程度”，最终将结果映射到0-1（或0%-100%）区间，核心逻辑是“当多头动能持续强于空头时，价格倾向于创新高，DeM值升高；当空头动能持续强于多头时，价格倾向于创新低，DeM值降低”——帮助交易者识别超买超卖状态、捕捉趋势反转信号，属于中灵敏度、侧重“动能离散度”的技术工具。</p>
+<p>DeM的核心优势在于<strong>“聚焦价格高低点的主动变化，而非被动收盘价”</strong>——与RSI（基于收盘价涨跌幅度）、W%R（基于价格区间位置）不同，它通过“DeMax（多头动能）”和“DeMin（空头动能）”直接量化“市场主动推高/压低价格的力量”，对趋势初期的动能变化更敏感，尤其适合判断“趋势是否由动能驱动”。</p>
+<ul>
+<li><strong>核心构成</strong>：</li>
+<li><strong>DeMax（多头动能因子）</strong>：若当期最高价 &gt; 前期最高价，DeMax = 当期最高价 - 前期最高价；否则DeMax = 0（仅记录多头主动推高的幅度）；</li>
+<li><strong>DeMin（空头动能因子）</strong>：若当期最低价 &lt; 前期最低价，DeMin = 前期最低价 - 当期最低价；否则DeMin = 0（仅记录空头主动压低的幅度）；</li>
+<li><strong>指标计算逻辑</strong>：DeM = 短期SMA(DeMax) / [短期SMA(DeMax) + 短期SMA(DeMin)]，结果范围0-1（乘以100%后为0%-100%）；</li>
+<li><strong>状态划分</strong>：</li>
+<li><strong>超买区间</strong>：DeM &gt; 0.7（或70%）——多头动能过度释放，价格上涨动力不足，大概率回调；</li>
+<li><strong>超卖区间</strong>：DeM &lt; 0.3（或30%）——空头动能过度释放，价格下跌动力不足，大概率反弹；</li>
+<li><strong>中性区间</strong>：0.3 ≤ DeM ≤ 0.7——多空动能平衡，价格沿当前趋势运行，无明确反转信号；</li>
+<li><strong>周期逻辑</strong>：默认参数为14期（最常用周期），周期越短，指标对短期动能变化越灵敏（如9期DeM易频繁进入超买超卖），周期越长，越能反映中长期动能趋势（如20期DeM信号更稳定）。</li>
+</ul>
+<h3 id="_3">组成结构与计算逻辑</h3>
+<p>DeM的计算围绕“DeMax/DeMin动能因子”和“双因子SMA平滑”展开，核心参数为“计算周期（N）”（即SMA的平滑周期），默认14期，计算步骤分四步，逻辑清晰且可复现。</p>
+<h4 id="1">1. 核心计算步骤（以日线周期为例）</h4>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑</th>
+<th>示例（周期N=14，当期数据：最高价108，最低价102；前期数据：最高价105，最低价103）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 计算DeMax（多头动能）</td>
+<td>对比当期与前期最高价：<br>若当期最高价 &gt; 前期最高价 → DeMax = 当期最高价 - 前期最高价<br>否则 → DeMax = 0</td>
+<td>当期最高价108 &gt; 前期105 → DeMax = 108 - 105 = 3</td>
+</tr>
+<tr>
+<td>2. 计算DeMin（空头动能）</td>
+<td>对比当期与前期最低价：<br>若当期最低价 &lt; 前期最低价 → DeMin = 前期最低价 - 当期最低价<br>否则 → DeMin = 0</td>
+<td>当期最低价102 &lt; 前期103 → DeMin = 103 - 102 = 1</td>
+</tr>
+<tr>
+<td>3. 计算双因子SMA</td>
+<td>分别计算过去N期的SMA(DeMax)和SMA(DeMin)（简单移动平均）<br>——平滑短期动能波动，避免噪音</td>
+<td>假设过去14期SMA(DeMax)=2.5，SMA(DeMin)=1.5</td>
+</tr>
+<tr>
+<td>4. 计算DeM值</td>
+<td>DeM = SMA(DeMax) / [SMA(DeMax) + SMA(DeMin)]<br>（结果×100%后转化为百分比形式）</td>
+<td>DeM = 2.5 / (2.5 + 1.5) = 0.625 → 62.5%（中性区间）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与周期适配</h4>
+<p>DeM的核心参数是“计算周期（N）”，不同周期对应不同的交易场景，需根据“交易风格”和“品种波动率”调整，避免信号滞后或噪音过多：
+- <strong>短线交易（15分钟/1小时，日内期货/加密货币）</strong>：周期设为9-12期——短期周期灵敏度高，能快速捕捉日内“主动推高/压低”的动能变化（如1小时9期DeM，适合日内T+0捕捉1-2小时的反转机会）；
+- <strong>中短线交易（4小时/日线，股票波段）</strong>：周期设为14期（默认）——14期覆盖2周左右行情，平衡灵敏度与稳定性，信号可靠性高，适合1-3周的波段交易；
+- <strong>中长线交易（周线/月线，指数/大宗商品）</strong>：周期设为20-28期——长期周期过滤短期波动噪音，仅捕捉影响3个月以上的中长期动能趋势（如20期DeM突破70%，可能是中期顶部信号）；
+- <strong>波动率适配</strong>：高波动品种（加密货币、原油期货）设短周期（9-14期），适配价格快速变化；低波动品种（蓝筹股、国债期货）设长周期（20-28期），减少“DeM频繁进出超买超卖区间”的假信号。</p>
+<h2 id="_4">二、意义：它为什么有用？</h2>
+<p>DeM的核心价值在于<strong>用“主动动能因子”解决了“动能真假难辨”的痛点</strong>。传统震荡指标（如RSI）易受“被动收盘价波动”误导（如价格盘中冲高回落，收盘价仍涨，RSI显示多头强，但实际多头已乏力），而DeM通过“仅记录主动推高/压低的幅度”，精准识别“真实动能强度”，具体体现在三大不可替代的功能：</p>
+<h3 id="1_1">1. 精准识别“虚假动能”与“真实趋势”</h3>
+<p>DeM通过DeMax/DeMin的“非零比例”判断动能是否“主动”，避免被“被动价格波动”误导：
+- <strong>真实多头趋势</strong>：价格上涨时，DeMax持续非零（多头主动推高），DeMin多为0（空头无主动压低），SMA(DeMax)远大于SMA(DeMin)，DeM值逐步升至70%附近——表明上涨由多头主动推动，趋势延续性强；
+- <strong>虚假多头信号</strong>：价格上涨但DeMax频繁为0（无主动推高，仅被动跟随），DeMin偶尔非零（空头有主动压低），SMA(DeMax)与SMA(DeMin)差距小，DeM值在50%附近震荡——表明上涨是“惯性延续”，而非动能驱动，大概率回调；
+- <strong>真实空头趋势</strong>：价格下跌时，DeMin持续非零（空头主动压低），DeMax多为0（多头无主动推高），SMA(DeMin)远大于SMA(DeMax)，DeM值逐步降至30%附近——表明下跌由空头主动推动，趋势延续性强；
+- <strong>优势</strong>：相比RSI“只要收盘价涨就认为多头强”，DeM能区分“主动涨”和“被动涨”，在趋势初期的“动能验证”上准确率更高。</p>
+<h3 id="2_1">2. 提前捕捉趋势反转（比价格形态更灵敏）</h3>
+<p>DeM的“超买超卖突破”和“背离”是“趋势反转的强信号”，能在价格未出现明确反转形态时，提前1-3个周期提示动能衰竭：
+- <strong>超买反转（看跌）</strong>：DeM突破70%超买区间后，逐步回落至70%以下，同时价格仍在创新高——表明多头主动推高的动能减弱，即使价格新高，也大概率回调（如DeM从75%降至65%，价格从110涨至112，反转概率超80%）；
+- <strong>超卖反转（看涨）</strong>：DeM跌破30%超卖区间后，逐步回升至30%以上，同时价格仍在创新低——表明空头主动压低的动能减弱，即使价格新低，也大概率反弹（如DeM从25%升至35%，价格从90跌至88，反转概率超80%）；
+- <strong>背离信号（强于超买超卖）</strong>：
+  - 顶背离：价格创新高，DeM未同步创新高（如价格从100涨至105，DeM从72%降至68%）——表明“价格新高但多头主动动能衰减”，反转信号比单纯超买更可靠；
+  - 底背离：价格创新低，DeM未同步创新低（如价格从100跌至95，DeM从28%升至32%）——表明“价格新低但空头主动动能衰减”，反转信号比单纯超卖更可靠；</p>
+<h3 id="3">3. 辅助过滤震荡市假信号（比趋势指标更精准）</h3>
+<p>DeM在震荡市中能通过“DeMax/DeMin的交替非零”判断“多空平衡”，帮助交易者避开“频繁追涨杀跌”的陷阱：
+- <strong>震荡市确认</strong>：价格在固定区间内波动，DeMax和DeMin频繁交替非零（多头偶尔推高，空头偶尔压低），SMA(DeMax)与SMA(DeMin)数值接近，DeM值在0.3-0.7区间内来回震荡，无持续单边趋势；
+- <strong>震荡市交易禁忌</strong>：震荡市中DeM的“超买超卖”多为假信号（如DeM短暂升至72%后立即回落，无真实多头动能），若按“超买卖、超卖买”交易，会导致“频繁止损”——需等待DeM突破0.7或跌破0.3后“站稳该区间”（如DeM连续3期&gt;70%），确认动能方向后再入场；
+- <strong>优势</strong>：相比MA（仅能判断趋势方向，无法区分震荡），DeM通过“动能离散度”直接标记震荡市，过滤假信号的效率更高。</p>
+<h2 id="_5">三、用法：如何使用它？</h2>
+<p>DeM的用法围绕“动能验证”“超买超卖反转”“背离预警”三大场景展开，核心是“用DeMax/DeMin判断动能真假，用超买超卖+背离确认反转，用趋势过滤假信号”。</p>
+<h3 id="_6">用法一：超买超卖反转交易（震荡市/趋势末期）</h3>
+<p>适用于<strong>震荡市</strong>或<strong>趋势末期动能衰竭</strong>场景，核心是“DeM突破超买/超卖区间后回落/回升时入场”，捕捉短期反转机会。</p>
+<h4 id="_7">超卖反转买入（空头动能衰竭）</h4>
+<ul>
+<li>反转信号确认（需满足3个条件）：</li>
+<li>DeM跌破30%超卖区间（如DeM=25%），且持续至少1期——确认空头动能过度释放；</li>
+<li>随后DeM回升至30%以上（如从25%升至35%），且当期DeMax&gt;0、DeMin=0——确认多头开始主动推高；</li>
+<li>价格未创新低（或出现“锤子线”等看涨K线）——价格与动能信号共振；</li>
+<li>入场时机：DeM回升至30%以上且收盘价站稳“前一期最高价”时入场；</li>
+<li>止损止盈：</li>
+<li>止损：DeM超卖区间的最低值对应的价格低点下方（如DeM=25%时价格低点90，止损设89.5）；</li>
+<li>止盈：DeM中性区间上沿（0.5-0.6）对应的价格高点（如历史震荡区间上沿100），或DeM接近70%时部分止盈。</li>
+</ul>
+<h4 id="_8">超买反转卖出（多头动能衰竭）</h4>
+<ul>
+<li>反转信号确认（需满足3个条件）：</li>
+<li>DeM突破70%超买区间（如DeM=75%），且持续至少1期——确认多头动能过度释放；</li>
+<li>随后DeM回落至70%以下（如从75%降至65%），且当期DeMin&gt;0、DeMax=0——确认空头开始主动压低；</li>
+<li>价格未创新高（或出现“流星线”等看跌K线）——价格与动能信号共振；</li>
+<li>入场时机：DeM回落至70%以下且收盘价跌破“前一期最低价”时入场；</li>
+<li>止损止盈：</li>
+<li>止损：DeM超买区间的最高值对应的价格高点上方（如DeM=75%时价格高点110，止损设110.5）；</li>
+<li>止盈：DeM中性区间下沿（0.4-0.5）对应的价格低点（如历史震荡区间下沿100），或DeM接近30%时部分止盈。</li>
+</ul>
+<h3 id="_9">用法二：背离反转交易（趋势反转强信号）</h3>
+<p>适用于<strong>趋势末期</strong>（如上涨/下跌趋势持续一段时间后），核心是“价格与DeM背离时入场”，捕捉中期趋势反转，准确率高于单纯超买超卖。</p>
+<h4 id="_10">底背离买入（下跌趋势反转）</h4>
+<ul>
+<li>背离确认（需满足2个核心条件）：</li>
+<li><strong>价格创新低</strong>：价格突破过去20期低点，创近期新低（如从100跌至95）；</li>
+<li><strong>DeM不创新低</strong>：DeM未同步突破过去20期低点，反而回升（如DeM从28%升至32%，未破前低25%）；</li>
+<li>强信号叠加（可选）：</li>
+<li>背离时，DeMin从非零转为0（空头无主动压低），DeMax首次出现非零（多头开始主动推高）；</li>
+<li>价格出现“双底”“头肩底”等看涨形态；</li>
+<li>入场时机：背离确认后，DeM回升至30%以上且价格突破“前一次反弹高点”时入场（右侧确认，降低左侧风险）；</li>
+<li>止损止盈：</li>
+<li>止损：价格新低下方（如95-1%=94.05），若价格重新破低，背离失效；</li>
+<li>止盈：前一波下跌的起点（如100），或DeM接近70%时部分止盈。</li>
+</ul>
+<h4 id="_11">顶背离卖出（上涨趋势反转）</h4>
+<ul>
+<li>背离确认（需满足2个核心条件）：</li>
+<li><strong>价格创新高</strong>：价格突破过去20期高点，创近期新高（如从100涨至105）；</li>
+<li><strong>DeM不创新高</strong>：DeM未同步突破过去20期高点，反而回落（如DeM从72%降至68%，未破前高75%）；</li>
+<li>强信号叠加（可选）：</li>
+<li>背离时，DeMax从非零转为0（多头无主动推高），DeMin首次出现非零（空头开始主动压低）；</li>
+<li>价格出现“双顶”“头肩顶”等看跌形态；</li>
+<li>入场时机：背离确认后，DeM回落至70%以下且价格跌破“前一次回调低点”时入场；</li>
+<li>止损止盈：</li>
+<li>止损：价格新高上方（如105+1%=106.05），若价格重新破高，背离失效；</li>
+<li>止盈：前一波上涨的起点（如100），或DeM接近30%时部分止盈。</li>
+</ul>
+<h3 id="_12">用法三：趋势跟踪交易（顺动能方向加仓）</h3>
+<p>适用于<strong>强劲单边趋势</strong>（配合ADX≥20确认趋势强度），核心是“顺DeM动能方向持仓，借DeMax/DeMin增强加仓”，赚足趋势主浪利润。</p>
+<h4 id="dem05demax">多头趋势跟踪（DeM&gt;0.5持仓，DeMax增强加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>DeM持续大于0.5（中性区间上沿），且逐步向70%靠近（如从0.5升至0.65）——多头动能主导；</li>
+<li>DeMax持续非零（多头主动推高），DeMin多为0（空头无主动压低），SMA(DeMax)持续大于SMA(DeMin)——真实多头动能；</li>
+<li>价格在上升通道中（低点上移、高点上移），且ADX≥20（确认趋势强度）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：DeM突破前期高点（如从0.6升至0.65，破前高0.62），且当期DeMax&gt;前一期DeMax（多头主动推高增强）时；</li>
+<li>第二次加仓：价格回调至MA20附近，DeM虽回落但仍&gt;0.5，且DeMin=0（空头无主动打压）时；</li>
+<li>止损离场：</li>
+<li>止损：MA20下方（或DeM跌破0.5），若DeM回落到0.5以下，表明多头动能减弱；</li>
+<li>离场信号：DeM出现顶背离，或DeMax连续2期为0（多头无主动推高）。</li>
+</ul>
+<h4 id="dem05demin">空头趋势跟踪（DeM&lt;0.5持仓，DeMin增强加仓）</h4>
+<ul>
+<li>趋势确认（需满足3个条件）：</li>
+<li>DeM持续小于0.5（中性区间下沿），且逐步向30%靠近（如从0.5降至0.35）——空头动能主导；</li>
+<li>DeMin持续非零（空头主动压低），DeMax多为0（多头无主动推高），SMA(DeMin)持续大于SMA(DeMax)——真实空头动能；</li>
+<li>价格在下降通道中（高点下移、低点下移），且ADX≥20（确认趋势强度）；</li>
+<li>加仓时机：</li>
+<li>第一次加仓：DeM跌破前期低点（如从0.4降至0.35，破前低0.38），且当期DeMin&gt;前一期DeMin（空头主动压低增强）时；</li>
+<li>第二次加仓：价格反弹至MA20附近，DeM虽回升但仍&lt;0.5，且DeMax=0（多头无主动推高）时；</li>
+<li>止损离场：</li>
+<li>止损：MA20上方（或DeM突破0.5），若DeM回升到0.5以上，表明空头动能减弱；</li>
+<li>离场信号：DeM出现底背离，或DeMin连续2期为0（空头无主动压低）。</li>
+</ul>
+<h2 id="_13">四、高级技巧与注意事项</h2>
+<h3 id="1_2">1. 参数优化：适配不同品种与场景</h3>
+<p>DeM的默认参数（14期）需根据“交易周期”和“品种波动率”调整，核心是“周期越长，信号越稳定；周期越短，信号越灵敏”，具体适配如下：
+| 交易场景       | 推荐周期（N） | 适配品种                | 核心逻辑                          |
+|----------------|---------------|-------------------------|-----------------------------------|
+| 日内短线（15min） | 9-10期         | 加密货币、原油期货      | 短周期捕捉日内“主动推高/压低”的动能变化，应对高波动 |
+| 日线波段       | 14期（默认）   | 股票、黄金、商品期货    | 平衡灵敏度与稳定性，适配1-3周波段，信号可靠 |
+| 周线中长线     | 20-25期        | 指数、大宗商品（铜、原油）| 长周期过滤短期噪音，反映3-6个月的中期动能趋势 |
+| 低波动品种（蓝筹股） | 20-25期        | 茅台、苹果等大盘股      | 长周期减少“DeM频繁进出超买超卖区间”的假信号，避免频繁止损 |</p>
+<h3 id="2-dem">2. 缺点与警示：避开这些“DeM陷阱”</h3>
+<p>DeM虽主动动能识别优势明显，但存在天生局限性，尤其在“极端行情”和“低波动市场”中易产生误导：
+- <strong>极端行情（涨跌停）失真</strong>：在“一字涨跌停”中，价格高低点固定（如连续涨停，最高价=收盘价=最低价），导致DeMax=0（无更高价可推）、DeMin=0（无更低价比对），SMA(DeMax)和SMA(DeMin)同步回落，DeM值向0.5靠拢（中性）——无法反映真实强劲的多头/空头动能，此类行情中DeM失效，需结合成交量（涨停缩量=趋势延续，放量=分歧）判断；
+- <strong>低波动市场假信号多</strong>：在低波动品种（如国债期货）中，价格高低点变化极小，DeMax和DeMin频繁为0，SMA(DeMax)与SMA(DeMin)接近0，导致DeM值在0.5附近震荡，偶尔因微小波动短暂突破30%/70%（如DeM=71%），实为假超买——需结合“成交量放大”判断，放量突破超买/超卖才可能是真实信号；
+- <strong>震荡市中“超买超卖反复”</strong>：在宽幅震荡市中，DeM可能频繁突破30%/70%（如1个月内3次进入超买、2次进入超卖），若按“单次突破”交易，会导致“频繁止损”——需设置“突破后站稳N期”的条件（如DeM连续2期&gt;70%才算有效超买），过滤假信号；
+- <strong>单一信号不可信</strong>：DeM需与“价格形态（头肩顶、双底）”“成交量”结合——例如，DeM超卖但价格跌破趋势线，可能是“假反弹”；DeM顶背离但成交量放大，可能是“背离延续”（多头仍有资金入场）。</p>
+<h3 id="3_1">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：忽略DeMax/DeMin的“主动性”，仅看DeM数值</strong>——认为“DeM&gt;70%=超买”，忽略DeMax是否持续非零（如DeM=72%但DeMax连续3期=0，实为被动价格上涨，非主动动能）；正确做法是“看DeM数值的同时，检查DeMax/DeMin的非零比例，主动动能驱动的超买/超卖才有效”；</li>
+<li><strong>误区2：震荡市中按“单次超买超卖”交易</strong>——在ADX&lt;20的震荡市中，DeM单次突破30%/70%后易快速回落，此时交易易“追涨杀跌”；正确做法是“震荡市中等待DeM突破后站稳2期以上，且价格突破震荡区间，再入场”；</li>
+<li><strong>误区3：背离出现就立即入场</strong>——认为“价格创新低+DeM不创新低=底背离”，忽略“DeM需回升至30%以上”的确认条件（如DeM从28%升至29%，未破30%，仍属空头动能主导）；正确做法是“背离后等待DeM突破30%/70%，或价格突破关键位，再入场，降低左侧风险”；</li>
+<li><strong>误区4：用短期DeM判断长期趋势</strong>——用15分钟DeM判断日线趋势，导致“小周期动能信号干扰大周期判断”（如15分钟DeM顶背离，日线DeM仍在0.6，中期趋势未变）；正确做法是“大周期（日线）定方向（如日线DeM&gt;0.5），小周期（1小时）找入场点（如1小时DeM超卖回升）”。</li>
+</ul>
+<h2 id="_14">五、总结</h2>
+<p>DeM是技术分析中的“主动动能标尺”——它通过“DeMax/DeMin”量化市场“主动推高/压低”的力量，既能精准识别“虚假动能”与“真实趋势”，也能提前捕捉趋势反转（超买超卖+背离），还能过滤震荡市假信号，尤其适合“趋势初期动能验证”和“多空主动力量对比”。</p>
+<p>但DeM并非“万能动能指标”，极端行情失真、低波动市场假信号多仍是其无法克服的局限。掌握DeM的核心，不在于“记住30%/70%的阈值”，而在于“结合DeMax/DeMin判断动能真假、用ADX区分趋势与震荡、用多工具验证信号”——始终以“主动动能是否持续”为核心，才能充分发挥其“精准识别动能”的优势，规避缺陷。</p>
+<p><a href="../">返回动量指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

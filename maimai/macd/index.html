@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>MACD 实战买卖用法全解析 - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../momentum/" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#macd" class="nav-link">MACD 实战买卖用法全解析</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#macd_1" class="nav-link">一、MACD 核心构成（基础必知）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">二、核心买卖信号：交叉信号（新手首选）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_2" class="nav-link">三、进阶买卖信号：背离信号（抓顶/底关键）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_3" class="nav-link">四、辅助判断：零轴位置+柱状线形态（过滤信号）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">五、实战注意事项（避免踩坑）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#macd_2" class="nav-link">六、MACD买卖决策流程（实战模板）</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="macd">MACD 实战买卖用法全解析</h1>
+<p>MACD（指数平滑异同平均线）是技术分析中经典的趋势跟踪与动量指标，核心通过“快速EMA（12日）、慢速EMA（26日）、MACD线（DIF）、信号线（DEA）、MACD柱状线”五大元素，判断多空力量转换与趋势方向，进而指导买卖决策。其具体应用需围绕<strong>交叉信号、背离信号、零轴位置、柱状线形态</strong>四大核心维度展开，以下是详细操作逻辑与实战技巧。</p>
+<h2 id="macd_1">一、MACD 核心构成（基础必知）</h2>
+<p>在使用前需明确软件中MACD指标的5个关键元素，它们是信号判断的底层依据：</p>
+<table>
+<thead>
+<tr>
+<th>元素名称</th>
+<th>计算逻辑（简化）</th>
+<th>核心作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>快速EMA（12）</strong></td>
+<td>12日收盘价的指数加权平均</td>
+<td>反映短期价格趋势，敏感度高</td>
+</tr>
+<tr>
+<td><strong>慢速EMA（26）</strong></td>
+<td>26日收盘价的指数加权平均</td>
+<td>反映长期价格趋势，稳定性强</td>
+</tr>
+<tr>
+<td><strong>MACD线（DIF）</strong></td>
+<td>快速EMA - 慢速EMA</td>
+<td>核心趋势线，直接体现多空差值</td>
+</tr>
+<tr>
+<td><strong>信号线（DEA）</strong></td>
+<td>MACD线的9日EMA</td>
+<td>辅助判断MACD线趋势，过滤杂波</td>
+</tr>
+<tr>
+<td><strong>MACD柱状线</strong></td>
+<td>MACD线 - 信号线</td>
+<td>直观展示多空力量强弱（红柱=多头，绿柱=空头）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_1">二、核心买卖信号：交叉信号（新手首选）</h2>
+<p>交叉信号是MACD最基础、易执行的信号，核心是<strong>MACD线（DIF）与信号线（DEA）的交叉</strong>，分为“金叉（买入）”和“死叉（卖出）”，需结合趋势过滤假信号。</p>
+<h3 id="1-macd">1. 买入信号：MACD金叉（低买核心）</h3>
+<ul>
+<li><strong>定义</strong>：MACD线（DIF）从下向上穿过信号线（DEA），柱状线从“绿柱”转为“红柱”（或绿柱缩窄后翻红）。</li>
+<li><strong>有效金叉的3个关键条件（避免假信号）</strong>：</li>
+<li><strong>位置优先</strong>：金叉发生在<strong>零轴下方或零轴附近</strong>（零轴是多空分水岭，下方金叉是“空头转多头”的初期信号，反转意义更强；零轴上方金叉是“多头延续”，适合趋势加仓）。<br />
+     ▶ 反例：高位（价格连涨后）零轴上方多次金叉，可能是“顶背离前兆”，需谨慎。</li>
+<li><strong>量能配合</strong>：金叉当天/次日，成交量需<strong>温和放大</strong>（证明有资金跟进，排除“无量诱多”）。</li>
+<li>
+<p><strong>趋势同步</strong>：日线金叉时，周线MACD未处于“死叉向下”状态（避免“小级别反弹，大级别下跌”）。</p>
+</li>
+<li>
+<p><strong>实战案例</strong>：某股票日线级别中，价格回调后，MACD线从-0.5升至-0.2，穿过信号线（从-0.3升至-0.1），柱状线从绿柱（-0.2）缩窄至0后翻红（0.1），且当天成交量比前一日增加30%，可视为有效金叉，短期买入信号成立。</p>
+</li>
+</ul>
+<h3 id="2-macd">2. 卖出信号：MACD死叉（高卖核心）</h3>
+<ul>
+<li><strong>定义</strong>：MACD线（DIF）从上向下穿过信号线（DEA），柱状线从“红柱”转为“绿柱”（或红柱缩窄后翻绿）。</li>
+<li><strong>有效死叉的3个关键条件（避免假信号）</strong>：</li>
+<li><strong>位置优先</strong>：死叉发生在<strong>零轴上方或零轴附近</strong>（零轴上方死叉是“多头转空头”的初期信号，反转意义更强；零轴下方死叉是“空头延续”，适合止损离场）。<br />
+     ▶ 反例：低位（价格连跌后）零轴下方多次死叉，可能是“底背离前兆”，勿盲目割肉。</li>
+<li><strong>量能配合</strong>：死叉当天若“放量下跌”（成交量骤增），看空信号更强；若缩量死叉，需观察后续是否补量下跌。</li>
+<li>
+<p><strong>趋势同步</strong>：日线死叉时，周线MACD已开始走弱（如MACD线靠近零轴），避免“小级别回调，大级别上升”。</p>
+</li>
+<li>
+<p><strong>实战案例</strong>：某股票日线级别中，价格冲高后，MACD线从1.2跌至0.8，穿过信号线（从1.0跌至0.9），柱状线从红柱（0.2）缩窄至0后翻绿（-0.1），且当天成交量比前一日增加50%（放量下跌），可视为有效死叉，短期卖出信号成立。</p>
+</li>
+</ul>
+<h2 id="_2">三、进阶买卖信号：背离信号（抓顶/底关键）</h2>
+<p>背离是“价格走势与MACD走势相反”的现象，是趋势即将反转的强烈信号，比交叉信号更提前，适合捕捉顶部（顶背离）和底部（底背离）。</p>
+<h3 id="1">1. 买入信号：底背离（抄底核心）</h3>
+<ul>
+<li><strong>定义</strong>：价格创新低（如日线价格跌至5元，低于前低6元），但MACD未创新低（如MACD线前低-1.0，本次最低-0.8；或柱状线前低-0.5，本次最低-0.3），说明“空头力量衰竭，多头即将反攻”。</li>
+<li><strong>有效底背离的2个关键</strong>：</li>
+<li><strong>级别匹配</strong>：优先“日线+周线”共振底背离（成功率远高于单一日线背离，避免“日线底背离，周线续跌”）。</li>
+<li>
+<p><strong>信号确认</strong>：底背离出现后，需等待<strong>MACD金叉</strong>确认（仅背离不买，金叉后再买，避免“背离后继续背离”）。</p>
+</li>
+<li>
+<p><strong>实战场景</strong>：某股票周线级别中，价格从10元跌至8元（创新低），但MACD线从-0.6跌至-0.5（未创新低），柱状线从-0.2跌至-0.1（未创新低），形成周线底背离；随后日线出现MACD金叉，可分批抄底。</p>
+</li>
+</ul>
+<h3 id="2">2. 卖出信号：顶背离（逃顶核心）</h3>
+<ul>
+<li><strong>定义</strong>：价格创新高（如日线价格涨至20元，高于前高18元），但MACD未创新高（如MACD线前高1.5，本次最高1.2；或柱状线前高0.4，本次最高0.2），说明“多头力量衰竭，空头即将反攻”。</li>
+<li><strong>有效顶背离的2个关键</strong>：</li>
+<li><strong>级别匹配</strong>：优先“日线+周线”共振顶背离（尤其是高位放量顶背离，逃顶优先级最高）。</li>
+<li>
+<p><strong>信号确认</strong>：顶背离出现后，需等待<strong>MACD死叉</strong>确认（仅背离不卖，死叉后再卖，避免“背离后继续背离”）。</p>
+</li>
+<li>
+<p><strong>实战场景</strong>：某股票周线级别中，价格从15元涨至17元（创新高），但MACD线从1.3涨至1.1（未创新高），柱状线从0.3涨至0.2（未创新高），形成周线顶背离；随后日线出现MACD死叉，需果断减仓/清仓。</p>
+</li>
+</ul>
+<h2 id="_3">四、辅助判断：零轴位置+柱状线形态（过滤信号）</h2>
+<h3 id="1_1">1. 零轴的“多空分水岭”作用</h3>
+<ul>
+<li><strong>零轴上方</strong>：整体为“多头趋势”，金叉是“趋势延续”（可加仓），死叉是“短期回调”（未跌破零轴可逢低补仓）。</li>
+<li><strong>零轴下方</strong>：整体为“空头趋势”，死叉是“趋势延续”（需止损），金叉是“短期反弹”（未突破零轴反弹后减仓）。</li>
+<li><strong>关键突破</strong>：MACD线从下向上突破零轴（“零上金叉”）= 多头趋势确立；从上向下跌破零轴（“零下死叉”）= 空头趋势确立。</li>
+</ul>
+<h3 id="2_1">2. 柱状线的“量能指引”作用</h3>
+<ul>
+<li><strong>红柱放大</strong>：多头力量增强，配合价格上涨则趋势延续概率大；红柱放大但价格不涨（“量价背离”），需警惕回调。</li>
+<li><strong>红柱缩窄</strong>：多头力量减弱，价格仍涨则可能是“顶背离前兆”，需准备卖出。</li>
+<li><strong>绿柱放大</strong>：空头力量增强，配合价格下跌则趋势延续概率大；绿柱放大但价格不跌（“量价背离”），需警惕反弹。</li>
+<li><strong>绿柱缩窄</strong>：空头力量减弱，价格仍跌则可能是“底背离前兆”，需准备买入。</li>
+</ul>
+<h2 id="_4">五、实战注意事项（避免踩坑）</h2>
+<ol>
+<li><strong>不单一依赖MACD</strong>：MACD是“趋势指标”，对震荡行情（如价格横盘）无效，易频繁出现“假金叉/死叉”。需结合<strong>均线（20日均线判趋势）、成交量（量价配合）、K线形态（头肩顶/底）</strong> 综合判断。</li>
+<li><strong>区分“趋势市”与“震荡市”</strong>：</li>
+<li>趋势市（价格沿20日均线向上/向下）：MACD信号成功率高，可重点使用。</li>
+<li>震荡市（价格无明确方向，均线缠绕）：减少MACD使用，或降低仓位（如5%仓位试错）。</li>
+<li><strong>严格止损止盈</strong>：即使信号明确，也需设置止损（如金叉买入后，价格跌破买入价5%或MACD死叉，立即止损），避免“信号失效”导致大幅亏损。</li>
+<li><strong>匹配交易周期</strong>：</li>
+<li>短线（1-3天）：看30分钟/60分钟MACD，侧重交叉信号。</li>
+<li>中线（1-3周）：看日线/周线MACD，侧重背离信号+零轴突破。</li>
+</ol>
+<h2 id="macd_2">六、MACD买卖决策流程（实战模板）</h2>
+<ol>
+<li><strong>判趋势</strong>：用20日均线判断方向（向上=趋势市，横盘=震荡市，向下=空头市），震荡市放弃操作。</li>
+<li><strong>找信号</strong>：</li>
+<li>多头趋势：日线MACD零轴下方金叉+底背离→买入；零轴上方死叉+顶背离→卖出。</li>
+<li>空头趋势：日线MACD零轴上方死叉+顶背离→卖出；零轴下方金叉+底背离→轻仓试买。</li>
+<li><strong>验信号</strong>：确认成交量配合（买时放量、卖时放量）、大级别（周线）趋势同步。</li>
+<li><strong>设风控</strong>：买入后以“买入价-5%”或“MACD死叉”止损；卖出后以“卖出价+5%”或“MACD金叉”止盈回补。</li>
+</ol>
+<p><a href="../">返回买卖类指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
