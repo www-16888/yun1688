@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>KDJ指标深度解析：动量与超买超卖的“动态跟踪仪” - 技术指标库</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">技术指标库</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">首页</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../trends/" class="nav-link">趋势型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">动量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volume/" class="nav-link">成交量型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../volatility/" class="nav-link">波动率型指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../xuangu/" class="nav-link">选股类指标</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../../maimai/" class="nav-link">买卖类指标</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#kdj" class="nav-link">KDJ指标深度解析：动量与超买超卖的“动态跟踪仪”</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-bs-level="2"><a href="#_1" class="nav-link">一、释义：它是什么？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_4" class="nav-link">二、意义：它为什么是“动态动量工具”？</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_5" class="nav-link">三、实战用法：三大核心交易策略</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_7" class="nav-link">四、高级技巧与注意事项</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-bs-level="2"><a href="#_8" class="nav-link">五、总结</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="kdj">KDJ指标深度解析：动量与超买超卖的“动态跟踪仪”</h1>
+<p>KDJ指标（又称随机指标）由技术分析师乔治·莱恩（George C. Lane）于1950年代提出，是<strong>基于“价格在近期波动区间内的相对位置”，量化市场动量变化与超买超卖状态的经典技术指标</strong>。其核心逻辑是“<strong>通过计算价格在特定周期内最高价与最低价区间的相对位置（K值、D值），并衍生出反映短期动量变化的J值，动态跟踪多空力量的转换节奏</strong>”——不直接预测价格方向，而是通过“价格相对位置”与“动量偏离”捕捉趋势转折信号，尤其适合震荡行情的高抛低吸与趋势行情的动量验证，是股票、期货、外汇等市场中应用最广泛的指标之一。</p>
+<h2 id="_1">一、释义：它是什么？</h2>
+<h3 id="_2">核心概念</h3>
+<p>KDJ的本质是“<strong>价格在近期波动区间内的标准化位置指标</strong>”，由K值、D值、J值三个子指标组成，三者协同反映市场动量状态：
+- <strong>K值</strong>：衡量“当日收盘价在近N日最高价-最低价区间内的相对位置”，灵敏度较高，反映短期动量变化；
+- <strong>D值</strong>：对K值进行平滑处理（通常为3日移动平均），灵敏度低于K值，反映中期动量趋势，避免短期噪音干扰；
+- <strong>J值</strong>：通过K值与D值的差值放大动量变化（公式：J=3K-2D），灵敏度最高，能提前捕捉K、D值的交叉与背离信号，甚至突破0-100区间，直观反映极端动量。</p>
+<p>例如，某股票14日周期内最高价20元、最低价18元，当日收盘价19.8元：K值接近90（说明价格接近区间顶部，短期超买），D值若为85（中期动量同步超买），J值可能达100以上（极端超买，预警短期反转）；若收盘价18.2元：K值接近10（价格接近区间底部，短期超卖），D值若为15（中期动量同步超卖），J值可能低于0（极端超卖，预警短期反弹）。</p>
+<p>其核心优势是“<strong>动态跟踪+信号分层</strong>”：K值反映短期节奏，D值锚定中期趋势，J值捕捉极端状态，三者形成“短-中-极”三层信号体系，既避免单一指标的片面性，又能通过“K与D交叉”“价格与J值背离”等信号精准定位交易机会，上手门槛低且实战性强。</p>
+<ul>
+<li><strong>核心特性</strong>：</li>
+<li><strong>区间约束性</strong>：K值、D值默认在0-100区间波动（J值可突破该区间），通常以“K/D＞80”为超买、“K/D＜20”为超卖，区间明确，信号直观；</li>
+<li><strong>交叉联动性</strong>：K值与D值的“金叉”（K上穿D）为潜在多头信号，“死叉”（K下穿D）为潜在空头信号，交叉位置（超买/超卖区 vs 中性区）直接影响信号强度；</li>
+<li><strong>背离预警性</strong>：价格创新高/低但K/D/J值未同步创新高/低（如价格新高、J值未新高），为趋势反转的核心预警信号，往往先于价格转折；</li>
+<li>
+<p><strong>周期适配性</strong>：短周期（如6日）KDJ灵敏，适合日内交易；长周期（如24日）KDJ平滑，适合中长线趋势判断。</p>
+</li>
+<li>
+<p><strong>与RSI的核心区别</strong>：
+| 指标类型       | 计算核心依据                                                                 | 优势                          | 适用场景                          |
+|----------------|--------------------------------------------------------------------------|-------------------------------|-----------------------------------|
+| KDJ指标        | 价格在“近期高低价区间内的相对位置”（K/D/J分层反映动量） | 动态跟踪价格位置，J值捕捉极端动量，交叉信号明确 | 震荡行情高抛低吸、趋势反转预警、短期动量捕捉 |
+| RSI指标        | 周期内“平均上涨幅度/平均下跌幅度”的比值（单一数值反映动量） | 超买超卖判断简洁，背离信号直观 | 震荡行情区间交易、中期动量验证 |</p>
+</li>
+</ul>
+<h3 id="_3">计算逻辑与核心参数</h3>
+<p>KDJ的计算围绕“波动区间确定→K值计算→D值平滑→J值推导”四步展开，核心参数仅有1个——“计算周期（通常设为14）”，即确定“近N日高低价区间”的时间范围，其他平滑参数（如D值的3日移动平均）为行业通用设置，无需频繁调整。</p>
+<h4 id="1-14">1. 核心计算步骤（以日线周期、14日计算周期为例）</h4>
+<p>KDJ的计算需先确定“近14日最高价（H14）”与“近14日最低价（L14）”，再基于当日收盘价（C）计算K、D、J值，步骤严谨且可复现：</p>
+<table>
+<thead>
+<tr>
+<th>计算环节</th>
+<th>计算逻辑与公式</th>
+<th>示例（某股票14日H=20元，L=18元，当日C=19.8元）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. 确定“近N日波动区间”</td>
+<td>提取近14日（含当日）的最高价H14和最低价L14（若为首次计算，需至少14日数据；后续每日滚动更新）</td>
+<td>H14=20元（14日内最高），L14=18元（14日内最低），区间幅度=2元</td>
+</tr>
+<tr>
+<td>2. 计算“未平滑K值（RSV）”</td>
+<td>RSV（Raw Stochastic Value，原始随机值）= [(C - L14) ÷ (H14 - L14)] × 100<br>（RSV本质是收盘价在区间内的占比，0=区间底部，100=区间顶部）</td>
+<td>RSV=[(19.8-18)÷(20-18)]×100=(1.8÷2)×100=90</td>
+</tr>
+<tr>
+<td>3. 计算“平滑K值”</td>
+<td>K值=（前一日K值 × 2 + 当日RSV）÷ 3<br>（首次计算时，前一日K值=RSV；用2:1权重平滑，既保留当日信号，又减少波动）</td>
+<td>若前一日K值=85→ 当日K=(85×2 + 90)÷3=(170+90)÷3≈86.67</td>
+</tr>
+<tr>
+<td>4. 计算“平滑D值”</td>
+<td>D值=（前一日D值 × 2 + 当日K值）÷ 3<br>（首次计算时，前一日D值=K值；对K值进一步平滑，反映中期趋势）</td>
+<td>若前一日D值=82→ 当日D=(82×2 + 86.67)÷3=(164+86.67)÷3≈83.56</td>
+</tr>
+<tr>
+<td>5. 计算“J值”</td>
+<td>J值=3×当日K值 - 2×当日D值<br>（通过K与D的差值放大动量，J值突破0-100时，代表极端超买/超卖）</td>
+<td>J=3×86.67 - 2×83.56≈260.01 - 167.12≈92.89（未突破100，短期超买）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="2">2. 关键参数与数值解读</h4>
+<p>KDJ的核心参数是“计算周期（N）”，不同周期对应不同的灵敏度，需结合交易风格调整；K/D/J值的区间含义需分层理解：
+- <strong>计算周期适配</strong>：
+  - 短线交易（日内/1-3天）：6日/9日KDJ→ 灵敏度高，能快速捕捉日内短期波动，适合高抛低吸；
+  - 波段交易（3-15天）：14日KDJ（默认）→ 平衡灵敏度与稳定性，避免频繁假信号，适配多数波段场景；
+  - 中长线交易（15天以上）：24日/30日KDJ→ 平滑短期噪音，更贴合长期趋势，适合趋势验证；
+- <strong>数值区间含义</strong>：
+  - K/D＞80（J值可能＞100）：超买区间→ 价格接近近期区间顶部，多头力量透支，短期反转风险高（震荡行情优先看空，趋势行情需结合背离）；
+  - K/D＜20（J值可能＜0）：超卖区间→ 价格接近近期区间底部，空头力量衰竭，短期反弹概率大（震荡行情优先看多，趋势行情需结合趋势确认）；
+  - 20≤K/D≤80：中性区间→ 多空力量均衡，K上穿D（金叉）→ 多头增强，K下穿D（死叉）→ 空头增强，需结合价格趋势判断；
+  - J值特殊含义：J＞100→ 极端超买，短期回调概率＞70%；J＜0→ 极端超卖，短期反弹概率＞70%，是比K/D更灵敏的极端信号。</p>
+<h2 id="_4">二、意义：它为什么是“动态动量工具”？</h2>
+<p>KDJ的核心价值在于<strong>用“价格相对位置”解决了“动量量化”与“趋势跟踪”的双重需求</strong>——传统指标（如RSI）仅关注涨跌幅度的比值，而KDJ通过“近期高低价区间”锚定价格的“相对位置”，既能判断“当前价格是否处于极端状态”（超买超卖），又能通过K/D交叉跟踪“动量转换节奏”，其不可替代的功能体现在三点：</p>
+<h3 id="1-j">1. 精准捕捉短期极端状态：J值的“极端预警”功能</h3>
+<p>J值突破0-100区间时，代表价格动量进入“极端区”，短期反转概率极高：
+- 示例：某股票14日KDJ中，J值连续2天＞105（极端超买），且价格未创新高→ 3日内回调概率达80%，此时卖出可规避短期下跌；若J值连续2天＜-5（极端超卖），且价格未创新低→ 3日内反弹概率达80%，此时买入可把握短期机会。</p>
+<h3 id="2-kd">2. 动态跟踪动量转换：K/D交叉的“节奏信号”</h3>
+<p>K值与D值的交叉（金叉/死叉）是动量转换的核心信号，交叉位置直接决定信号强度：
+- 超买区死叉（K从80以上下穿D）：空头信号强，短期下跌幅度通常更大（如某股票K=85、D=82时死叉，后续5日下跌8%）；
+- 超卖区金叉（K从20以下上穿D）：多头信号强，短期反弹幅度通常更大（如某股票K=18、D=21时金叉，后续5日上涨6%）；
+- 中性区交叉（20-80内）：信号强度弱，多为震荡调整，需结合其他指标验证。</p>
+<h3 id="3-kdj">3. 提前预警趋势反转：价格与KDJ的“背离信号”</h3>
+<p>当价格创新高/低，但K/D/J值未同步创新高/低时，形成“背离”，是趋势反转的强预警：
+- 顶背离（价格新高，K/D/J未新高）：多头趋势衰竭，如某股票价格创25元新高，但K值从85降至80、D值从82降至78→ 后续10日大概率回调至22元；
+- 底背离（价格新低，K/D/J未新低）：空头趋势衰竭，如某股票价格创15元新低，但K值从15升至20、D值从18升至22→ 后续10日大概率反弹至18元。</p>
+<h2 id="_5">三、实战用法：三大核心交易策略</h2>
+<p>KDJ的实战用法需结合“市场状态（震荡/趋势）”与“信号强度（极端区/中性区）”，以下为三种高胜率策略：</p>
+<h3 id="j">用法一：极端区J值反转策略（适用于震荡行情）</h3>
+<p>核心是“<strong>J值突破0/100 + 价格止涨/止跌K线</strong>”，捕捉短期极端反转机会，持仓周期1-3天，胜率超70%：
+1. <strong>多头入场条件</strong>：
+   - J值＜0（极端超卖），且连续2天回升（如J从-5升至2）；
+   - 价格收出“止跌K线”（如锤子线、阳包阴）；
+   - 成交量缩量至5日均量0.8倍以下（抛压枯竭）；
+2. <strong>空头入场条件</strong>：
+   - J值＞100（极端超买），且连续2天回落（如J从105降至98）；
+   - 价格收出“止涨K线”（如流星线、阴包阳）；
+   - 成交量放量至5日均量1.2倍以上（买盘透支）；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=止跌K线最低价-1%，空头止损=止涨K线最高价+1%；
+   - 止盈：目标=近期波动区间的1/2（如区间18-20元，止盈19元），或J值回归50（中性区间）时离场。</p>
+<h3 id="kd">用法二：超买超卖区K/D交叉策略（适用于波段行情）</h3>
+<p>核心是“<strong>K/D在超买区死叉/超卖区金叉 + 价格趋势确认</strong>”，捕捉波段级趋势反转，持仓周期5-10天：
+1. <strong>多头入场条件（超卖区金叉）</strong>：
+   - K值从20以下上穿D值（金叉），且金叉时K/D均＜25；
+   - 价格突破“近期震荡平台上沿”，或站稳20日EMA上方；
+   - 成交量放大至5日均量1.2倍以上（买盘入场）；
+2. <strong>空头入场条件（超买区死叉）</strong>：
+   - K值从80以上下穿D值（死叉），且死叉时K/D均＞75；
+   - 价格跌破“近期震荡平台下沿”，或跌破20日EMA下方；
+   - 成交量放大至5日均量1.2倍以上（抛盘离场）；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=金叉日最低价-2%，空头止损=死叉日最高价+2%；
+   - 止盈：目标=近期波段幅度的1倍（如前期下跌5元，止盈5元），或K/D回归50时离场50%仓位，剩余仓位看趋势延续。</p>
+<h3 id="_6">用法三：背离+趋势线突破策略（适用于趋势反转行情）</h3>
+<p>核心是“<strong>价格与KDJ背离 + 趋势线突破</strong>”，捕捉中长期趋势反转，持仓周期10-30天，胜率超80%：
+1. <strong>多头入场条件（底背离+突破）</strong>：
+   - 价格创近3个月新低，但KDJ（14日）未创新低（K/D/J均高于前期低点），形成底背离；
+   - 价格突破“空头趋势线”（连接近2个高点的直线），且收盘价站稳趋势线上方3天；
+   - 周线KDJ同步金叉（确认中期趋势）；
+2. <strong>空头入场条件（顶背离+突破）</strong>：
+   - 价格创近3个月新高，但KDJ（14日）未创新高（K/D/J均低于前期高点），形成顶背离；
+   - 价格跌破“多头趋势线”（连接近2个低点的直线），且收盘价站稳趋势线下方3天；
+   - 周线KDJ同步死叉（确认中期趋势）；
+3. <strong>止损止盈</strong>：
+   - 止损：多头止损=价格新低时的最低价-3%，空头止损=价格新高时的最高价+3%；
+   - 止盈：目标=趋势线突破幅度的2倍（如突破幅度3元，止盈6元），或月线KDJ出现反向信号时清仓。</p>
+<h2 id="_7">四、高级技巧与注意事项</h2>
+<h3 id="1">1. 优化信号：结合“多周期共振+成交量”过滤假信号</h3>
+<p>单纯依赖单周期KDJ易产生假信号（如短期金叉但长期趋势仍空），需通过以下方式优化：
+- <strong>多周期共振验证</strong>：
+  - 日线KDJ金叉时，需同步满足“周线KDJ＞20（中期不极端弱）”“60分钟KDJ金叉（短期动量跟进）”，避免“孤立金叉”；
+  - 示例：日线KDJ超卖金叉，但周线KDJ仍在创新低→ 假信号，不入场；
+- <strong>成交量验证</strong>：
+  - 超卖区金叉需“缩量超卖+放量突破”（缩量说明抛压尽，放量说明买盘来）；
+  - 超买区死叉需“放量超买+缩量破位”（放量说明买盘尽，缩量说明抛压持续）；
+  - 无量的交叉信号（如金叉时成交量仅0.6倍均量）多为假信号，需规避。</p>
+<h3 id="2-kdj">2. 缺点与警示：避开这些“KDJ陷阱”</h3>
+<p>KDJ虽实用，但存在固有局限性，实战中需重点规避：
+- <strong>强趋势中的“交叉失效”</strong>：
+  - 多头强趋势中（价格沿20日EMA陡峭上升），KDJ可能频繁在50-80间金叉（如金叉后继续上涨），此时“中性区金叉”是加仓信号，而非入场信号；若强行在超买区死叉卖出，会错过趋势收益；
+  - 空头强趋势中（价格沿20日EMA陡峭下降），KDJ可能频繁在20-50间死叉，此时“中性区死叉”是减仓信号，而非入场信号；
+  - 应对：强趋势中（价格与20日EMA夹角＞30°），放弃“超买死叉卖”，仅用“超卖金叉买”（多头）或“超买死叉卖”（空头），且需结合趋势线持仓。</p>
+<ul>
+<li><strong>窄幅震荡中的“信号泛滥”</strong>：</li>
+<li>价格在极窄区间（如振幅＜2%）震荡时，KDJ会频繁金叉死叉（如1周内3次金叉、2次死叉），所有信号均为无效震荡，入场后易被“来回打脸”；</li>
+<li>
+<p>应对：窄幅震荡时（近10日振幅＜3%），暂停使用KDJ，改用“成交量突破策略”（如放量突破区间上沿买入）。</p>
+</li>
+<li>
+<p><strong>极端行情中的“背离滞后”</strong>：</p>
+</li>
+<li>黑天鹅事件（如突发利空跌停）导致价格骤跌，KDJ可能同步跌至0附近，此时底背离信号可能滞后（价格已跌20%后才出现背离），过早入场会被套“半山腰”；</li>
+<li>应对：极端行情后（单日涨跌幅＞8%），等待KDJ出现“二次背离”（如价格再跌5%，KDJ未新低），且价格形成“双底”形态后再入场。</li>
+</ul>
+<h3 id="3">3. 常见误区：这些错误要避免</h3>
+<ul>
+<li><strong>误区1：K/D金叉必涨、死叉必跌</strong>：</li>
+<li>金叉仅代表“短期动量转强”，不代表“必然上涨”（如中性区金叉后，价格受压力位压制回落）；死叉仅代表“短期动量转弱”，不代表“必然下跌”（如超卖区死叉后，价格受支撑位反弹）；</li>
+<li>
+<p>正确做法：金叉/死叉需结合“位置”（超买/超卖区 vs 中性区）与“趋势”（价格在EMA上方/下方），超卖区金叉+价格在EMA上方=强信号，中性区死叉+价格无趋势=弱信号。</p>
+</li>
+<li>
+<p><strong>误区2：忽视J值，仅看K/D交叉</strong>：</p>
+</li>
+<li>认为“K/D交叉是唯一信号”，忽略J值的极端预警（如J值＞100时，即使K/D未死叉，短期回调风险已极高）；</li>
+<li>
+<p>正确做法：优先看J值（极端状态），再看K/D交叉（动量转换），最后看价格趋势（方向确认），三者一致时信号最强。</p>
+</li>
+<li>
+<p><strong>误区3：频繁调整计算周期</strong>：</p>
+</li>
+<li>认为“KDJ效果差是周期问题”，频繁将14日改为6日、24日，导致指标节奏混乱（如用6日KDJ指导波段交易，信号太灵敏；用24日KDJ指导日内交易，信号太滞后）；</li>
+<li>正确做法：交易周期与KDJ周期匹配——日内交易用6/9日，波段交易用14日，中长线交易用24/30日，周期确定后不随意更改。</li>
+</ul>
+<h2 id="_8">五、总结</h2>
+<p>KDJ指标是技术分析中的“动态动量核心工具”——它通过K/D/J的分层信号，既捕捉短期极端状态（J值），又跟踪中期动量转换（K/D交叉），还能预警长期趋势反转（背离），适配震荡、波段、趋势等多种市场状态，是新手入门与资深交易者必备的“多面手”。</p>
+<p>但KDJ并非“交易圣杯”：强趋势中交叉失效、窄幅震荡中信号泛滥、极端行情中背离滞后等问题需警惕，且必须结合趋势方向（如EMA）、成交量、价格形态综合验证。正确的用法是“将KDJ作为‘动量节奏锚’，搭配‘趋势指标定方向+量能指标定资金+形态分析定结构’，形成‘动量+趋势+量能’的三维决策体系”，才能在复杂市场中精准把握机会、控制风险，实现持续稳定的交易收益。</p>
+<p><a href="../">返回动量型指标列表</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
